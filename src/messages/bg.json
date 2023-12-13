@@ -1,0 +1,22 @@
+{
+  "navigation": {
+    "discover_feed": "Начало",
+    "categories": "Категории",
+    "search": "Търси",
+    "places": "Места",
+    "chats": "Съобщения",
+    "favorites": "Любими",
+    "my_profile": "Моят профил",
+    "settings": "Настройки",
+    "logout": "Изход",
+    "create": "Създай"
+  },
+  "categories": {
+    "title": "Категории"
+  },
+  "settings": {
+    "title": "Настройки",
+    "change_language": "Смени езика",
+    "change_theme": "Смени темата"
+  }
+}

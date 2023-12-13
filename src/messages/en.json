@@ -1,0 +1,22 @@
+{
+  "navigation": {
+    "discover_feed": "Discover Feed",
+    "categories": "Categories",
+    "search": "Search",
+    "places": "Places",
+    "chats": "Chats",
+    "favorites": "Favorites",
+    "my_profile": "My Profile",
+    "settings": "Settings",
+    "logout": "Log out",
+    "create": "Create"
+  },
+  "categories": {
+    "title": "Categories"
+  },
+  "settings": {
+    "title": "Settings",
+    "change_language": "Change Language",
+    "change_theme": "Change Theme"
+  }
+}
