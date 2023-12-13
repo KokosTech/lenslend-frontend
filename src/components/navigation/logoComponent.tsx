@@ -8,7 +8,7 @@ const logoComponent = () => (
       width={52}
       height={52}
     />
-    <span className='font-black text-2xl bg-gradient text-transparent bg-clip-text'>
+    <span className='bg-gradient bg-clip-text text-2xl font-black text-transparent'>
       LensLend
     </span>
   </div>

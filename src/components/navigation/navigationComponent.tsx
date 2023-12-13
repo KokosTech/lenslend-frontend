@@ -19,11 +19,11 @@ const NavigationComponent = ({
   return (
     <Link
       href={href}
-      className={`flex items-center gap-2.5 px-2.5 py-3.5 rounded-lg border ${
+      className={`flex items-center gap-2.5 rounded-lg border px-2.5 py-3.5 ${
         selected
-          ? 'bg-primary border-stroke'
-          : 'bg-transparent border-transparent'
-      } hover:bg-primary hover:border-stroke transition-colors duration-200 ease-in-out`}
+          ? 'border-stroke bg-primary'
+          : 'border-transparent bg-transparent'
+      } transition-colors duration-200 ease-in-out hover:border-stroke hover:bg-primary`}
     >
       {icon}
       <span>{t(text)}</span>

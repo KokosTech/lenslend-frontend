@@ -7,7 +7,5 @@
   "quoteProps": "as-needed",
   "jsxBracketSameLine": false,
   "arrowParens": "always",
-  "plugins": [
-    "prettier-plugin-tailwindcss"
-  ]
+  "plugins": ["prettier-plugin-tailwindcss"]
 }

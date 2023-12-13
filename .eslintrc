@@ -3,10 +3,7 @@
   "root": true,
   "overrides": [
     {
-      "files": [
-        "*.ts",
-        "*.tsx"
-      ],
+      "files": ["*.ts", "*.tsx"],
       "parser": "@typescript-eslint/parser",
       "extends": [
         "next/core-web-vitals",
@@ -17,24 +14,12 @@
       ],
       "rules": {
         "react/react-in-jsx-scope": "off",
-        "indent": [
-          "error",
-          2
-        ],
-        "quotes": [
-          "error",
-          "single"
-        ],
-        "semi": [
-          "error",
-          "always"
-        ],
+        "indent": ["error", 2],
+        "quotes": ["error", "single"],
+        "semi": ["error", "always"],
         "no-console": 0,
         "block-scoped-var": "error",
-        "curly": [
-          "error",
-          "multi-line"
-        ],
+        "curly": ["error", "multi-line"],
         "eqeqeq": "error",
         "guard-for-in": "error",
         "no-alert": "error",
@@ -55,14 +40,8 @@
             "multiline": true
           }
         ],
-        "array-bracket-spacing": [
-          "error",
-          "never"
-        ],
-        "block-spacing": [
-          "error",
-          "never"
-        ],
+        "array-bracket-spacing": ["error", "never"],
+        "block-spacing": ["error", "never"],
         "comma-spacing": [
           "error",
           {
@@ -70,14 +49,8 @@
             "after": true
           }
         ],
-        "comma-style": [
-          "error",
-          "last"
-        ],
-        "eol-last": [
-          "error",
-          "always"
-        ],
+        "comma-style": ["error", "last"],
+        "eol-last": ["error", "always"],
         "key-spacing": [
           "error",
           {
@@ -125,22 +98,10 @@
           }
         ],
         "object-property-newline": "error",
-        "operator-assignment": [
-          "error",
-          "always"
-        ],
-        "padded-blocks": [
-          "error",
-          "never"
-        ],
-        "spaced-comment": [
-          "error",
-          "always"
-        ],
-        "arrow-body-style": [
-          "error",
-          "as-needed"
-        ],
+        "operator-assignment": ["error", "always"],
+        "padded-blocks": ["error", "never"],
+        "spaced-comment": ["error", "always"],
+        "arrow-body-style": ["error", "as-needed"],
         "arrow-spacing": [
           "error",
           {
@@ -169,19 +130,10 @@
         "prefer-rest-params": "error",
         "prefer-spread": "error",
         "prefer-template": "error",
-        "quote-props": [
-          "error",
-          "as-needed"
-        ],
+        "quote-props": ["error", "as-needed"],
         "semi-spacing": "error",
-        "semi-style": [
-          "error",
-          "last"
-        ],
-        "space-before-blocks": [
-          "error",
-          "always"
-        ],
+        "semi-style": ["error", "last"],
+        "space-before-blocks": ["error", "always"],
         "space-before-function-paren": [
           "error",
           {
@@ -190,9 +142,12 @@
             "asyncArrow": "always"
           }
         ],
-        "space-in-parens": [
+        "space-in-parens": ["error", "never"],
+        "prettier/prettier": [
           "error",
-          "never"
+          {
+            "endOfLine": "auto"
+          }
         ]
       },
       "parserOptions": {
@@ -206,37 +161,20 @@
       }
     },
     {
-      "files": [
-        "*.js",
-        "*.jsx"
-      ],
-      "extends": [
-        "next/core-web-vitals"
-      ],
+      "files": ["*.js", "*.jsx"],
+      "extends": ["next/core-web-vitals"],
       "rules": {
         "react/react-in-jsx-scope": "off",
         "import/no-extraneous-dependencies": "off",
         "class-methods-use-this": "off",
         "import/prefer-default-export": "off",
         "react/jsx-props-no-spreading": "off",
-        "indent": [
-          "error",
-          2
-        ],
-        "quotes": [
-          "error",
-          "single"
-        ],
-        "semi": [
-          "error",
-          "always"
-        ],
+        "indent": ["error", 2],
+        "quotes": ["error", "single"],
+        "semi": ["error", "always"],
         "no-console": 0,
         "block-scoped-var": "error",
-        "curly": [
-          "error",
-          "multi-line"
-        ],
+        "curly": ["error", "multi-line"],
         "eqeqeq": "error",
         "guard-for-in": "error",
         "no-alert": "error",
@@ -257,14 +195,8 @@
             "multiline": true
           }
         ],
-        "array-bracket-spacing": [
-          "error",
-          "never"
-        ],
-        "block-spacing": [
-          "error",
-          "never"
-        ],
+        "array-bracket-spacing": ["error", "never"],
+        "block-spacing": ["error", "never"],
         "comma-spacing": [
           "error",
           {
@@ -272,14 +204,8 @@
             "after": true
           }
         ],
-        "comma-style": [
-          "error",
-          "last"
-        ],
-        "eol-last": [
-          "error",
-          "always"
-        ],
+        "comma-style": ["error", "last"],
+        "eol-last": ["error", "always"],
         "key-spacing": [
           "error",
           {
@@ -304,14 +230,8 @@
             "ignoreUrls": true
           }
         ],
-        "multiline-comment-style": [
-          "error",
-          "starred-block"
-        ],
-        "multiline-ternary": [
-          "error",
-          "always"
-        ],
+        "multiline-comment-style": ["error", "starred-block"],
+        "multiline-ternary": ["error", "always"],
         "no-array-constructor": "error",
         "no-lonely-if": "error",
         "no-multi-assign": "error",
@@ -341,22 +261,10 @@
           }
         ],
         "object-property-newline": "error",
-        "operator-assignment": [
-          "error",
-          "always"
-        ],
-        "padded-blocks": [
-          "error",
-          "never"
-        ],
-        "spaced-comment": [
-          "error",
-          "always"
-        ],
-        "arrow-body-style": [
-          "error",
-          "as-needed"
-        ],
+        "operator-assignment": ["error", "always"],
+        "padded-blocks": ["error", "never"],
+        "spaced-comment": ["error", "always"],
+        "arrow-body-style": ["error", "as-needed"],
         "arrow-spacing": [
           "error",
           {
@@ -385,19 +293,10 @@
         "prefer-rest-params": "error",
         "prefer-spread": "error",
         "prefer-template": "error",
-        "quote-props": [
-          "error",
-          "as-needed"
-        ],
+        "quote-props": ["error", "as-needed"],
         "semi-spacing": "error",
-        "semi-style": [
-          "error",
-          "last"
-        ],
-        "space-before-blocks": [
-          "error",
-          "always"
-        ],
+        "semi-style": ["error", "last"],
+        "space-before-blocks": ["error", "always"],
         "space-before-function-paren": [
           "error",
           {
@@ -406,9 +305,12 @@
             "asyncArrow": "always"
           }
         ],
-        "space-in-parens": [
+        "space-in-parens": ["error", "never"],
+        "prettier/prettier": [
           "error",
-          "never"
+          {
+            "endOfLine": "auto"
+          }
         ]
       }
     }

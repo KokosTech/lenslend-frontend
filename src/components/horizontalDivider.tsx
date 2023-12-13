@@ -1,5 +1,5 @@
 const HorizontalDivider = () => (
-  <div className='w-full h-[1px] bg-stroke opacity-50' />
+  <div className='h-[1px] w-full bg-stroke opacity-50' />
 );
 
 export default HorizontalDivider;
