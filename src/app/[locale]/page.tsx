@@ -1,4 +1,10 @@
+import { useLocale } from 'next-intl';
+import { unstable_setRequestLocale } from 'next-intl/server';
+
 const Home = () => {
+  const locale = useLocale();
+  unstable_setRequestLocale(locale);
+
   console.log('Hello from src/app/page.tsx');
   return (
     <main className='flex min-h-screen flex-col items-center justify-center bg-background'>

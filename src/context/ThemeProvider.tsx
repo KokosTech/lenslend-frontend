@@ -14,12 +14,7 @@ const ThemeContext = createContext<{
 });
 
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
-  const [theme, setTheme] = useState<Theme>(
-    (localStorage.theme as Theme) ||
-      ((window.matchMedia('(prefers-color-scheme: dark)').matches
-        ? 'dark'
-        : 'light') as Theme),
-  );
+  const [theme, setTheme] = useState<Theme | undefined>(undefined);
 
   const toggleTheme = () => {
     const root = window.document.documentElement;
@@ -35,6 +30,26 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     setTheme('light');
     localStorage.setItem('theme', 'light');
   };
+
+  const getInitialTheme = (): Theme => {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const storedPrefs = window.localStorage.getItem('theme');
+      if (typeof storedPrefs === 'string') {
+        return storedPrefs as Theme;
+      }
+
+      const userMedia = window.matchMedia('(prefers-color-scheme: dark)');
+      if (userMedia.matches) {
+        return 'dark';
+      }
+    }
+
+    return 'light';
+  };
+
+  useEffect(() => {
+    setTheme(getInitialTheme());
+  }, []);
 
   useEffect(() => {
     const root = window.document.documentElement;

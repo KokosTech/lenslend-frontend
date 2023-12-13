@@ -1,8 +1,12 @@
-import { useTranslations } from 'next-intl';
-import ChangeTheme from '@/components/settings/theme';
 import ChangeLanguage from '@/components/settings/language';
+import ChangeTheme from '@/components/settings/theme';
+import { useLocale, useTranslations } from 'next-intl';
+import { unstable_setRequestLocale } from 'next-intl/server';
 
 const SettingsPage = () => {
+  const locale = useLocale();
+  unstable_setRequestLocale(locale);
+
   const t = useTranslations('settings');
 
   return (

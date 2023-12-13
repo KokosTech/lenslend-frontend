@@ -1,16 +1,17 @@
 import React from 'react';
 
 import type { Metadata, Viewport } from 'next';
-import { notFound } from 'next/navigation';
 import { Inter } from 'next/font/google';
+import { notFound } from 'next/navigation';
 
-import '@/styles/globals.css';
-import { NextIntlClientProvider, useLocale, useMessages } from 'next-intl';
-import Navigation from '@/partials/global/navigation/navigation';
 import { ThemeProvider } from '@/context/ThemeProvider';
+import Navigation from '@/partials/global/navigation/navigation';
+import '@/styles/globals.css';
+import { NextIntlClientProvider, useMessages } from 'next-intl';
+import { unstable_setRequestLocale } from 'next-intl/server';
+import { locales } from '@/constants/locales';
 
 const inter = Inter({ subsets: ['latin', 'cyrillic-ext'] });
-const locales = ['en', 'de'];
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -18,17 +19,18 @@ export function generateStaticParams() {
 
 export default function LocaleLayout({
   children,
-  params,
+  params: { locale },
 }: Readonly<{
   children: React.ReactNode;
-  params: { lang: string };
+  params: { locale: string };
 }>) {
-  const locale = useLocale();
-  const messages = useMessages();
-
-  if (params.lang !== locale) {
+  if (!locales.includes(locale)) {
     notFound();
   }
+
+  unstable_setRequestLocale(locale);
+
+  const messages = useMessages();
 
   return (
     <html lang={locale}>
