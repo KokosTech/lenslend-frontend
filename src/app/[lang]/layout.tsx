@@ -1,13 +1,14 @@
 import React from 'react';
 
 import type { Metadata, Viewport } from 'next';
-import { notFound } from 'next/navigation';
 import { Inter } from 'next/font/google';
+import { notFound } from 'next/navigation';
 
+import { ThemeProvider } from '@/context/ThemeProvider';
+import Navigation from '@/partials/global/navigation/navigation';
 import '@/styles/globals.css';
 import { NextIntlClientProvider, useLocale, useMessages } from 'next-intl';
-import Navigation from '@/partials/global/navigation/navigation';
-import { ThemeProvider } from '@/context/ThemeProvider';
+import { unstable_setRequestLocale } from 'next-intl/server';
 
 const inter = Inter({ subsets: ['latin', 'cyrillic-ext'] });
 const locales = ['en', 'de'];
@@ -29,6 +30,8 @@ export default function LocaleLayout({
   if (params.lang !== locale) {
     notFound();
   }
+
+  unstable_setRequestLocale(locale);
 
   return (
     <html lang={locale}>
