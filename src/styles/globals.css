@@ -30,3 +30,24 @@
 /*        --text-important: #EEEEEE;*/
 /*    }*/
 /*}*/
+
+::-webkit-scrollbar {
+  width: .5rem;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: var(--background);
+  margin: 1rem .5rem;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 2rem;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--stroke);
+}

@@ -15,7 +15,7 @@ const Navigation = () => {
   return (
     <nav className='fixed flex h-screen w-60 overflow-y-auto bg-background text-sm font-semibold text-text'>
       {!noNavigation.includes(pathname) && (
-        <div className='flex w-full flex-col gap-4 px-4 py-4'>
+        <div className='flex h-full w-full flex-col gap-4 px-4 py-4'>
           <LogoComponent />
           {navigation.map(({ icon, text, href }) => {
             if (!href) return <HorizontalDivider key={text} />;
