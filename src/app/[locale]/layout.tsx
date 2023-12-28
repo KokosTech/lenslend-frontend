@@ -40,7 +40,7 @@ export default function LocaleLayout({
         <NextIntlClientProvider messages={messages}>
           <ThemeProvider>
             <Navigation />
-            <main className='w-full pl-60'>{children}</main>
+            <main className='w-full px-4 py-24 md:py-4'>{children}</main>
           </ThemeProvider>
         </NextIntlClientProvider>
       </body>

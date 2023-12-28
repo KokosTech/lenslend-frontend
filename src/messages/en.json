@@ -11,6 +11,23 @@
     "logout": "Log out",
     "create": "Create"
   },
+  "listing": {
+    "state": {
+      "NEW": "New",
+      "LIKE_NEW": "Like New",
+      "USED": "Used",
+      "REFURBISHED": "Refurbished"
+    },
+    "modal": {
+      "saved": {
+        "title": "Saved",
+        "message": "The listing has been saved successfully.",
+        "view_all": "View favorites",
+        "close": "Close"
+      }
+    },
+    "hour": "hr"
+  },
   "categories": {
     "title": "Categories"
   },
@@ -18,5 +35,20 @@
     "title": "Settings",
     "change_language": "Change Language",
     "change_theme": "Change Theme"
+  },
+  "auth": {
+    "signup": {
+      "title": "Sign Up",
+      "email": "Email",
+      "username": "Username",
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
+      "name": "Name",
+      "dateOfBirth": "Date of birth",
+      "phone": "Phone",
+      "submit": "Sign Up",
+      "already_have_account": "Already have an account?",
+      "login": "Log In"
+    }
   }
 }

@@ -13,9 +13,18 @@ import {
 
 export const noNavigation = [
   '/_error',
-  '/login',
-  '/signup',
-  '/forgot-password',
+  '/en/auth/login',
+  '/en/auth/signup',
+  '/en/auth/forgot-password',
+  '/en/auth/reset-password',
+  '/en/auth/verify-email',
+  '/en/auth/verify-phone',
+  '/bg/auth/login',
+  '/bg/auth/signup',
+  '/bg/auth/forgot-password',
+  '/bg/auth/reset-password',
+  '/bg/auth/verify-email',
+  '/bg/auth/verify-phone',
 ];
 
 export const navigation = [

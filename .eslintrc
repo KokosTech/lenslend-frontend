@@ -66,15 +66,6 @@
             "after": true
           }
         ],
-        "max-len": [
-          "error",
-          {
-            "code": 120,
-            "tabWidth": 4,
-            "comments": 120,
-            "ignoreUrls": true
-          }
-        ],
         "no-array-constructor": "error",
         "no-lonely-if": "error",
         "no-multi-assign": "error",
@@ -219,15 +210,6 @@
           {
             "before": true,
             "after": true
-          }
-        ],
-        "max-len": [
-          "error",
-          {
-            "code": 120,
-            "tabWidth": 4,
-            "comments": 120,
-            "ignoreUrls": true
           }
         ],
         "multiline-comment-style": ["error", "starred-block"],

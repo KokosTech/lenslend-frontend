@@ -1,7 +1,8 @@
 import Image from 'next/image';
+import React from 'react';
 
-const logoComponent = () => (
-  <div className='flex items-center gap-2.5'>
+const logoComponent = (props: React.HTMLAttributes<HTMLDivElement>) => (
+  <div className='flex items-center gap-2.5' {...props}>
     <Image
       src='/assets/icons/icon-less.png'
       alt='LensLend Logo'
