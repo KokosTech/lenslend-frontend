@@ -1,8 +1,8 @@
-import ActionButtons from '@/components/common/cards/components/actionButtons';
 import ListingThumbnail from '@/components/common/cards/components/listing.thumbnail';
 import Price from '@/components/common/cards/components/price';
 import { ListingResponse } from '@/types/data/listing';
 import { useTranslations } from 'next-intl';
+import ListingActionButtons from '@/wrappers/listingActionButtons';
 import Link from 'next/link';
 
 const ListingCard = ({
@@ -18,10 +18,7 @@ const ListingCard = ({
   const t = useTranslations('listing');
 
   return (
-    <Link
-      className='relative flex w-full max-w-xl gap-3 rounded-xl border border-stroke bg-primary p-2.5'
-      href={`/listing/${uuid}`}
-    >
+    <div className='relative flex w-full max-w-xl gap-3 rounded-xl border border-stroke bg-primary p-2.5 transition hover:scale-[1.01] '>
       <ListingThumbnail
         image={images ? images[0] : null}
         state={t(`state.${state}`).toLowerCase()}
@@ -37,10 +34,11 @@ const ListingCard = ({
         </div>
         <div className='flex w-full items-center justify-between gap-4'>
           <Price price={price} rental={rental} />
-          <ActionButtons uuid={uuid} userUuid={user.uuid} />
+          <ListingActionButtons uuid={uuid} userUuid={user.uuid} />
         </div>
       </div>
-    </Link>
+      <Link href={`/listing/${uuid}`} className='absolute h-full w-full' />
+    </div>
   );
 };
 
