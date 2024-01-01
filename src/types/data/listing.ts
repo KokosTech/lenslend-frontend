@@ -20,8 +20,10 @@ type ListingResponse = {
     uuid: string;
     name: string;
     username: string;
+    bio: string;
     phone?: string;
     profile_pic?: string;
+    header_pic?: string;
   };
   images?: [
     {

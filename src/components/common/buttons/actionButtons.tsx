@@ -1,5 +1,5 @@
-import MessageButton from '@/components/common/cards/components/messageButton';
-import SaveButton from '@/components/common/cards/components/client/saveButton';
+import MessageButton from '@/components/common/buttons/messageButton';
+import SaveButton from '@/components/common/buttons/saveButton';
 
 const ActionButtons = ({
   uuid,

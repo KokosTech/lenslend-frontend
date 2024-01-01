@@ -3,21 +3,21 @@
 @tailwind utilities;
 
 :root {
-  --background: #eef4f6;
-  --primary: #fefefe;
-  --stroke: #e6e6e6;
-  --text: #262626;
-  --text-secondary: #525252;
-  --text-important: #0b0b0b;
+    --background: #eef4f6;
+    --primary: #fefefe;
+    --stroke: #e6e6e6;
+    --text: #262626;
+    --text-secondary: #525252;
+    --text-important: #0b0b0b;
 }
 
 .dark {
-  --background: #232429;
-  --primary: #34363e;
-  --stroke: #41434e;
-  --text: #d9d9d9;
-  --text-secondary: #9b9b9b;
-  --text-important: #eeeeee;
+    --background: #232429;
+    --primary: #34363e;
+    --stroke: #41434e;
+    --text: #d9d9d9;
+    --text-secondary: #9b9b9b;
+    --text-important: #eeeeee;
 }
 
 /*@media (prefers-color-scheme: dark) {*/
@@ -32,22 +32,25 @@
 /*}*/
 
 ::-webkit-scrollbar {
-  width: .5rem;
+    width: .5rem;
+    height: .5rem;
 }
+
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: var(--background);
-  margin: 1rem .5rem;
+    background: transparent;
+    margin: 1rem .5rem;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: var(--primary);
-  border-radius: 2rem;
+    /*background: var(--primary);*/
+    border-radius: 2rem;
+    border: var(--stroke) solid 1px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--stroke);
+    background: var(--stroke);
 }

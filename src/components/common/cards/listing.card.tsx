@@ -1,5 +1,5 @@
 import ListingThumbnail from '@/components/common/cards/components/listing.thumbnail';
-import Price from '@/components/common/cards/components/price';
+import Price from '@/components/common/price';
 import { ListingResponse } from '@/types/data/listing';
 import { useTranslations } from 'next-intl';
 import ListingActionButtons from '@/wrappers/listingActionButtons';

@@ -1,6 +1,6 @@
 'use client';
 import { onSave } from '@/utils/saves/listing.save';
-import ActionButtons from '@/components/common/cards/components/actionButtons';
+import ActionButtons from '@/components/common/buttons/actionButtons';
 
 const ListingActionButtons = ({
   uuid,
