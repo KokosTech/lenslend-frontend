@@ -1,8 +1,9 @@
 import { ShortListingResponse } from '@/types/data/listing.type';
 import ListingCard from '@/components/common/cards/listing.card';
+import { API_URL } from '@/configs/api';
 
 const getListings = async () => {
-  const response = await fetch('http://localhost:8080/listing');
+  const response = await fetch(`${API_URL}/listing`);
   if (!response.ok) {
     throw new Error(response.statusText);
   }
