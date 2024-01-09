@@ -44,7 +44,14 @@
     },
     "hour": "hr",
     "view_profile": "View profile",
-    "get_directions": "Get directions"
+    "get_directions": "Get directions",
+    "errors": {
+      "404": {
+        "title": "404 - Listing not found",
+        "message": "The listing you're looking for doesn't exist or has been deleted.",
+        "action": "Go back"
+      }
+    }
   },
   "categories": {
     "title": "Categories"
@@ -96,6 +103,10 @@
     "updated_at": "Updated on:",
     "share": "Share",
     "copied": "Copied!"
+  },
+  "errors": {
+    "something_went_wrong": "Something went wrong, please try again",
+    "try_again": "Try again"
   },
   "currency": {
     "USD": "$",
