@@ -5,7 +5,7 @@ const config: Config = {
   theme: {
     darkMode: ['class', '[data-mode="dark"]'],
     fontFamily: {
-      inter: "'Inter', sans-serif",
+      inter: '"Inter", sans-serif',
     },
     // darkMode: 'class',
     container: {
@@ -20,6 +20,7 @@ const config: Config = {
       blue: '#06A7F5',
       green: '#28EDA3',
       stroke: 'var(--stroke)',
+      'stroke-secondary': 'var(--stroke-secondary)',
       text: 'var(--text)',
       'text-secondary': 'var(--text-secondary)',
       'text-important': 'var(--text-important)',
