@@ -10,6 +10,7 @@ import '@/styles/globals.css';
 import { NextIntlClientProvider, useMessages } from 'next-intl';
 import { unstable_setRequestLocale } from 'next-intl/server';
 import { locales } from '@/constants/locales';
+import { ModalProvider } from '@/context/ModalProvider';
 
 const inter = Inter({ subsets: ['latin', 'cyrillic-ext'] });
 
@@ -39,8 +40,12 @@ export default function LocaleLayout({
       >
         <NextIntlClientProvider messages={messages}>
           <ThemeProvider>
-            <Navigation />
-            <main className='w-full px-4 py-24 md:py-4'>{children}</main>
+            <ModalProvider>
+              <Navigation />
+              <main className='min-h-screen w-full px-4 pb-4 pt-24 md:py-4'>
+                {children}
+              </main>
+            </ModalProvider>
           </ThemeProvider>
         </NextIntlClientProvider>
       </body>

@@ -17,7 +17,7 @@ const Navigation = () => {
     duration: 300,
     easing: 'ease-in-out',
   });
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
 
   if (noNavigation.includes(pathname)) return null;
 
@@ -29,32 +29,33 @@ const Navigation = () => {
           <HorizontalDivider />
         </div>
       )}
-      {show && (
-        <nav
-          className={`
-      fixed flex h-screen w-60 overflow-y-auto bg-background text-sm font-semibold text-text`}
-        >
-          <div className='flex w-full flex-col gap-8 px-4 py-4'>
-            <LogoComponent onClick={() => setShow(!show)} />
-            {navigation.map(({ icon, text, href }) => {
-              if (!href) return <HorizontalDivider key={text} />;
+      <nav
+        className={`
+          fixed h-screen w-60 overflow-y-auto bg-background text-sm font-semibold text-text md:fixed md:left-0
+          ${show ? 'flex' : 'hidden md:flex'}
+          `}
+      >
+        <div className='flex w-full flex-col gap-8 px-4 py-8'>
+          <LogoComponent onClick={() => setShow(!show)} />
+          {navigation.map(({ icon, text, href }) => {
+            if (!href) return <HorizontalDivider key={text} />;
 
-              return (
-                <NavigationComponent
-                  key={href}
-                  icon={icon}
-                  text={text}
-                  href={href}
-                  selected={(pathname.replace(/^\/\w{2}/, '') || '/') === href}
-                />
-              );
-            })}
-          </div>
-          <div className='h-full py-4'>
-            <VerticalDivider />
-          </div>
-        </nav>
-      )}
+            return (
+              <NavigationComponent
+                key={href}
+                icon={icon}
+                text={text}
+                href={href}
+                selected={(pathname.replace(/^\/\w{2}/, '') || '/') === href}
+                close={() => setShow(false)}
+              />
+            );
+          })}
+        </div>
+        <div className='h-full py-4'>
+          <VerticalDivider />
+        </div>
+      </nav>
       <div className='md:pl-60' />
     </div>
   );
