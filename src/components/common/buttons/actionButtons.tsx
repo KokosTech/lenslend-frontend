@@ -12,7 +12,9 @@ const ActionButtons = ({
   onSave: (listingUUID: string) => Promise<boolean>;
   addClass?: string;
 }) => (
-  <div className={`${addClass} z-10 flex gap-1 overflow-hidden rounded-lg`}>
+  <div
+    className={`${addClass} z-10 flex shrink-0 gap-1 overflow-hidden rounded-lg`}
+  >
     <MessageButton uuid={userUuid} />
     <SaveButton uuid={uuid} onSave={onSave} />
   </div>

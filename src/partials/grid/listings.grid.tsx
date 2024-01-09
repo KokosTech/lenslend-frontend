@@ -1,4 +1,4 @@
-import { ListingResponse } from '@/types/data/listing';
+import { ShortListingResponse } from '@/types/data/listing.type';
 import ListingCard from '@/components/common/cards/listing.card';
 
 const getListings = async () => {
@@ -7,20 +7,19 @@ const getListings = async () => {
     throw new Error(response.statusText);
   }
 
-  const data = await response.json();
+  const data = (await response.json()) as ShortListingResponse[];
   console.log(data);
 
   return data;
 };
 
 const ListingsGrid = async ({}) => {
-  const listings: ListingResponse[] =
-    (await getListings()) as ListingResponse[];
+  const listings: ShortListingResponse[] = await getListings();
 
   return (
     // <div className='grid w-full grid-cols-1 gap-4 xl:grid-cols-2 2xl:grid-cols-3'>
     <div className='flex flex-wrap items-start justify-center gap-4'>
-      {listings.map((listing: ListingResponse) => (
+      {listings.map((listing: ShortListingResponse) => (
         <ListingCard key={listing.uuid} {...listing} />
       ))}
     </div>

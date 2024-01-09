@@ -1,20 +1,22 @@
 import ListingThumbnail from '@/components/common/cards/components/listing.thumbnail';
 import Price from '@/components/common/price';
-import { ListingResponse } from '@/types/data/listing';
+import { ShortListingResponse } from '@/types/data/listing.type';
 import { useTranslations } from 'next-intl';
 import ListingActionButtons from '@/wrappers/listingActionButtons';
 import Link from 'next/link';
+import Address from '@/components/common/address';
 
 const ListingCard = ({
   uuid,
   title,
-  location,
+  lat,
+  lng,
   price,
   state,
   rental,
   user,
   images,
-}: ListingResponse) => {
+}: ShortListingResponse) => {
   const t = useTranslations('listing');
 
   return (
@@ -29,7 +31,7 @@ const ListingCard = ({
             {title}
           </h3>
           <p className='md:text-md text-sm font-light text-text-secondary'>
-            {location}
+            <Address lat={lat} lng={lng} />
           </p>
         </div>
         <div className='flex w-full items-center justify-between gap-4'>

@@ -2,10 +2,18 @@ type ListingType = 'PRODUCT' | 'SERVICE';
 type State = 'NEW' | 'LIKE_NEW' | 'USED' | 'REFURBISHED';
 type Status = 'PUBLIC' | 'PRIVATE' | 'REMOVED' | 'DELETED';
 
-type ListingResponse = {
+type Tag = {
+  tag: {
+    uuid: string;
+    name: string;
+  };
+};
+
+type ShortListingResponse = {
   uuid: string;
   title: string;
-  location: string;
+  lat: number;
+  lng: number;
   type: ListingType;
   price?: number;
   state?: State;
@@ -37,6 +45,11 @@ type ListingResponse = {
   updated_at: string;
 };
 
+type FullListingResponse = ShortListingResponse & {
+  description: string;
+  tags?: Tag[];
+};
+
 type ListingRequest = {
   title: string;
   description: string;
@@ -50,4 +63,4 @@ type ListingRequest = {
   userId: string;
 };
 
-export type { ListingResponse, ListingRequest };
+export type { ShortListingResponse, FullListingResponse, ListingRequest, Tag };
