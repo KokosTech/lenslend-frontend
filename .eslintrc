@@ -100,12 +100,6 @@
             "after": true
           }
         ],
-        "no-confusing-arrow": [
-          "error",
-          {
-            "allowParens": true
-          }
-        ],
         "no-duplicate-imports": "error",
         "no-var": "error",
         "object-shorthand": "error",
@@ -238,7 +232,7 @@
           "error",
           "always",
           {
-            "arraysInObjects": false,
+            "arraysInObjects": true,
             "objectsInObjects": true
           }
         ],
@@ -252,12 +246,6 @@
           {
             "before": true,
             "after": true
-          }
-        ],
-        "no-confusing-arrow": [
-          "error",
-          {
-            "allowParens": true
           }
         ],
         "no-duplicate-imports": "error",

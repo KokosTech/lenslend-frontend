@@ -18,6 +18,7 @@
       "USED": "Used",
       "REFURBISHED": "Refurbished"
     },
+    "negotiable": "Negotiable",
     "modal": {
       "saved": {
         "title": "Saved",
@@ -26,10 +27,49 @@
         "close": "Close"
       }
     },
-    "hour": "hr"
+    "comments": {
+      "action": "Comment",
+      "placeholder": "Add a comment...",
+      "plural": "Comments",
+      "singular": "Comment",
+      "none": "No comments yet...",
+      "errorLoading": "Problem loading comments, please try again",
+      "tryAgain": "Try again",
+      "sort": {
+        "newest": "Newest",
+        "oldest": "Oldest",
+        "popular": "Popular"
+      },
+      "sortBy": "Sort by"
+    },
+    "hour": "hr",
+    "view_profile": "View profile",
+    "get_directions": "Get directions"
   },
   "categories": {
     "title": "Categories"
+  },
+    "place": {
+      "visitors": {
+        "title": "People who've been here",
+        "view_all": "View all"
+      },
+      "reviews": {
+        "title": "Reviews",
+        "none": "No reviews yet...",
+        "first": "Be the first one to add a review!",
+        "action": "Post",
+        "placeholder": "Add a review...",
+        "read_all": "Read all",
+        "show_more": "show more",
+        "show_less": "show less"
+      },
+      "buttons": {
+        "edit": "Edit",
+        "report": "Report",
+        "open_map": "Open in Google Maps"
+      },
+      "owner": "Owner"
   },
   "settings": {
     "title": "Settings",
@@ -50,5 +90,20 @@
       "already_have_account": "Already have an account?",
       "login": "Log In"
     }
+  },
+  "common": {
+    "created_at": "Created on:",
+    "updated_at": "Updated on:",
+    "share": "Share",
+    "copied": "Copied!"
+  },
+  "currency": {
+    "USD": "$",
+    "EUR": "€",
+    "GBP": "£",
+    "JPY": "¥",
+    "RUB": "₽",
+    "UAH": "₴",
+    "BGN": "BGN"
   }
 }

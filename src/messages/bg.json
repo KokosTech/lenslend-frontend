@@ -18,6 +18,7 @@
       "USED": "Използвано",
       "REFURBISHED": "Обновено"
     },
+    "negotiable": "По договаряне",
     "modal": {
       "saved": {
         "title": "Добавено в любими",
@@ -26,14 +27,68 @@
         "close": "Затвори"
       }
     },
-    "hour": "ч."
+    "comments": {
+      "action": "Коментирай",
+      "placeholder": "Напиши коментар...",
+      "plural": "Коментара",
+      "singular": "Коментар",
+      "none": "Няма коментари",
+      "errorLoading": "Проблем при зареждане на коментарите, моля опитайте отново",
+      "tryAgain": "Опитай пак",
+      "sort": {
+        "newest": "Най-нови",
+        "oldest": "Най-стари",
+        "popular": "Популярни"
+      },
+      "sortBy": "Сортирай по"
+    },
+    "hour": "ч.",
+    "view_profile": "Виж профила",
+    "get_directions": "Упътвания"
   },
   "categories": {
     "title": "Категории"
+  },
+  "place": {
+    "visitors": {
+      "title": "Хора, които са били тук",
+      "view_all": "Виж всички"
+    },
+    "reviews": {
+      "title": "Ревюта",
+      "none": "Все още няма ревюта",
+      "first": "Напиши първото ревю",
+      "action": "Публикувай",
+      "placeholder": "Какво мислиш за това място...",
+      "read_all": "Прочети всички",
+      "show_more": "покажи още",
+      "show_less": "покажи по-малко"
+    },
+    "buttons": {
+      "edit": "Редактирай",
+      "report": "Докладвай",
+      "open_map": "Отвори в Google Maps"
+    },
+    "owner": "Собственик"
   },
   "settings": {
     "title": "Настройки",
     "change_language": "Смени езика",
     "change_theme": "Смени темата"
+  },
+  "common": {
+    "created_at": "Създадено на:",
+    "updated_at": "Обновено на:",
+    "share": "Сподели",
+    "copied": "Копирано!"
+  },
+  "currency": {
+    "USD": "$",
+    "EUR": "€",
+    "GBP": "£",
+    "JPY": "¥",
+    "RUB": "₽",
+    "UAH": "₴",
+    "BGN": "лв."
   }
 }
