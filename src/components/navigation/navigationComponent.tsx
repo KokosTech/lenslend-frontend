@@ -8,11 +8,13 @@ const NavigationComponent = ({
   text,
   href,
   selected,
+  close,
 }: {
   icon: ReactNode;
   text: string;
   href: string;
   selected: boolean;
+  close: () => void;
 }) => {
   const t = useTranslations('navigation');
 
@@ -24,6 +26,7 @@ const NavigationComponent = ({
           ? 'border-stroke bg-primary'
           : 'border-transparent bg-transparent'
       } transition-colors duration-200 ease-in-out hover:border-stroke hover:bg-primary`}
+      onClick={close}
     >
       {icon}
       <span>{t(text)}</span>
