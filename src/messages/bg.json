@@ -9,7 +9,9 @@
     "my_profile": "Моят профил",
     "settings": "Настройки",
     "logout": "Изход",
-    "create": "Създай"
+    "create": "Създай",
+    "login": "Вход",
+    "signup": "Регистрация"
   },
   "listing": {
     "state": {

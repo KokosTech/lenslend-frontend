@@ -9,7 +9,9 @@
     "my_profile": "My Profile",
     "settings": "Settings",
     "logout": "Log out",
-    "create": "Create"
+    "create": "Create",
+    "login": "Log in",
+    "signup": "Sign up"
   },
   "listing": {
     "state": {
