@@ -8,8 +8,10 @@ import NavigationComponent from '@/components/navigation/navigationComponent';
 import VerticalDivider from '@/components/verticalDivider';
 
 import { navigation, noNavigation } from '@/constants/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { getAuth } from '@/actions/auth';
+import dynamic from 'next/dynamic';
 
 const Navigation = () => {
   const pathname = usePathname();
@@ -18,6 +20,20 @@ const Navigation = () => {
     easing: 'ease-in-out',
   });
   const [show, setShow] = useState(false);
+  const [isAuth, setIsAuth] = useState(false);
+
+  useEffect(() => {
+    getAuth()
+      .then(({ accessToken, refreshToken }) => {
+        console.log('A', accessToken, 'R', refreshToken);
+        if (!accessToken || !refreshToken) {
+          setIsAuth(false);
+        } else {
+          setIsAuth(true);
+        }
+      })
+      .catch(() => setIsAuth(false));
+  }, [getAuth()]);
 
   if (noNavigation.includes(pathname)) return null;
 
@@ -37,7 +53,8 @@ const Navigation = () => {
       >
         <div className='flex w-full flex-col gap-8 px-4 py-8'>
           <LogoComponent onClick={() => setShow(!show)} />
-          {navigation.map(({ icon, text, href }) => {
+          {navigation.map(({ icon, text, href, auth }) => {
+            if ((auth && !isAuth) || (auth === false && isAuth)) return null;
             if (!href) return <HorizontalDivider key={text} />;
 
             return (
@@ -61,4 +78,6 @@ const Navigation = () => {
   );
 };
 
-export default Navigation;
+export default dynamic(() => Promise.resolve(Navigation), {
+  ssr: false,
+});

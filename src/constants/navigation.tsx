@@ -1,6 +1,7 @@
 import {
   IconBrandSafari,
   IconCategory,
+  IconLogin,
   IconLogout,
   IconMap,
   IconMessage2,
@@ -71,27 +72,44 @@ export const navigation = [
     href: null,
   },
   {
+    icon: <IconLogin className='h-6 w-6' />,
+    text: 'login',
+    href: '/auth/login',
+    auth: false,
+  },
+  {
+    icon: <IconSquareRoundedPlus className='h-6 w-6' />,
+    text: 'signup',
+    href: '/auth/signup',
+    auth: false,
+  },
+  {
     icon: <IconUserCircle className='h-6 w-6' />,
     text: 'my_profile',
-    href: '/user/123',
+    href: '/user/profile',
+    auth: true,
   },
   {
     icon: <IconSettings className='h-6 w-6' />,
     text: 'settings',
     href: '/settings',
+    auth: true,
   },
   {
     icon: <IconLogout className='h-6 w-6' />,
     text: 'logout',
-    href: '/logout',
+    href: '/auth/logout',
+    auth: true,
   },
   {
     text: 'Divider 3',
     href: null,
+    auth: true,
   },
   {
     icon: <IconSquareRoundedPlus className='h-6 w-6' />,
     text: 'create',
     href: '/create',
+    auth: true,
   },
 ];

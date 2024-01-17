@@ -13,6 +13,12 @@
         "plugin:@typescript-eslint/recommended-requiring-type-checking"
       ],
       "rules": {
+        "@typescript-eslint/no-misused-promises": [
+          "error",
+          {
+            "checksVoidReturn": false
+          }
+        ],
         "react/react-in-jsx-scope": "off",
         "indent": ["error", 2],
         "quotes": ["error", "single"],

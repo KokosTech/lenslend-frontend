@@ -18,6 +18,23 @@ const NavigationComponent = ({
 }) => {
   const t = useTranslations('navigation');
 
+  if (href.includes('logout')) {
+    return (
+      <a
+        href={href}
+        className={`flex items-center gap-2.5 rounded-lg border px-2.5 py-3.5 ${
+          selected
+            ? 'border-stroke bg-primary'
+            : 'border-transparent bg-transparent'
+        } transition-colors duration-200 ease-in-out hover:border-stroke hover:bg-primary`}
+        onClick={close}
+      >
+        {icon}
+        <span>{t(text)}</span>
+      </a>
+    );
+  }
+
   return (
     <Link
       href={href}
