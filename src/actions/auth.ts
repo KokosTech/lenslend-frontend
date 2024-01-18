@@ -1,19 +1,24 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use server';
 
+import { revalidateTag, unstable_noStore as noStore } from 'next/cache';
+
 import { axiosInstance } from '@/configs/axios';
 import { AxiosError } from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import { cookies } from 'next/headers';
-import { revalidateTag } from 'next/cache';
 import { redirect } from 'next/navigation';
 
 const login = async (email: string, password: string) => {
+  noStore();
+
   try {
     const res = await axiosInstance.post('/auth/login', {
       email,
       password,
     });
+
+    console.log('AXIOS URL: ', res.request);
 
     console.log('====================================');
     console.log('LOGIN', res);
@@ -45,6 +50,8 @@ const login = async (email: string, password: string) => {
 };
 
 const loginAction = async (formData: FormData) => {
+  noStore();
+
   const email = formData.get('email') as string;
   const password = formData.get('password') as string;
 
