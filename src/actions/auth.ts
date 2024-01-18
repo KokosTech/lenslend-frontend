@@ -8,30 +8,49 @@ import { AxiosError } from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+import { API_URL } from '@/configs/api';
 
 const login = async (email: string, password: string) => {
   noStore();
 
   try {
-    const res = await axiosInstance.post('/auth/login', {
-      email,
-      password,
+    const res = await fetch(`${API_URL}/auth/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
     });
 
-    console.log('AXIOS URL: ', res.request);
-
     console.log('====================================');
-    console.log('LOGIN', res);
-    console.log('====================================');
+    console.log('LOGIN', res.url);
 
     if (res.status === 201) {
-      const { access_token, refresh_token } = res.data as {
+      const { access_token, refresh_token } = (await res.json()) as {
         access_token: string;
         refresh_token: string;
       };
 
       setTokens(access_token, refresh_token);
     }
+    //
+    // console.log('AXIOS URL: ', res.request);
+    //
+    // console.log('====================================');
+    // console.log('LOGIN', res);
+    // console.log('====================================');
+    //
+    // if (res.status === 201) {
+    //   const { access_token, refresh_token } = res.data as {
+    //     access_token: string;
+    //     refresh_token: string;
+    //   };
+    //
+    //   setTokens(access_token, refresh_token);
+    // }
   } catch (err) {
     if (err instanceof AxiosError) {
       if (err.response?.status === 401) {

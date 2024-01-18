@@ -1,34 +1,23 @@
 'use client';
 
-import { FormEvent, useState } from 'react';
+import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 
 import TextareaAutosize from 'react-textarea-autosize';
+import postComment from '@/actions/comment';
 
 const PublishComment = ({ listingId }: { listingId: string }) => {
   const [comment, setComment] = useState('');
+  const postCommentAction = postComment.bind(null, listingId);
 
   const t = useTranslations('listing.comments');
-
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    try {
-      // await axiosInstance.post(`/listings/${listingId}/comments`, {
-      //   content: comment,
-      // });
-      console.log(comment, listingId);
-      setComment('');
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   return (
     <div className='w-full'>
       <div className='flex gap-4 rounded-xl border-2 border-stroke bg-primary text-justify'>
         <form
           className='flex w-full items-center gap-4 px-8 py-4'
-          onSubmit={onSubmit}
+          action={postCommentAction}
         >
           <TextareaAutosize
             name='comment'

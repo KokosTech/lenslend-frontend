@@ -3,6 +3,7 @@ import { User } from '@/types/data/place.type';
 import React from 'react';
 import { getTranslations } from 'next-intl/server';
 import Comment from '@/partials/listings/listing/comment';
+import { API_URL } from '@/configs/api';
 
 type Comment = {
   id: string;
@@ -72,9 +73,11 @@ const Comments = async ({ params: { uuid } }: { params: { uuid: string } }) => {
 };
 
 const getComments = async (listingUUID: string) => {
-  const res = await fetch(
-    `${process.env.API_URL}/listing/${listingUUID}/comment`,
-  );
+  const res = await fetch(`${API_URL}/listing/${listingUUID}/comment`, {
+    next: {
+      tags: [`/listing/${listingUUID}/comment`],
+    },
+  });
 
   if (!res.ok) {
     throw new Error(`Could not fetch comments for listing ${listingUUID}`);
