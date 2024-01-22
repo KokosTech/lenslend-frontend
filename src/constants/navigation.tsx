@@ -108,7 +108,7 @@ export const navigation = [
   },
   {
     icon: <IconSquareRoundedPlus className='h-6 w-6' />,
-    text: 'create',
+    text: 'name',
     href: '/create',
     auth: true,
   },

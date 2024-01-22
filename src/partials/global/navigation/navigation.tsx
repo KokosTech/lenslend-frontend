@@ -63,6 +63,7 @@ const Navigation = () => {
                 icon={icon}
                 text={text}
                 href={href}
+                auth={auth}
                 selected={(pathname.replace(/^\/\w{2}/, '') || '/') === href}
                 close={() => setShow(false)}
               />

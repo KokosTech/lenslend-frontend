@@ -2,6 +2,7 @@ import Link from 'next/link';
 
 import { ReactNode } from 'react';
 import { useTranslations } from 'next-intl';
+import CreateButton from '@/components/common/buttons/createButton';
 
 const NavigationComponent = ({
   icon,
@@ -9,16 +10,18 @@ const NavigationComponent = ({
   href,
   selected,
   close,
+  auth,
 }: {
   icon: ReactNode;
   text: string;
   href: string;
   selected: boolean;
   close: () => void;
+  auth?: boolean;
 }) => {
   const t = useTranslations('navigation');
 
-  if (href.includes('logout')) {
+  if (href.includes('logout') || auth === false) {
     return (
       <a
         href={href}
@@ -32,6 +35,12 @@ const NavigationComponent = ({
         {icon}
         <span>{t(text)}</span>
       </a>
+    );
+  }
+
+  if (href.includes('create')) {
+    return (
+      <CreateButton icon={icon} text={text} selected={selected} close={close} />
     );
   }
 

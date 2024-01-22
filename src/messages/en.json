@@ -9,7 +9,12 @@
     "my_profile": "My Profile",
     "settings": "Settings",
     "logout": "Log out",
-    "create": "Create",
+    "create": {
+      "name": "Create",
+      "product": "Product",
+      "service": "Service",
+      "place": "Place"
+    },
     "login": "Log in",
     "signup": "Sign up"
   },

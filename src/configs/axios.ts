@@ -7,5 +7,5 @@ export const axiosInstance: AxiosInstance = axios.create({
   headers: {
     cookie: typeof window === 'undefined' ? undefined : document.cookie,
   },
-  withCredentials: true,
+  // fix cors
 });
