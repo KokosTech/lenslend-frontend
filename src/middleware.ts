@@ -23,6 +23,13 @@ export default function middleware(request: NextRequest) {
     return response;
   }
 
+  if (request.url.includes('/login')) {
+    const response = NextResponse.redirect(new URL('/', request.url));
+    if (request.cookies.get('access_token')) {
+      return response;
+    }
+  }
+
   return intl(request);
 }
 
