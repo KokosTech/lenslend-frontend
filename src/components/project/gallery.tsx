@@ -89,13 +89,11 @@ const GalleryModal = ({
 
     document.addEventListener('keydown', handleKeyDown);
     document.addEventListener('wheel', handleWheel);
-    // modalRef.current?.addEventListener('touchstart', handleTouch);
     document.addEventListener('click', handleOutsideClick);
 
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
       document.removeEventListener('wheel', handleWheel);
-      // modalRef.current?.removeEventListener('touchstart', handleTouch);
       document.removeEventListener('click', handleOutsideClick);
     };
   }, [closeModal, modalRef, next, prev]);
