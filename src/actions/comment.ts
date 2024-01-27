@@ -15,9 +15,9 @@ export default async function postComment(
     throw new Error('Invalid form data');
   }
 
-  const { accessToken } = await getAuth();
+  const auth = await getAuth();
 
-  if (!accessToken) {
+  if (!auth) {
     throw new Error('Access token is missing');
   }
 
@@ -30,7 +30,7 @@ export default async function postComment(
       },
       {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: auth,
         },
       },
     );

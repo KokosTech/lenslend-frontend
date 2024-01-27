@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import createMiddleware from 'next-intl/middleware';
 import { locales } from '@/constants/locales';
+import { logout } from '@/actions/auth';
 
 const intl = createMiddleware({
   // A list of all locales that are supported
@@ -10,15 +11,17 @@ const intl = createMiddleware({
   defaultLocale: 'en',
 });
 
-export default function middleware(request: NextRequest) {
-  if (request.url.includes('/logout')) {
-    console.log('====================================');
-    console.log('LOGOUT');
-    console.log('====================================');
-    const response = NextResponse.redirect(new URL('/', request.url));
+export default async function middleware(request: NextRequest) {
+  if (request.url.includes('/logout') && !request.url.includes('failed')) {
+    let response = NextResponse.redirect(new URL('/', request.url));
 
-    response.cookies.delete('access_token');
-    response.cookies.delete('refresh_token');
+    try {
+      await logout(response);
+    } catch (err) {
+      response = NextResponse.redirect(
+        new URL('/auth/logout-failed', request.url),
+      );
+    }
 
     return response;
   }

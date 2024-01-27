@@ -10,7 +10,6 @@ const NavigationComponent = ({
   href,
   selected,
   close,
-  auth,
 }: {
   icon: ReactNode;
   text: string;
@@ -21,7 +20,7 @@ const NavigationComponent = ({
 }) => {
   const t = useTranslations('navigation');
 
-  if (href.includes('logout') || auth === false) {
+  if (href.includes('logout')) {
     return (
       <a
         href={href}

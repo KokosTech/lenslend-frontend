@@ -1,146 +1,208 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use server';
 
-import { revalidateTag, unstable_noStore as noStore } from 'next/cache';
-
-import { axiosInstance } from '@/configs/axios';
-import { AxiosError } from 'axios';
 import { jwtDecode } from 'jwt-decode';
+import { revalidateTag, unstable_noStore as noStore } from 'next/cache';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { API_URL } from '@/configs/api';
 
-const login = async (email: string, password: string) => {
+import { API_URL } from '@/configs/api';
+import { z } from 'zod';
+import { NextResponse } from 'next/server';
+import { SignupFormState } from '@/types/forms/signup.form';
+
+type AuthResponse = {
+  access_token: string;
+  refresh_token: string;
+};
+
+class FormError extends Error {
+  constructor(public message: string) {
+    super();
+  }
+}
+
+const loginSchema = z.object({
+  email: z.string().email({
+    message: 'errors.invalid_email',
+  }),
+  password: z.string().min(8, {
+    message: 'errors.min_length',
+  }),
+});
+
+const login = async (email: string, password: string): Promise<boolean> => {
   noStore();
 
+  const res = await fetch(`${API_URL}/auth/login`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      email,
+      password,
+    }),
+  });
+
+  console.log(res.status);
+
+  if (res.status === 201) {
+    const { access_token, refresh_token } = (await res.json()) as AuthResponse;
+
+    setTokens(access_token, refresh_token);
+    return true;
+  }
+
+  throw new FormError('errors.invalid_credentials');
+};
+
+const loginAction = async (prevState: unknown, formData: FormData) => {
+  noStore();
+
+  let logged = false;
+
+  const validatedData = loginSchema.safeParse({
+    email: formData.get('email'),
+    password: formData.get('password'),
+  });
+
+  if (!validatedData.success) {
+    console.log('invalid data');
+    console.log(validatedData.error);
+    return {
+      messages: validatedData.error.issues.map((issue) => issue.message),
+    };
+  }
+
+  const { email, password } = validatedData.data;
+
   try {
-    const res = await fetch(`${API_URL}/auth/login`, {
+    console.log('login');
+    logged = await login(email, password);
+    revalidateTag('user');
+  } catch (err) {
+    if (err instanceof FormError) {
+      return {
+        messages: [err.message],
+      };
+    }
+
+    return {
+      messages: ['errors.500'],
+    };
+  }
+
+  if (logged) redirect('/');
+};
+
+const signup = async (
+  data: SignupFormState,
+  prevState: unknown,
+  formData: FormData,
+) => {
+  console.log('submitting');
+
+  try {
+    const res = await fetch(`${API_URL}/auth/signup`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        email,
-        password,
-      }),
+      body: JSON.stringify(data),
     });
 
-    console.log('====================================');
-    console.log('LOGIN', res.url);
+    if (res.ok) {
+      const { access_token, refresh_token } =
+        (await res.json()) as AuthResponse;
 
-    if (res.status === 201) {
-      const { access_token, refresh_token } = (await res.json()) as {
-        access_token: string;
-        refresh_token: string;
-      };
+      console.log(access_token, refresh_token);
 
       setTokens(access_token, refresh_token);
+      return true;
     }
-    //
-    // console.log('AXIOS URL: ', res.request);
-    //
-    // console.log('====================================');
-    // console.log('LOGIN', res);
-    // console.log('====================================');
-    //
-    // if (res.status === 201) {
-    //   const { access_token, refresh_token } = res.data as {
-    //     access_token: string;
-    //     refresh_token: string;
-    //   };
-    //
-    //   setTokens(access_token, refresh_token);
-    // }
-  } catch (err) {
-    if (err instanceof AxiosError) {
-      if (err.response?.status === 401) {
-        console.log('====================================');
-        console.log('LOGIN ERROR', err.response.data);
-        console.log('====================================');
-        return {
-          errors: 'Email or password is incorrect',
-        };
-      }
-    }
-    console.log('====================================');
-    console.log('LOGIN ERROR', err);
-    console.log('====================================');
+
+    console.log(res.status);
+    console.log(res.json());
+
+    return {
+      messages: ['errors.500'],
+    };
+  } catch (e) {
+    console.log(e);
+    return {
+      messages: ['errors.500'],
+    };
   }
-};
-
-const loginAction = async (formData: FormData) => {
-  noStore();
-
-  const email = formData.get('email') as string;
-  const password = formData.get('password') as string;
-
-  console.log('ACTION', email, password);
-
-  if (!email || !password) {
-    throw new Error('Invalid form data');
-  }
-
-  try {
-    await login(email, password);
-    revalidateTag('user');
-  } catch (err) {
-    throw err;
-  }
-
-  redirect('/');
 };
 
 export async function refreshTokens() {
+  noStore();
+
   const cookieStore = cookies();
   const refreshToken = cookieStore.get('refresh_token');
 
   if (!refreshToken) {
-    return;
+    throw new Error('No refresh token found');
   }
 
-  try {
-    const response = await axiosInstance.get('/auth/refresh', {
-      headers: {
-        Authorization: `Bearer ${refreshToken.value}`,
-      },
-    });
+  const response = await fetch(`${API_URL}/auth/refresh`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${refreshToken.value}`,
+      'Content-Type': 'application/json',
+    },
+  });
 
-    const { access_token, refresh_token } = response.data as {
-      access_token: string;
-      refresh_token: string;
-    };
-
-    setTokens(access_token, refresh_token);
-  } catch (err) {
-    console.log('====================================');
-    console.log('REFRESH ERROR', err);
-    console.log('====================================');
+  if (response.status !== 200) {
+    throw new Error('Failed to refresh tokens');
   }
+
+  const data = (await response.json()) as {
+    access_token: string;
+    refresh_token: string;
+  };
+
+  const { access_token, refresh_token } = data;
+
+  setTokens(access_token, refresh_token);
 }
 
-// eslint-disable-next-line @typescript-eslint/require-await
-async function getAuth() {
-  // Get access token from cookies
-  const cookieStore = cookies();
-  const accessToken = cookieStore.get('access_token');
-  const refreshToken = cookieStore.get('refresh_token');
+async function isAuth() {
+  noStore();
 
-  return {
-    accessToken: accessToken?.value || null,
-    refreshToken: refreshToken?.value || null,
-  };
-  //
-  // // Refresh existing access and refresh tokens if the access token is expired
-  // if (!accessToken) {
-  //   await refreshTokens();
-  //   accessToken = cookieStore.get('access_token');
-  // }
-  //
-  // if (!accessToken) {
-  //   return undefined;
-  // }
-  //
-  // return `Bearer ${accessToken.value}`;
+  const cookieStore = cookies();
+  let accessToken = cookieStore.get('access_token');
+
+  if (!accessToken) {
+    try {
+      await refreshTokens();
+      accessToken = cookieStore.get('access_token');
+    } catch (err) {
+      return false;
+    }
+  }
+
+  return accessToken !== undefined;
+}
+
+async function getAuth() {
+  noStore();
+
+  const cookieStore = cookies();
+  const auth = await isAuth();
+
+  if (!auth) {
+    return null;
+  }
+
+  const accessToken = cookieStore.get('access_token');
+
+  if (!accessToken) {
+    return null;
+  }
+
+  return `Bearer ${accessToken.value}`;
 }
 
 const setTokens = (accessToken: string, refreshToken: string) => {
@@ -155,53 +217,56 @@ const setTokens = (accessToken: string, refreshToken: string) => {
   cookieStore.set('refresh_token', refreshToken, {
     expires: refreshExpiry ? refreshExpiry * 1000 : undefined,
   });
-
-  cookieStore.getAll().forEach((cookie) => {
-    console.log('====================================');
-    console.log('COOKIE', cookie);
-    console.log('====================================');
-  });
-
-  console.log('====================================');
-  console.log('SET TOKENS', accessToken, refreshToken);
 };
 
-async function logout() {
+const getTokens = () => {
   const cookieStore = cookies();
   const accessToken = cookieStore.get('access_token');
   const refreshToken = cookieStore.get('refresh_token');
 
-  if (!refreshToken || !accessToken) {
-    return;
-  }
+  return {
+    accessToken: accessToken?.value ?? undefined,
+    refreshToken: refreshToken?.value ?? undefined,
+  };
+};
 
-  console.log('====================================');
-  console.log('LOGOUT', refreshToken);
-  console.log('====================================');
-
-  try {
-    const res = await axiosInstance.post('/auth/logout', {
-      accessToken: accessToken.value,
-      refreshToken: refreshToken.value,
-    });
-
-    if (res.status === 200) {
-      cookieStore.delete('access_token');
-      cookieStore.delete('refresh_token');
-    }
-  } catch (err) {
-    if (err instanceof AxiosError) {
-      if (err.response?.status === 401 || err.response?.status === 403) {
-      }
-    }
-    console.log('====================================');
-    console.log('LOGOUT ERROR', err);
-    console.log('====================================');
-  }
+const deleteTokens = () => {
+  const cookieStore = cookies();
 
   cookieStore.delete('access_token');
   cookieStore.delete('refresh_token');
-  revalidateTag('user');
+};
+
+async function logout(response: NextResponse) {
+  noStore();
+
+  const { accessToken, refreshToken } = getTokens();
+
+  if (!refreshToken || !accessToken) {
+    response.cookies.delete('access_token');
+    response.cookies.delete('refresh_token');
+    // revalidateTag('user');
+    return;
+  }
+
+  const res = await fetch(`${API_URL}/auth/logout`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${refreshToken}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      accessToken,
+      refreshToken,
+    }),
+  });
+
+  if (res.status === 200 || res.status === 201 || res.status === 401) {
+    response.cookies.delete('access_token');
+    response.cookies.delete('refresh_token');
+
+    // revalidateTag('user');
+  }
 }
 
-export { login, loginAction, getAuth, logout };
+export { getAuth, signup, loginAction, logout, isAuth };

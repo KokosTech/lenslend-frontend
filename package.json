@@ -32,7 +32,8 @@
     "react-dom": "^18",
     "react-geocode": "^1.0.0-alpha.1",
     "react-textarea-autosize": "^8.5.3",
-    "swr": "^2.2.4"
+    "swr": "^2.2.4",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/negotiator": "^0.6.3",

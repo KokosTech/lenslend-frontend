@@ -1,6 +1,12 @@
 'use client';
 
+import dynamic from 'next/dynamic';
+
+import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
+import { useAutoAnimate } from '@formkit/auto-animate/react';
+
+import { isAuth as isAuthF } from '@/actions/auth';
 
 import HorizontalDivider from '@/components/horizontalDivider';
 import LogoComponent from '@/components/navigation/logoComponent';
@@ -8,10 +14,6 @@ import NavigationComponent from '@/components/navigation/navigationComponent';
 import VerticalDivider from '@/components/verticalDivider';
 
 import { navigation, noNavigation } from '@/constants/navigation';
-import { useEffect, useState } from 'react';
-import { useAutoAnimate } from '@formkit/auto-animate/react';
-import { getAuth } from '@/actions/auth';
-import dynamic from 'next/dynamic';
 
 const Navigation = () => {
   const pathname = usePathname();
@@ -19,21 +21,15 @@ const Navigation = () => {
     duration: 300,
     easing: 'ease-in-out',
   });
+
   const [show, setShow] = useState(false);
   const [isAuth, setIsAuth] = useState(false);
 
   useEffect(() => {
-    getAuth()
-      .then(({ accessToken, refreshToken }) => {
-        console.log('A', accessToken, 'R', refreshToken);
-        if (!accessToken || !refreshToken) {
-          setIsAuth(false);
-        } else {
-          setIsAuth(true);
-        }
-      })
+    isAuthF()
+      .then((auth) => setIsAuth(auth))
       .catch(() => setIsAuth(false));
-  }, [getAuth()]);
+  }, [pathname]);
 
   if (noNavigation.includes(pathname)) return null;
 
