@@ -1,34 +1,23 @@
-import { getAuth, loginAction } from '@/actions/auth';
-import { redirect } from 'next/navigation';
+import { unstable_setRequestLocale } from 'next-intl/server';
+import { useTranslations } from 'next-intl';
+import LoginForm from '@/partials/login/form';
+import AuthWrapper from '@/wrappers/auth.wrapper';
 
-const LoginPage = async () => {
-  // const t = useTranslations('auth.login');
-
-  const auth = await getAuth();
-
-  if (auth.accessToken) redirect('/');
+const LoginPage = ({ params: { locale } }: { params: { locale: string } }) => {
+  unstable_setRequestLocale(locale);
+  const t = useTranslations('auth.login');
 
   return (
-    <div>
-      <h1>Login page</h1>
-      <form action={loginAction}>
-        <label htmlFor='email'>Email</label>
-        <input
-          id='email'
-          placeholder='Enter your email'
-          type='email'
-          name='email'
-        />
-        <label htmlFor='password'>Password</label>
-        <input
-          id='password'
-          placeholder='Enter your password'
-          type='password'
-          name='password'
-        />
-        <button type='submit'>Login</button>
-      </form>
-    </div>
+    <AuthWrapper
+      title={t('title')}
+      alt={{
+        href: '/auth/signup',
+        text: t('new_here'),
+        action: t('signup'),
+      }}
+    >
+      <LoginForm key='login' />
+    </AuthWrapper>
   );
 };
 export default LoginPage;
