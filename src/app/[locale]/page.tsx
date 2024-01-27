@@ -1,4 +1,3 @@
-import { useLocale } from 'next-intl';
 import { unstable_setRequestLocale } from 'next-intl/server';
 import ListingsGrid from '@/partials/grid/listings.grid';
 import { Suspense } from 'react';
@@ -7,8 +6,7 @@ import Link from 'next/link';
 import { IconChevronRight } from '@tabler/icons-react';
 import Search from '@/partials/common/seatch';
 
-const Home = () => {
-  const locale = useLocale();
+const Home = ({ params: { locale } }: { params: { locale: string } }) => {
   unstable_setRequestLocale(locale);
 
   console.log('Hello from src/app/page.tsx');

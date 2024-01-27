@@ -1,7 +1,11 @@
 import { IconSortAscending } from '@tabler/icons-react';
 import { User } from '@/types/data/place.type';
 import React from 'react';
-import { getTranslations } from 'next-intl/server';
+import {
+  getLocale,
+  getTranslations,
+  unstable_setRequestLocale,
+} from 'next-intl/server';
 import Comment from '@/partials/listings/listing/comment';
 import { API_URL } from '@/configs/api';
 
@@ -14,6 +18,9 @@ type Comment = {
 };
 
 const Comments = async ({ params: { uuid } }: { params: { uuid: string } }) => {
+  const locale = await getLocale();
+  unstable_setRequestLocale(locale);
+
   const comments = await getComments(uuid);
   const t = await getTranslations('listing.comments');
 

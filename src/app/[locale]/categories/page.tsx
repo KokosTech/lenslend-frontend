@@ -1,8 +1,11 @@
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { unstable_setRequestLocale } from 'next-intl/server';
 
-const CategoriesPage = () => {
-  const locale = useLocale();
+const CategoriesPage = ({
+  params: { locale },
+}: {
+  params: { locale: string };
+}) => {
   unstable_setRequestLocale(locale);
 
   const t = useTranslations('categories');

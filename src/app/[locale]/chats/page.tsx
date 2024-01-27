@@ -1,8 +1,6 @@
-import { useLocale } from 'next-intl';
 import { unstable_setRequestLocale } from 'next-intl/server';
 
-const ChatsPage = () => {
-  const locale = useLocale();
+const ChatsPage = ({ params: { locale } }: { params: { locale: string } }) => {
   unstable_setRequestLocale(locale);
 
   return (

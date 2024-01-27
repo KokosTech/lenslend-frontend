@@ -1,4 +1,3 @@
-import { useLocale } from 'next-intl';
 import { unstable_setRequestLocale } from 'next-intl/server';
 import Search from '@/partials/common/seatch';
 import { API_URL } from '@/configs/api';
@@ -23,13 +22,14 @@ const getSearch = async (search: string, category?: string) => {
 
 const SearchPage = async ({
   searchParams: { search, category },
+  params: { locale },
 }: {
   searchParams: {
     search: string;
     category?: string;
   };
+  params: { locale: string };
 }) => {
-  const locale = useLocale();
   unstable_setRequestLocale(locale);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
