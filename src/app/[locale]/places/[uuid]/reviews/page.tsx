@@ -2,6 +2,7 @@ import { API_URL } from '@/configs/api';
 import { Review as ReviewType } from '@/types/data/place.type';
 import { ReviewServer } from '@/components/place/review';
 import BackButton from '@/components/common/buttons/backButton';
+import { unstable_setRequestLocale } from 'next-intl/server';
 
 const getReviews = async (uuid: string) => {
   const response = await fetch(`${API_URL}/place/${uuid}/reviews`, {
@@ -20,10 +21,12 @@ const getReviews = async (uuid: string) => {
 };
 
 const ReviewsPage = async ({
-  params: { uuid },
+  params: { uuid, locale },
 }: {
-  params: { uuid: string };
+  params: { uuid: string; locale: string };
 }) => {
+  unstable_setRequestLocale(locale);
+
   console.log('REVIEWS', uuid);
   const reviews: ReviewType[] | null = await getReviews(uuid);
 

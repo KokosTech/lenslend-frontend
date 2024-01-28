@@ -39,8 +39,8 @@ const ContactMap = ({ lat, lng }: { lat: number; lng: number }) => {
           >
             <Marker
               position={{
-                lat: 42.6977,
-                lng: 23.3219,
+                lat,
+                lng,
               }}
             />
           </Map>

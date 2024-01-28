@@ -4,7 +4,7 @@ import React from 'react';
 const logoComponent = (props: React.HTMLAttributes<HTMLDivElement>) => (
   <div className='flex items-center gap-2.5' {...props}>
     <Image
-      src='/assets/icons/icon-less.png'
+      src='/assets/icons/lenslend.png'
       alt='LensLend Logo'
       width={52}
       height={52}

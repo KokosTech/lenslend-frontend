@@ -19,6 +19,10 @@ const config: Config = {
       primary: 'var(--primary)',
       blue: '#06A7F5',
       green: '#28EDA3',
+      error: {
+        primary: '#d92017',
+        secondary: '#b20500',
+      },
       stroke: 'var(--stroke)',
       'stroke-secondary': 'var(--stroke-secondary)',
       text: 'var(--text)',

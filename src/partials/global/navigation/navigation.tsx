@@ -1,6 +1,12 @@
 'use client';
 
+import dynamic from 'next/dynamic';
+
+import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
+import { useAutoAnimate } from '@formkit/auto-animate/react';
+
+import { isAuth as isAuthF } from '@/actions/auth';
 
 import HorizontalDivider from '@/components/horizontalDivider';
 import LogoComponent from '@/components/navigation/logoComponent';
@@ -8,8 +14,6 @@ import NavigationComponent from '@/components/navigation/navigationComponent';
 import VerticalDivider from '@/components/verticalDivider';
 
 import { navigation, noNavigation } from '@/constants/navigation';
-import { useState } from 'react';
-import { useAutoAnimate } from '@formkit/auto-animate/react';
 
 const Navigation = () => {
   const pathname = usePathname();
@@ -17,7 +21,15 @@ const Navigation = () => {
     duration: 300,
     easing: 'ease-in-out',
   });
+
   const [show, setShow] = useState(false);
+  const [isAuth, setIsAuth] = useState(false);
+
+  useEffect(() => {
+    isAuthF()
+      .then((auth) => setIsAuth(auth))
+      .catch(() => setIsAuth(false));
+  }, [pathname]);
 
   if (noNavigation.includes(pathname)) return null;
 
@@ -37,7 +49,8 @@ const Navigation = () => {
       >
         <div className='flex w-full flex-col gap-8 px-4 py-8'>
           <LogoComponent onClick={() => setShow(!show)} />
-          {navigation.map(({ icon, text, href }) => {
+          {navigation.map(({ icon, text, href, auth }) => {
+            if ((auth && !isAuth) || (auth === false && isAuth)) return null;
             if (!href) return <HorizontalDivider key={text} />;
 
             return (
@@ -46,6 +59,7 @@ const Navigation = () => {
                 icon={icon}
                 text={text}
                 href={href}
+                auth={auth}
                 selected={(pathname.replace(/^\/\w{2}/, '') || '/') === href}
                 close={() => setShow(false)}
               />
@@ -61,4 +75,6 @@ const Navigation = () => {
   );
 };
 
-export default Navigation;
+export default dynamic(() => Promise.resolve(Navigation), {
+  ssr: false,
+});
