@@ -1,8 +1,10 @@
-import { useLocale } from 'next-intl';
 import { unstable_setRequestLocale } from 'next-intl/server';
 
-const FavoritesPage = () => {
-  const locale = useLocale();
+const FavoritesPage = ({
+  params: { locale },
+}: {
+  params: { locale: string };
+}) => {
   unstable_setRequestLocale(locale);
   return <div>Favorites Page</div>;
 };

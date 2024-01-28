@@ -21,7 +21,7 @@ const CustomIcon: FC<IconProps> = ({ name, ...props }: IconProps) => {
 
   return (
     <SelectedIcon
-      className={`h-6 w-6 text-background md:h-7 md:w-7 ${props.className}`}
+      className={props.className ?? 'h-6 w-6 text-background md:h-7 md:w-7'}
       {...props}
     />
   );

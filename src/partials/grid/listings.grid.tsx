@@ -9,7 +9,7 @@ const getListings = async () => {
   }
 
   const data = (await response.json()) as ShortListingResponse[];
-  console.log(data);
+  // console.log(data);
 
   return data;
 };
