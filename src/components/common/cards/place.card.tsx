@@ -5,18 +5,12 @@ const PlaceCard = ({
 }: {
   place: {
     uuid: string;
-    title: string;
-    description: string;
-    location: {
-      lat: number;
-      lng: number;
-      city: string;
-      county: string;
-    };
-    price?: number;
-    image: {
+    name: string;
+    lat: number;
+    lng: number;
+    images: {
       url: string;
-    };
+    }[];
   };
 }) => (
   <Link
@@ -26,26 +20,26 @@ const PlaceCard = ({
     <div className='relative h-60 w-full overflow-hidden rounded-xl'>
       <img
         className='absolute h-full w-full object-cover'
-        src={place.image.url}
-        alt={place.title}
+        src={place.images[0]?.url}
+        alt={place.name}
       />
     </div>
     <div className='flex w-full flex-col justify-between'>
       <div>
         <h3 className='line-clamp-2 text-lg font-semibold sm:text-xl md:text-2xl'>
-          {place.title}
+          {place.name}
         </h3>
         <p className='md:text-md text-sm font-light text-text-secondary'>
-          {place.location.city}, {place.location.county}
+          {place.lng}, {place.lat}
         </p>
       </div>
-      <div className='flex w-full items-center justify-between gap-4'>
-        <div className='flex w-full items-center justify-between gap-4'>
-          <p className='text-lg font-semibold sm:text-xl md:text-2xl'>
-            {place.price} BGN
-          </p>
-        </div>
-      </div>
+      {/* <div className='flex w-full items-center justify-between gap-4'>*/}
+      {/*  <div className='flex w-full items-center justify-between gap-4'>*/}
+      {/*    <p className='text-lg font-semibold sm:text-xl md:text-2xl'>*/}
+      {/*      /!*{place.price} BGN*!/*/}
+      {/*    </p>*/}
+      {/*  </div>*/}
+      {/* </div>*/}
     </div>
   </Link>
 );

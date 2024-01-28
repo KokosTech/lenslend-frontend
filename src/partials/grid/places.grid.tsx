@@ -1,84 +1,30 @@
 import PlaceCard from '@/components/common/cards/place.card';
+import { API_URL } from '@/configs/api';
 
-// const getPlaces = async () => {
-//   const response = await fetch('http://localhost:8080/listing');
-//   if (!response.ok) {
-//     throw new Error(response.statusText);
-//   }
-//
-//   const data = await response.json();
-//   console.log(data);
-//
-//   return data;
-// };
+const getPlaces = async () => {
+  const response = await fetch(`${API_URL}/place?format=card`);
+  if (!response.ok) {
+    throw new Error(response.statusText);
+  }
 
-const PlacesGrid = () => {
-  // const listings: ListingResponse[] =
-  //   (await getListings()) as ListingResponse[];
+  const data = (await response.json()) as {
+    uuid: string;
+    name: string;
+    lat: number;
+    lng: number;
+    images: {
+      url: string;
+    }[];
+  }[];
+  console.log(data);
 
-  // const places = [{
-  //   uuid: '1',
-  //   title: 'Place 1',
-  //   description: 'Description 1',
-  //   location: {
-  //     lat: 1,
-  //     lng: 1,
-  //     city: 'City 1',
-  //     county: 'County 1',
-  //   },
-  //   price: 5.99,
-  //   services: [],
-  //   images: [],
-  //   users: []
-  // }];
+  return data;
+};
 
-  const places = [
-    {
-      uuid: '1',
-      title: 'Place 1',
-      description: 'Description 1',
-      location: {
-        lat: 1,
-        lng: 1,
-        city: 'City 1',
-        county: 'County 1',
-      },
-      price: 5.99,
-      image: {
-        url: 'https://tuesfest.bg/_next/image?url=%2Fassets%2Fprojects%2FCSR%2Fthumbnail.webp&w=1920&q=75',
-      },
-    },
-    {
-      uuid: '2',
-      title: 'Place 2',
-      description: 'Description 1',
-      location: {
-        lat: 1,
-        lng: 1,
-        city: 'City 1',
-        county: 'County 1',
-      },
-      price: 5.99,
-      image: {
-        url: 'https://tuesfest.bg/_next/image?url=%2Fassets%2Fprojects%2FCSR%2Fthumbnail.webp&w=1920&q=75',
-      },
-    },
-    {
-      uuid: '3',
-      title: 'Place 3',
-      description: 'Description 3',
-      location: {
-        lat: 1,
-        lng: 1,
-        city: 'City 1',
-        county: 'County 1',
-      },
-      price: 5.99,
-      image: {
-        url: 'https://tuesfest.bg/_next/image?url=%2Fassets%2Fprojects%2FCSR%2Fthumbnail.webp&w=1920&q=75',
-      },
-    },
-  ];
+const PlacesGrid = async () => {
+  const places = await getPlaces();
+
+  if (!places) return null;
 
   return (
     // <div className='grid w-full grid-cols-1 gap-4 xl:grid-cols-2 2xl:grid-cols-3'>
