@@ -14,12 +14,20 @@ import {
 import { CreateListingInitial } from '@/constants/forms/create-listing.initial';
 import BasicCreate from '@/app/[locale]/create/product/basic.create';
 import { createListingSchema } from '@/schemas/create-listing.schema';
-import { SignupFormErrors } from '@/types/forms/signup.form';
 import FormErrors from '@/components/common/form/errors';
 
 type ImageInputProps = {
   file: File;
   order: number;
+};
+
+interface ErrorObject {
+  _errors?: string[]; // Optional because not all objects may have this key.
+  [key: string]: ErrorObject | string[] | undefined; // Allows for nested error objects or the _errors array.
+}
+
+type ExtractedErrors = {
+  [key: string]: string[] | ExtractedErrors;
 };
 
 export type CreateProductErrors = {
@@ -115,20 +123,34 @@ const CreateProductPage = () => {
 
       console.log('FORMATTED', formatted);
 
-      const newErrors: Partial<SignupFormErrors> = Object.keys(
-        formatted,
-      ).reduce((acc, key) => {
-        if (key !== '_errors') {
-          return {
-            ...acc,
-            [key]: formatted[key]._errors.map((e: string) => e),
-            //
+      const extractErrors = (errors: {
+        [key: string]: {
+          _errors: string[];
+          [key: string]: {
+            _errors: string[];
           };
-        }
-        return acc;
-      }, {});
+        };
+      }) =>
+        Object.keys(errors).reduce((acc, key) => {
+          if (key !== '_errors') {
+            const subErrors = extractErrors(errors[key]);
+            console.log('SUB ERRORS', subErrors);
+            //  check if sub errors is an empty object
+            if (Object.keys(subErrors).length === 0) {
+              return {
+                ...acc,
+                [key]: errors[key]._errors,
+              };
+            }
+            return {
+              ...acc,
+              [key]: subErrors,
+            };
+          }
+          return acc;
+        }, {});
 
-      console.log('NEW ERRORS', newErrors);
+      const newErrors: Partial<CreateProductErrors> = extractErrors(formatted);
 
       setErrors(newErrors);
       setSubmitting(false);
