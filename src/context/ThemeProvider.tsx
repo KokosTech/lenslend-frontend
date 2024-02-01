@@ -3,32 +3,45 @@
 
 import React, { createContext, useEffect, useState } from 'react';
 
-type Theme = 'light' | 'dark';
+export type Theme = 'light' | 'dark' | 'system';
 
 const ThemeContext = createContext<{
   theme: Theme | undefined;
-  toggleTheme: () => void;
+  changeTheme: (theme: Theme) => void;
 }>({
-  theme: 'dark',
-  toggleTheme: () => {},
+  theme: 'system',
+  changeTheme: (theme: Theme) => {},
 });
 
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const [theme, setTheme] = useState<Theme | undefined>(undefined);
 
-  const toggleTheme = () => {
+  const changeTheme = (theme: Theme) => {
     const root = window.document.documentElement;
 
-    if (theme === 'light') {
-      setTheme('dark');
-      root.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-      return;
+    switch (theme) {
+      case 'light':
+        root.classList.remove('dark');
+        setTheme('light');
+        localStorage.setItem('theme', 'light');
+        break;
+      case 'dark':
+        setTheme('dark');
+        root.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+        break;
+      case 'system':
+        setTheme('system');
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          root.classList.add('dark');
+        } else {
+          root.classList.remove('dark');
+        }
+        localStorage.setItem('theme', 'system');
+        break;
+      default:
+        break;
     }
-
-    root.classList.remove('dark');
-    setTheme('light');
-    localStorage.setItem('theme', 'light');
   };
 
   const getInitialTheme = (): Theme => {
@@ -37,14 +50,9 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
       if (typeof storedPrefs === 'string') {
         return storedPrefs as Theme;
       }
-
-      const userMedia = window.matchMedia('(prefers-color-scheme: dark)');
-      if (userMedia.matches) {
-        return 'dark';
-      }
     }
 
-    return 'light';
+    return 'system';
   };
 
   useEffect(() => {
@@ -54,26 +62,30 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const root = window.document.documentElement;
 
-    root.classList.remove('dark');
-
-    if (theme === 'dark') {
-      root.classList.add('dark');
-    } else {
-      root.classList.remove('dark');
+    switch (theme) {
+      case 'light':
+        root.classList.remove('dark');
+        break;
+      case 'dark':
+        root.classList.add('dark');
+        break;
+      case 'system':
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          root.classList.add('dark');
+        } else {
+          root.classList.remove('dark');
+        }
+        break;
+      default:
+        break;
     }
-
-    // remove style hidden on body
-    // eslint-disable-next-line prefer-destructuring
-    const body = document.getElementsByTagName('body')[0];
-    // remove class hidden on body
-    body.classList.remove('hidden');
   }, [theme]);
 
   return (
     <ThemeContext.Provider
       value={{
         theme,
-        toggleTheme,
+        changeTheme,
       }}
     >
       {children}
@@ -84,10 +96,10 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
 export default ThemeContext;
 
 export const useTheme = () => {
-  const { theme, toggleTheme } = React.useContext(ThemeContext);
+  const { theme, changeTheme } = React.useContext(ThemeContext);
 
   return {
     theme,
-    toggleTheme,
+    changeTheme,
   };
 };

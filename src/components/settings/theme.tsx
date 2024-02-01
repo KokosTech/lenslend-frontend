@@ -1,8 +1,8 @@
 'use client';
-import { useTheme } from '@/context/ThemeProvider';
+import { Theme, useTheme } from '@/context/ThemeProvider';
 import { IconMoon, IconSettingsStar, IconSun } from '@tabler/icons-react';
 
-const themes = ['light', 'dark', 'system'];
+const themes: Theme[] = ['light', 'dark', 'system'];
 const icons = [
   <IconSun key='light' />,
   <IconMoon key='dark' />,
@@ -10,7 +10,7 @@ const icons = [
 ];
 
 const ChangeTheme = ({ text }: { text: string }) => {
-  const { theme, toggleTheme } = useTheme();
+  const { theme, changeTheme } = useTheme();
 
   return (
     <div className='flex w-full flex-wrap items-center justify-between rounded-xl border border-stroke bg-primary px-4 py-2'>
@@ -20,8 +20,8 @@ const ChangeTheme = ({ text }: { text: string }) => {
           <ThemeComponent
             key={th}
             theme={th}
-            selected={th === theme || (th === 'system' && theme === null)}
-            changeTheme={toggleTheme}
+            selected={th === theme}
+            changeTheme={changeTheme}
             i={i}
           />
         ))}
@@ -36,9 +36,9 @@ const ThemeComponent = ({
   changeTheme,
   i,
 }: {
-  theme: string;
+  theme: Theme;
   selected: boolean;
-  changeTheme: (theme: string) => void;
+  changeTheme: (theme: Theme) => void;
   i: number;
 }) => (
   <>
