@@ -18,23 +18,49 @@ const ChangeLanguage = () => {
   };
 
   return (
-    <div className='flex w-full flex-col items-center justify-center'>
-      <h2 className='text-4xl font-bold'>{t('change_language')}</h2>
-      <div className='flex w-full flex-row items-center justify-center'>
-        {locales.map((lang) => (
-          <button
+    <div className='flex w-full flex-wrap items-center justify-between rounded-xl border border-stroke bg-primary px-4 py-2'>
+      <p className='m-2 break-keep font-semibold text-text'>
+        {t('change_language')}
+      </p>
+      <div className='flex flex-row items-center justify-center'>
+        {locales.map((lang, i) => (
+          <LangComponent
             key={lang}
-            className={`${
-              lang === locale ? 'bg-primary' : 'bg-secondary'
-            } m-2 rounded-md px-4 py-2 text-text`}
-            onClick={() => changeLanguage(lang)}
-          >
-            {lang}
-          </button>
+            lang={lang}
+            selected={lang === locale}
+            changeLanguage={changeLanguage}
+            i={i}
+          />
         ))}
       </div>
     </div>
   );
 };
+
+const LangComponent = ({
+  lang,
+  selected,
+  changeLanguage,
+  i,
+}: {
+  lang: string;
+  selected: boolean;
+  changeLanguage: (lang: string) => void;
+  i: number;
+}) => (
+  <>
+    <button
+      className={`${
+        selected
+          ? 'border !border-stroke-secondary bg-stroke'
+          : 'bg-secondary hover:border-stroke-secondary hover:bg-stroke'
+      } m-2 rounded-md border border-stroke px-4 py-2 text-text transition-all duration-300 ease-in-out`}
+      onClick={() => changeLanguage(lang)}
+    >
+      {lang}
+    </button>
+    {i !== locales.length - 1 && <div className='h-6 w-[2px] bg-stroke' />}
+  </>
+);
 
 export default ChangeLanguage;
