@@ -13,9 +13,11 @@ type Category = {
 
 const CategorySelect = ({
   value,
+  errors,
   onChange,
 }: {
   value: string;
+  errors: string[];
   onChange: (category: { uuid: string; name: string }) => void;
 }) => {
   const [show, setShow] = useState(false);
@@ -72,6 +74,7 @@ const CategorySelect = ({
           addClass='!max-w-none !w-full'
           required={true}
           readOnly={true}
+          errors={errors}
         />
         <button
           onClick={handleClick}

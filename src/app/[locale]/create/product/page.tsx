@@ -13,10 +13,34 @@ import {
 } from '@/types/forms/create-listing.form';
 import { CreateListingInitial } from '@/constants/forms/create-listing.initial';
 import BasicCreate from '@/app/[locale]/create/product/basic.create';
+import { createListingSchema } from '@/schemas/create-listing.schema';
+import { SignupFormErrors } from '@/types/forms/signup.form';
+import FormErrors from '@/components/common/form/errors';
 
 type ImageInputProps = {
   file: File;
   order: number;
+};
+
+export type CreateProductErrors = {
+  name: string[];
+  description: string[];
+  price: string[];
+  rental: string[];
+  negotiable: string[];
+  state: string[];
+  status: string[];
+  category: {
+    uuid: string[];
+    name: string[];
+  };
+  tags: string[];
+  location: {
+    lat: string[];
+    lng: string[];
+  };
+  images: string[];
+  global: string[];
 };
 
 const CreateProductPage = () => {
@@ -24,7 +48,26 @@ const CreateProductPage = () => {
   const [images, setImages] = useState<ImageInputProps[]>([]);
 
   const [submitting, setSubmitting] = useState<boolean>(false);
-  const [errors, setErrors] = useState<string[]>([]);
+  const [errors, setErrors] = useState<CreateProductErrors>({
+    name: [],
+    description: [],
+    price: [],
+    rental: [],
+    negotiable: [],
+    state: [],
+    status: [],
+    category: {
+      uuid: [],
+      name: [],
+    },
+    tags: [],
+    location: {
+      lat: [],
+      lng: [],
+    },
+    images: [],
+    global: [],
+  });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setForm((prevState) => ({
@@ -49,10 +92,46 @@ const CreateProductPage = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setSubmitting(true);
 
     const token = await getAuth();
     if (!token) {
-      setErrors(['You need to be logged in to create a listing']);
+      setErrors({
+        global: ['You must be logged in to create a listing'],
+      });
+      setSubmitting(false);
+      return;
+    }
+
+    //  validate form using zod
+
+    const result = createListingSchema.safeParse(form);
+    if (!result.success) {
+      const formatted = result.error.format() as unknown as {
+        [key: string]: {
+          _errors: string[];
+        };
+      };
+
+      console.log('FORMATTED', formatted);
+
+      const newErrors: Partial<SignupFormErrors> = Object.keys(
+        formatted,
+      ).reduce((acc, key) => {
+        if (key !== '_errors') {
+          return {
+            ...acc,
+            [key]: formatted[key]._errors.map((e: string) => e),
+            //
+          };
+        }
+        return acc;
+      }, {});
+
+      console.log('NEW ERRORS', newErrors);
+
+      setErrors(newErrors);
+      setSubmitting(false);
       return;
     }
 
@@ -95,7 +174,10 @@ const CreateProductPage = () => {
         );
         if (!imageToUpload) {
           console.log('image not found');
-          setErrors(['Image not found']);
+          setErrors({
+            images: ['Image not found'],
+          });
+          setSubmitting(false);
           return;
         }
 
@@ -138,7 +220,6 @@ const CreateProductPage = () => {
         tags: form.tags,
         lat: form.location.lat,
         lng: form.location.lng,
-        // images: [],
         images: signedUrls.map((url) => url.public_url),
       }),
     });
@@ -146,10 +227,11 @@ const CreateProductPage = () => {
     if (!res.ok) {
       const data = await res.json();
       console.log(data);
-      setErrors(data.errors);
+      setErrors({
+        global: [data.message],
+      });
       return;
     }
-
     const data = await res.json();
     console.log(data);
     // redirect(data.uuid);
@@ -162,7 +244,12 @@ const CreateProductPage = () => {
         onSubmit={handleSubmit}
       >
         <h1 className='mb-2 text-3xl font-bold'>Create a new listing</h1>
-        <BasicCreate {...form} handleChange={handleChange} setForm={setForm} />
+        <BasicCreate
+          {...form}
+          handleChange={handleChange}
+          setForm={setForm}
+          errors={errors}
+        />
         <HorizontalDivider />
         <div className='flex flex-col gap-2'>
           <h4 className='text-lg font-bold'> Images</h4>
@@ -173,6 +260,7 @@ const CreateProductPage = () => {
           handleChange={handleChange}
           handleCheckboxChange={handleCheckboxChange}
           setForm={setForm}
+          errors={errors}
         />
         <MapCreate location={form.location} handleLocation={handleLocation} />
         <div className='flex items-center justify-end gap-8'>
@@ -189,6 +277,7 @@ const CreateProductPage = () => {
             Create
           </button>
         </div>
+        <FormErrors errors={errors.global} />
       </form>
     </div>
   );

@@ -1,5 +1,5 @@
 import { IconPhoto, IconPlus, IconTrash } from '@tabler/icons-react';
-import { ChangeEvent, Dispatch, SetStateAction } from 'react';
+import { ChangeEvent, Dispatch, DragEvent, SetStateAction } from 'react';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 
 type ImageInputProps = {
@@ -38,14 +38,14 @@ const ImageInput = ({ images, setImages }: ImageInputType) => {
   };
 
   const handleDragStart = (
-    e: React.DragEvent<HTMLDivElement>,
+    e: DragEvent<HTMLDivElement>,
     draggedImage: ImageInputProps,
   ) => {
     e.dataTransfer.setData('text/plain', draggedImage.file.name);
   };
 
   const handleDrop = (
-    e: React.DragEvent<HTMLDivElement>,
+    e: DragEvent<HTMLDivElement>,
     droppedImage: ImageInputProps,
   ) => {
     e.preventDefault();

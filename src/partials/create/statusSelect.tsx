@@ -8,9 +8,11 @@ type Status = 'PUBLIC' | 'PRIVATE';
 
 const StatusSelect = ({
   value,
+  errors,
   onChange,
 }: {
   value: Status;
+  errors: string[];
   onChange: (status: Status) => void;
 }) => {
   const [show, setShow] = useState(false);
@@ -50,6 +52,7 @@ const StatusSelect = ({
         addClass='!max-w-none !w-full'
         required={true}
         readOnly={true}
+        errors={errors}
       />
       <button
         onClick={handleClick}

@@ -11,6 +11,7 @@ import {
   ListingCategory,
   ListingStatus,
 } from '@/types/forms/create-listing.form';
+import { CreateProductErrors } from '@/app/[locale]/create/product/page';
 
 type BasicCreateProps = {
   name: string;
@@ -18,6 +19,7 @@ type BasicCreateProps = {
   status: ListingStatus;
   handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
   setForm: Dispatch<SetStateAction<CreateListingForm>>;
+  errors: CreateProductErrors;
 };
 
 const BasicCreate = ({
@@ -26,6 +28,7 @@ const BasicCreate = ({
   status,
   handleChange,
   setForm,
+  errors,
 }: BasicCreateProps) => (
   <>
     <HorizontalDivider />
@@ -39,9 +42,11 @@ const BasicCreate = ({
       addClass='!max-w-none !w-full'
       required={true}
       onChange={handleChange}
+      errors={errors.name}
     />
     <CategorySelect
       value={category.name}
+      errors={errors.category.name}
       onChange={(category: ListingCategory) => {
         setForm((prevState) => ({
           ...prevState,
@@ -52,6 +57,7 @@ const BasicCreate = ({
     <div className='flex items-center gap-4'>
       <StatusSelect
         value={status}
+        errors={errors.status}
         onChange={(status: ListingStatus) => {
           setForm((prevState) => ({
             ...prevState,

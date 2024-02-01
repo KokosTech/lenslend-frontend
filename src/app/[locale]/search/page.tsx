@@ -8,6 +8,11 @@ import ListingCard from '@/components/common/cards/listing.card';
 const getSearch = async (search: string, category?: string) => {
   const res = await fetch(
     `${API_URL}/search?search=${search}&category=${category}`,
+    {
+      next: {
+        revalidate: 60,
+      },
+    },
   );
   const data = (await res.json()) as {
     listings: ShortListingResponse[];

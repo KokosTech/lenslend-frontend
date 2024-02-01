@@ -8,6 +8,7 @@ import ToggleInput from '@/components/common/toggle.input';
 import HorizontalDivider from '@/components/horizontalDivider';
 
 import { CreateListingForm } from '@/types/forms/create-listing.form';
+import { CreateProductErrors } from '@/app/[locale]/create/product/page';
 
 type DetailsCreateProps = {
   description: string;
@@ -18,6 +19,7 @@ type DetailsCreateProps = {
   handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
   handleCheckboxChange: (e: ChangeEvent<HTMLInputElement>) => void;
   setForm: Dispatch<SetStateAction<CreateListingForm>>;
+  errors: CreateProductErrors;
 };
 
 const DetailsCreate = ({
@@ -29,6 +31,7 @@ const DetailsCreate = ({
   handleChange,
   handleCheckboxChange,
   setForm,
+  errors,
 }: DetailsCreateProps) => {
   const handleAddTag = (tag: string) => {
     if (tags.includes(tag) || isEmpty(tag)) return;
@@ -59,6 +62,7 @@ const DetailsCreate = ({
           addClass='!max-w-none !w-full'
           required={true}
           onChange={handleChange}
+          errors={errors.description}
         />
         <div className='flex items-center gap-2'>
           <Input
@@ -75,6 +79,7 @@ const DetailsCreate = ({
                 price: toInteger(e.target.value) || undefined,
               }))
             }
+            errors={errors.price}
           />
           <ToggleInput
             label={
@@ -98,6 +103,7 @@ const DetailsCreate = ({
           handleAddTag={handleAddTag}
           handleRemoveTag={handleRemoveTag}
         />
+        {/*  TODO: Add errors to tag */}
       </div>
     </>
   );
