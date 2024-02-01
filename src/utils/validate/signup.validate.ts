@@ -2,6 +2,8 @@ import { API_URL } from '@/configs/api';
 import { SignupFormErrors, SignupFormState } from '@/types/forms/signup.form';
 import { signupFromErrorsInitial } from '@/constants/forms/signup.initial';
 import { signupSchemas } from '@/schemas/signup.schema';
+import { formatErrors } from '@/utils/formatErrors';
+import { extractErrors } from '../extractErrors';
 
 type ValidationError = {
   constraints: {
@@ -34,24 +36,8 @@ const clientValidate = (
   const result = signupSchemas[step].safeParse(data);
 
   if (!result.success) {
-    const formatted = result.error.format() as unknown as {
-      [key: string]: {
-        _errors: string[];
-      };
-    };
-
-    const newErrors: Partial<SignupFormErrors> = Object.keys(formatted).reduce(
-      (acc, key) => {
-        if (key !== '_errors') {
-          return {
-            ...acc,
-            [key]: formatted[key]._errors.map((e: string) => t(`errors.${e}`)),
-          };
-        }
-        return acc;
-      },
-      {},
-    );
+    const formatted = formatErrors(result);
+    const newErrors: Partial<SignupFormErrors> = extractErrors(formatted);
 
     return {
       ...signupFromErrorsInitial,

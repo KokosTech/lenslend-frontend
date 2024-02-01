@@ -15,19 +15,13 @@ import { CreateListingInitial } from '@/constants/forms/create-listing.initial';
 import BasicCreate from '@/app/[locale]/create/product/basic.create';
 import { createListingSchema } from '@/schemas/create-listing.schema';
 import FormErrors from '@/components/common/form/errors';
+import { formatErrors } from '@/utils/formatErrors';
+import { extractErrors } from '@/utils/extractErrors';
+import { getSignedUrl, uploadS3 } from '@/utils/uploadS3';
 
 type ImageInputProps = {
   file: File;
   order: number;
-};
-
-interface ErrorObject {
-  _errors?: string[]; // Optional because not all objects may have this key.
-  [key: string]: ErrorObject | string[] | undefined; // Allows for nested error objects or the _errors array.
-}
-
-type ExtractedErrors = {
-  [key: string]: string[] | ExtractedErrors;
 };
 
 export type CreateProductErrors = {
@@ -51,31 +45,33 @@ export type CreateProductErrors = {
   global: string[];
 };
 
+const intialErrors = {
+  name: [],
+  description: [],
+  price: [],
+  rental: [],
+  negotiable: [],
+  state: [],
+  status: [],
+  category: {
+    uuid: [],
+    name: [],
+  },
+  tags: [],
+  location: {
+    lat: [],
+    lng: [],
+  },
+  images: [],
+  global: [],
+};
+
 const CreateProductPage = () => {
   const [form, setForm] = useState<CreateListingForm>(CreateListingInitial);
   const [images, setImages] = useState<ImageInputProps[]>([]);
 
   const [submitting, setSubmitting] = useState<boolean>(false);
-  const [errors, setErrors] = useState<CreateProductErrors>({
-    name: [],
-    description: [],
-    price: [],
-    rental: [],
-    negotiable: [],
-    state: [],
-    status: [],
-    category: {
-      uuid: [],
-      name: [],
-    },
-    tags: [],
-    location: {
-      lat: [],
-      lng: [],
-    },
-    images: [],
-    global: [],
-  });
+  const [errors, setErrors] = useState<CreateProductErrors>(intialErrors);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setForm((prevState) => ({
@@ -105,6 +101,7 @@ const CreateProductPage = () => {
     const token = await getAuth();
     if (!token) {
       setErrors({
+        ...intialErrors,
         global: ['You must be logged in to create a listing'],
       });
       setSubmitting(false);
@@ -115,44 +112,13 @@ const CreateProductPage = () => {
 
     const result = createListingSchema.safeParse(form);
     if (!result.success) {
-      const formatted = result.error.format() as unknown as {
-        [key: string]: {
-          _errors: string[];
-        };
-      };
-
-      console.log('FORMATTED', formatted);
-
-      const extractErrors = (errors: {
-        [key: string]: {
-          _errors: string[];
-          [key: string]: {
-            _errors: string[];
-          };
-        };
-      }) =>
-        Object.keys(errors).reduce((acc, key) => {
-          if (key !== '_errors') {
-            const subErrors = extractErrors(errors[key]);
-            console.log('SUB ERRORS', subErrors);
-            //  check if sub errors is an empty object
-            if (Object.keys(subErrors).length === 0) {
-              return {
-                ...acc,
-                [key]: errors[key]._errors,
-              };
-            }
-            return {
-              ...acc,
-              [key]: subErrors,
-            };
-          }
-          return acc;
-        }, {});
-
+      const formatted = formatErrors(result);
       const newErrors: Partial<CreateProductErrors> = extractErrors(formatted);
 
-      setErrors(newErrors);
+      setErrors({
+        ...intialErrors,
+        ...newErrors,
+      });
       setSubmitting(false);
       return;
     }
@@ -160,29 +126,24 @@ const CreateProductPage = () => {
     console.log(form);
     console.log(token);
 
-    //   for each image get signed url to upload to s3
     const signedUrls = await Promise.all(
       images.map(async (image) => {
-        const res = await fetch(
-          `${API_URL}/file/upload?name=${image.file.name}&type=${
-            image.file.type.split('/')[1]
-          }&acl=${form.status === 'PUBLIC' ? 'public-read' : 'private'}`,
-          {
-            headers: {
-              Authorization: token,
-            },
-          },
-        );
-        const data = (await res.json()) as {
-          url: string;
-          key: string;
-          public_url: string;
-        };
-        console.log(data);
-        return {
-          ...data,
-          order: image.order,
-        };
+        const acl = form.status === 'PRIVATE' ? 'private' : 'public-read';
+
+        try {
+          const res = await getSignedUrl(image.file, acl, token);
+          return {
+            ...res,
+            order: image.order,
+          };
+        } catch (error) {
+          setErrors({
+            ...intialErrors,
+            images: ['Error getting signed url'],
+          });
+          setSubmitting(false);
+          return;
+        }
       }),
     );
 
@@ -191,32 +152,41 @@ const CreateProductPage = () => {
     // upload images to s3
     await Promise.all(
       signedUrls.map(async (imageUrl) => {
+        if (!imageUrl) {
+          console.log('image url not found');
+          setErrors({
+            ...intialErrors,
+            images: ['Image url not found'],
+          });
+          setSubmitting(false);
+          return;
+        }
+
         const imageToUpload = images.find(
           (image) => image.order === imageUrl.order,
         );
         if (!imageToUpload) {
           console.log('image not found');
           setErrors({
+            ...intialErrors,
             images: ['Image not found'],
           });
           setSubmitting(false);
           return;
         }
 
-        const res = await fetch(imageUrl.url, {
-          method: 'PUT',
-          body: imageToUpload.file,
-          headers: {
-            'Content-Type': imageToUpload.file.type,
-          },
-        });
+        const res = await uploadS3(imageToUpload.file, imageUrl.url);
 
-        if (!res.ok) {
-          const data = await res.json();
-          console.log(data);
-          setErrors(data.errors);
+        if (!res) {
+          console.log('error uploading image');
+          setErrors({
+            ...intialErrors,
+            images: ['Error uploading image'],
+          });
+          setSubmitting(false);
           return;
         }
+
         return res;
       }),
     );
@@ -242,7 +212,7 @@ const CreateProductPage = () => {
         tags: form.tags,
         lat: form.location.lat,
         lng: form.location.lng,
-        images: signedUrls.map((url) => url.public_url),
+        images: signedUrls.map((url) => url?.public_url),
       }),
     });
 
@@ -250,6 +220,7 @@ const CreateProductPage = () => {
       const data = await res.json();
       console.log(data);
       setErrors({
+        ...intialErrors,
         global: [data.message],
       });
       return;
