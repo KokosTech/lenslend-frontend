@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 import type { Review as ReviewType } from '@/types/data/place.type';
 import Dates from '@/components/common/dates';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 const ReviewClient = ({
   uuid,
@@ -15,7 +15,9 @@ const ReviewClient = ({
   created_at,
   updated_at,
 }: ReviewType) => {
+  const locale = useLocale();
   const t = useTranslations('place.reviews');
+
   const [showFull, setShowFull] = useState(false);
 
   return (
@@ -23,7 +25,10 @@ const ReviewClient = ({
       key={uuid}
       className='flex flex-col justify-center gap-2 rounded-xl border border-stroke bg-primary p-4'
     >
-      <Link href={`/user/${user.uuid}`} className='flex items-center gap-2'>
+      <Link
+        href={`/${locale}/user/${user.username}`}
+        className='flex items-center gap-2'
+      >
         {user.profile_pic && (
           <div className='relative h-14 w-14 overflow-hidden rounded-full border border-stroke'>
             <Image

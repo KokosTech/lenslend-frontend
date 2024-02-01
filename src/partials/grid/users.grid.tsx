@@ -22,7 +22,7 @@ const UsersGrid = async () => {
   const users: User[] = await getUsers();
 
   return (
-    <div className='grid w-full grid-cols-2 grid-rows-[1fr_1fr_0] justify-items-stretch gap-x-4 gap-y-4 overflow-hidden p-2 sm:grid-cols-3 md:grid-cols-2 min-[880px]:grid-cols-3 lg:grid-cols-4 lg:grid-rows-[1fr_0_0] lg:gap-y-0 xl:grid-cols-5 2xl:grid-cols-6'>
+    <div className='grid w-full grid-cols-2 grid-rows-[1fr_1fr_0] justify-items-stretch gap-x-4 gap-y-4 overflow-hidden sm:grid-cols-3 md:grid-cols-2 min-[880px]:grid-cols-3 lg:grid-cols-4 lg:grid-rows-[1fr_0_0] lg:gap-y-0 xl:grid-cols-5 2xl:grid-cols-6'>
       {users.map((user: User) => (
         <UserCard key={user.uuid} user={user} />
       ))}

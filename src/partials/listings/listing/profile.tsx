@@ -6,7 +6,7 @@ import {
   IconUserCircle,
   IconUserHexagon,
 } from '@tabler/icons-react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 const Profile = ({
   name,
@@ -25,6 +25,7 @@ const Profile = ({
   header_pic?: string;
 }) => {
   const t = useTranslations('listing');
+  const locale = useLocale();
 
   return (
     <div className='w-full lg:w-fit'>
@@ -87,7 +88,7 @@ const Profile = ({
             {phone}
           </Link>
           <Link
-            href={`/user/${username}`}
+            href={`/${locale}/user/${username}`}
             className='text-md space-pre-wrap flex justify-center rounded-lg bg-blue/90 px-4 py-2 font-semibold text-primary hover:bg-blue'
           >
             <IconUserCircle className='mr-2' />
