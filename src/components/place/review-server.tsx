@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import Dates from '@/components/project/client/dates';
+import Dates from '@/components/common/dates';
 
 import type { Review as ReviewType } from '@/types/data/place.type';
 

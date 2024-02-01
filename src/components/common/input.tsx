@@ -10,6 +10,7 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   className?: string;
   icon?: string;
   errors?: string[];
+  addClass?: string;
 }
 
 const Input = ({
@@ -20,9 +21,12 @@ const Input = ({
   className,
   icon,
   errors,
+  addClass,
   ...props
 }: InputProps) => (
-  <div className='flex shrink flex-col items-center gap-2 sm:w-96'>
+  <div
+    className={`flex shrink flex-col items-center gap-2 sm:w-96 ${addClass}`}
+  >
     <div className='relative flex w-full shrink flex-col gap-2'>
       {icon && (
         <CustomIcon

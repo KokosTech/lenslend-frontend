@@ -51,9 +51,7 @@ const ContactMap = ({ lat, lng }: { lat: number; lng: number }) => {
             className='text-md space-pre-wrap flex justify-center rounded-lg bg-blue/90 px-4 py-2 font-semibold text-primary hover:bg-blue'
             target='_blank'
             rel='noopener noreferrer'
-            href={
-              'https://www.google.com/maps/dir/?api=1&destination=42.6977,23.3219'
-            }
+            href={`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`}
           >
             <IconGps className='mr-2' />
             {t('get_directions')}

@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { User } from '@/types/data/place.type';
-import Dates from '@/components/project/client/dates';
+import Dates from '@/components/common/dates';
 
 const Comment = ({
   user,

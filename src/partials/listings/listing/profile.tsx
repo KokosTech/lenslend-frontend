@@ -9,7 +9,6 @@ import {
 import { useTranslations } from 'next-intl';
 
 const Profile = ({
-  uuid,
   name,
   username,
   bio,
@@ -28,7 +27,7 @@ const Profile = ({
   const t = useTranslations('listing');
 
   return (
-    <div className='w-full'>
+    <div className='w-full lg:w-fit'>
       <div className='relative flex flex-col rounded-xl border-2 border-stroke bg-primary p-2 text-justify'>
         {profile_pic || header_pic ? (
           <div className='relative flex w-full flex-col gap-2'>
@@ -88,7 +87,7 @@ const Profile = ({
             {phone}
           </Link>
           <Link
-            href={`/profile/${uuid}`}
+            href={`/user/${username}`}
             className='text-md space-pre-wrap flex justify-center rounded-lg bg-blue/90 px-4 py-2 font-semibold text-primary hover:bg-blue'
           >
             <IconUserCircle className='mr-2' />

@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import type { Review as ReviewType } from '@/types/data/place.type';
-import Dates from '@/components/project/client/dates';
+import Dates from '@/components/common/dates';
 import { useTranslations } from 'next-intl';
 
 const ReviewClient = ({

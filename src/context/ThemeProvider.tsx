@@ -9,7 +9,7 @@ const ThemeContext = createContext<{
   theme: Theme | undefined;
   toggleTheme: () => void;
 }>({
-  theme: 'light',
+  theme: 'dark',
   toggleTheme: () => {},
 });
 
@@ -84,9 +84,10 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
 export default ThemeContext;
 
 export const useTheme = () => {
-  const { toggleTheme } = React.useContext(ThemeContext);
+  const { theme, toggleTheme } = React.useContext(ThemeContext);
 
   return {
+    theme,
     toggleTheme,
   };
 };

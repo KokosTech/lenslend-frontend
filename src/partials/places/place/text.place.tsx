@@ -1,6 +1,6 @@
 import { Place } from '@/types/data/place.type';
 import HorizontalDivider from '@/components/horizontalDivider';
-import Dates from '@/components/project/client/dates';
+import Dates from '@/components/common/dates';
 import Tag from '@/components/common/tag';
 import Address from '@/components/common/address';
 
