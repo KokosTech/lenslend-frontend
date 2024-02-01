@@ -1,5 +1,5 @@
 import { IconPhoto, IconPlus, IconTrash } from '@tabler/icons-react';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 
 type ImageInputProps = {
@@ -7,8 +7,12 @@ type ImageInputProps = {
   order: number;
 };
 
-const ImageInput = () => {
-  const [images, setImages] = useState<ImageInputProps[]>([]);
+type ImageInputType = {
+  images: ImageInputProps[];
+  setImages: Dispatch<SetStateAction<ImageInputProps[]>>;
+};
+
+const ImageInput = ({ images, setImages }: ImageInputType) => {
   const [parent] = useAutoAnimate({
     duration: 300,
     easing: 'ease-in-out',
@@ -28,7 +32,7 @@ const ImageInput = () => {
     );
     const newImages = newFiles.map((file, index) => ({
       file,
-      order: images.length + index,
+      order: images.length + index + 1,
     }));
     setImages([...images, ...newImages]);
   };

@@ -49,6 +49,7 @@ const StatusSelect = ({
         value={value}
         addClass='!max-w-none !w-full'
         required={true}
+        readOnly={true}
       />
       <button
         onClick={handleClick}
