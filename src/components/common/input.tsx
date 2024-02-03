@@ -1,6 +1,7 @@
 import CustomIcon from '@/components/common/customIcon';
-import { InputHTMLAttributes } from 'react';
+import React, { InputHTMLAttributes } from 'react';
 import FormErrors from '@/components/common/form/errors';
+import { IconChevronDown } from '@tabler/icons-react';
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   id: string;
@@ -11,6 +12,7 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   icon?: string;
   errors?: string[];
   addClass?: string;
+  dropDownButton?: () => void;
 }
 
 const Input = ({
@@ -22,6 +24,7 @@ const Input = ({
   icon,
   errors,
   addClass,
+  dropDownButton,
   ...props
 }: InputProps) => (
   <div
@@ -52,6 +55,15 @@ const Input = ({
         }
         {...props}
       />
+      {dropDownButton && (
+        <button
+          onClick={dropDownButton}
+          type='button'
+          className='absolute bottom-2 right-2 rounded px-4 py-2 font-bold transition-colors duration-200 ease-in-out hover:text-blue'
+        >
+          <IconChevronDown size={24} />
+        </button>
+      )}
     </div>
     <FormErrors errors={errors} />
   </div>

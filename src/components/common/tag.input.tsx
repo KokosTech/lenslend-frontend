@@ -6,12 +6,18 @@ import { ChangeEvent, KeyboardEvent, useState } from 'react';
 import CopyButton from '@/components/common/buttons/copyButton';
 
 type TagInputProps = {
+  placeholder?: string;
   tags: string[];
   handleAddTag: (tag: string) => void;
   handleRemoveTag: (tag: string) => void;
 };
 
-const TagInput = ({ tags, handleAddTag, handleRemoveTag }: TagInputProps) => {
+const TagInput = ({
+  placeholder,
+  tags,
+  handleAddTag,
+  handleRemoveTag,
+}: TagInputProps) => {
   const [tagText, setTagText] = useState<string>('');
 
   const handleTagTextChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -63,7 +69,7 @@ const TagInput = ({ tags, handleAddTag, handleRemoveTag }: TagInputProps) => {
         type='text'
         value={tagText}
         onChange={handleTagTextChange}
-        placeholder={tags.length === 0 ? ' Tags' : ''}
+        placeholder={tags.length === 0 ? `  ${placeholder}` : ''}
         onKeyDown={handleKeyDown}
         className='h-10 grow bg-transparent text-text-secondary outline-none'
       />
