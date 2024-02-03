@@ -21,8 +21,8 @@ const UserCard = ({ user }: { user: User }) => {
           alt={user.name}
         />
       ) : (
-        <div className='aspect-square h-24 w-24 rounded-full border border-stroke'>
-          <IconUser className='h-8 w-8' />
+        <div className='flex aspect-square w-full items-center justify-center rounded-lg border border-stroke'>
+          <IconUser className='h-12 w-12' />
         </div>
       )}
       <div className='w-full'>

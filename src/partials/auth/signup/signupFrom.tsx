@@ -11,7 +11,6 @@ import TosSection from '@/partials/auth/signup/tosSection';
 
 import NextButton from '@/partials/auth/signup/prevNext';
 import PrevButton from '@/partials/auth/signup/prev';
-import FormErrors from '@/components/common/form/errors';
 
 import {
   signupFormInitial,
@@ -79,7 +78,9 @@ const SignupFrom = () => {
     if ([0, 1].includes(currentStep)) {
       setIsSubmitting(true);
 
-      const clientErrors = clientValidate(currentStep, state, t);
+      const clientErrors = clientValidate(currentStep, state, (key: string) =>
+        t(`errors.${key}`),
+      );
 
       if (clientErrors && clientErrors !== true) {
         setErrors(clientErrors);
@@ -119,7 +120,7 @@ const SignupFrom = () => {
   return (
     <form className='flex flex-col gap-4 font-semibold' action={formAction}>
       {steps[currentStep]}
-      <FormErrors errors={errors.global} t={t} />
+      {/* <FormErrors errors={errors.global} t={t} />*/}
       <div className='flex items-center justify-center gap-4'>
         <PrevButton
           currentStep={currentStep}

@@ -4,7 +4,7 @@ import Link from 'next/link';
 import type { User } from '@/types/data/place.type';
 import { useLocale } from 'next-intl';
 
-const Visitor = ({ uuid, name, username, profile_pic }: User) => {
+const Visitor = ({ name, username, profile_pic }: User) => {
   const locale = useLocale();
 
   return (

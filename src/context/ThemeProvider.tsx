@@ -10,7 +10,7 @@ const ThemeContext = createContext<{
   changeTheme: (theme: Theme) => void;
 }>({
   theme: 'system',
-  changeTheme: (theme: Theme) => {},
+  changeTheme: () => {},
 });
 
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
