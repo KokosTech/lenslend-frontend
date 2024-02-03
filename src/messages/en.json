@@ -203,7 +203,9 @@
         },
         "price": "Invalid price",
         "category": "Category is required",
-        "tags": "Tags must be at most 16",
+        "tags": {
+          "max": "Tags must be at most 16"
+        },
         "tag": {
           "min": "Tag must be at least 3 characters long",
           "max": "Tag must be at most 20 characters long"

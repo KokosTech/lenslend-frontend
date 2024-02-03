@@ -1,15 +1,19 @@
+/* eslint-disable indent */
+
 'use client';
 
 import { isEmpty } from 'lodash';
 import { IconX } from '@tabler/icons-react';
 import { ChangeEvent, KeyboardEvent, useState } from 'react';
 import CopyButton from '@/components/common/buttons/copyButton';
+import FormErrors from '@/components/common/form/errors';
 
 type TagInputProps = {
   placeholder?: string;
   tags: string[];
   handleAddTag: (tag: string) => void;
   handleRemoveTag: (tag: string) => void;
+  errors?: string[] | Record<number, string>;
 };
 
 const TagInput = ({
@@ -17,6 +21,7 @@ const TagInput = ({
   tags,
   handleAddTag,
   handleRemoveTag,
+  errors,
 }: TagInputProps) => {
   const [tagText, setTagText] = useState<string>('');
 
@@ -57,24 +62,41 @@ const TagInput = ({
   };
 
   return (
-    <div
-      className={
-        'relative flex w-full flex-wrap items-start justify-start gap-2 rounded-lg border border-stroke p-2 text-text-secondary'
-      }
-    >
-      {tags.map((tag) => (
-        <Tag key={tag} tag={tag} handleRemoveTag={handleRemoveTag} />
-      ))}
-      <input
-        type='text'
-        value={tagText}
-        onChange={handleTagTextChange}
-        placeholder={tags.length === 0 ? `  ${placeholder}` : ''}
-        onKeyDown={handleKeyDown}
-        className='h-10 grow bg-transparent text-text-secondary outline-none'
-      />
-      <CopyButton text={`${tags.join(',')},`} />
-    </div>
+    <>
+      <div
+        className={`relative flex w-full flex-wrap items-start justify-start gap-2 rounded-lg border p-2 text-text-secondary
+        ${
+          errors &&
+          ((Array.isArray(errors) && errors.length > 1) ||
+            Object.keys(errors).length > 0)
+            ? 'border-error-primary'
+            : 'border-stroke'
+        }`}
+      >
+        {tags.map((tag) => (
+          <Tag key={tag} tag={tag} handleRemoveTag={handleRemoveTag} />
+        ))}
+        <input
+          type='text'
+          value={tagText}
+          onChange={handleTagTextChange}
+          placeholder={tags.length === 0 ? `  ${placeholder}` : ''}
+          onKeyDown={handleKeyDown}
+          className='h-10 grow bg-transparent text-text-secondary outline-none'
+        />
+        <CopyButton text={`${tags.join(',')},`} />
+      </div>
+      {errors && !Array.isArray(errors) ? (
+        <FormErrors
+          errors={Object.values(errors).reduce(
+            (acc: string[], val) => acc.concat(val),
+            [],
+          )}
+        />
+      ) : (
+        <FormErrors errors={errors} />
+      )}
+    </>
   );
 };
 

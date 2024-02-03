@@ -47,7 +47,7 @@ type CreateProductErrors = {
     uuid: string[];
     name: string[];
   };
-  tags: string[];
+  tags: string[] | Record<number, string>;
   location: {
     lat: string[];
     lng: string[];

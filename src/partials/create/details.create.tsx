@@ -108,6 +108,7 @@ const DetailsCreate = ({
           tags={tags}
           handleAddTag={handleAddTag}
           handleRemoveTag={handleRemoveTag}
+          errors={errors.tags}
         />
         {/*  TODO: Add errors to tag */}
       </div>
