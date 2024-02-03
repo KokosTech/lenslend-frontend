@@ -10,7 +10,7 @@ const ReviewsPlace = ({ place: { uuid, reviews } }: { place: Place }) => {
   if (!reviews || !reviews.length) {
     return (
       <>
-        <p>
+        <div className='flex flex-col gap-2 text-center'>
           {t('none')}{' '}
           <Link
             href={`/places/${uuid}/reviews`}
@@ -18,7 +18,7 @@ const ReviewsPlace = ({ place: { uuid, reviews } }: { place: Place }) => {
           >
             {t('first')}
           </Link>
-        </p>
+        </div>
         <HorizontalDivider />
       </>
     );

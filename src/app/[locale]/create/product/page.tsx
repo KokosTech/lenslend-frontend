@@ -1,238 +1,147 @@
 'use client';
 
-import Input from '@/components/common/input';
-import { ChangeEvent, useState } from 'react';
-import { isEmpty, toInteger } from 'lodash';
-import { IconX } from '@tabler/icons-react';
+import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
+import { ChangeEvent, FormEvent, useState } from 'react';
 
-type Form = {
-  name: string;
-  description: string;
-  type: 'PRODUCT' | 'SERVICE';
-  price?: number;
-  rental?: number;
-  negotiable: boolean;
-  status: 'PUBLIC' | 'PRIVATE';
-  categoryId: string;
-  images: string[];
-  tags: string[];
-};
+import FormErrors from '@/components/common/form/errors';
+import HorizontalDivider from '@/components/horizontalDivider';
+import SubmitButton from '@/components/common/buttons/submitButton';
+
+import MapCreate from '@/partials/create/map.create';
+import ImageInput from '@/partials/create/image.input';
+import BasicCreate from '@/partials/create/basic.create';
+import DetailsCreate from '@/partials/create/details.create';
+
+import { handleCreateListing } from '@/utils/create/listing';
+
+import {
+  CreateListingForm,
+  CreateProductErrors,
+  LocationType,
+} from '@/types/forms/create-listing.form';
+import { ImageInputProps } from '@/types/s3.type';
+
+import {
+  CreateListingInitial,
+  CreateListingInitialErrors,
+} from '@/constants/forms/create-listing.initial';
 
 const CreateProductPage = () => {
-  const [form, setForm] = useState<Form>({
-    name: '',
-    description: '',
-    type: 'PRODUCT',
-    price: undefined,
-    rental: undefined,
-    negotiable: false,
-    status: 'PUBLIC',
-    categoryId: '',
-    images: [],
-    tags: [],
-  });
+  const router = useRouter();
+  const t = useTranslations('create.listing');
 
-  const [tagText, setTagText] = useState<string>('');
+  const [form, setForm] = useState<CreateListingForm>(CreateListingInitial);
+  const [images, setImages] = useState<ImageInputProps[]>([]);
 
-  const handleAddTag = (tag: string) => {
-    if (form.tags.includes(tag) || isEmpty(tag)) return;
+  const [submitting, setSubmitting] = useState<boolean>(false);
+  const [errors, setErrors] = useState<CreateProductErrors>(
+    CreateListingInitialErrors,
+  );
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setForm((prevState) => ({
       ...prevState,
-      tags: [...prevState.tags, tag],
+      [e.target.name]: e.target.value,
     }));
   };
 
-  const handleTagTextChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setTagText(e.target.value);
+  const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setForm((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.checked,
+    }));
+  };
 
-    if (!e.target.value.includes(',')) return;
+  const handleLocation = (location: LocationType) => {
+    setForm((prevState) => ({
+      ...prevState,
+      location,
+    }));
+  };
 
-    const tags = e.target.value.split(',');
-    tags.map((tag) => handleAddTag(tag));
-    setTagText('');
+  const handleError = (newErrors: Partial<CreateProductErrors>) => {
+    setErrors({
+      ...CreateListingInitialErrors,
+      ...newErrors,
+    });
+    setSubmitting(false);
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setSubmitting(true);
+
+    try {
+      const listing = await handleCreateListing(
+        form,
+        images,
+        handleError,
+        (key: string) => t(`errors.${key}`),
+      );
+      if (listing) {
+        setForm(CreateListingInitial);
+        setImages([]);
+        router.push(`/listing/${listing.uuid}`);
+      }
+    } catch (error) {
+      console.error(error);
+      handleError({ global: [t('errors.500')] });
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
-    <div>
-      <h1>Create Product Page</h1>
-      <form>
-        <Input
-          id={'name'}
-          name={'name'}
-          type={'text'}
-          placeholder='Name'
-          value={form.name}
-          onChange={(e) =>
-            setForm({
-              ...form,
-              name: e.target.value,
-            })
-          }
+    <div className='flex w-full justify-center'>
+      <form
+        className='flex max-w-screen-md flex-1 flex-col gap-4 py-4'
+        onSubmit={handleSubmit}
+      >
+        <h1 className='mb-2 text-3xl font-bold'>{t('title')}</h1>
+        <BasicCreate
+          {...form}
+          handleChange={handleChange}
+          setForm={setForm}
+          errors={errors}
         />
-        <Input
-          id='Description'
-          name='Description'
-          type='text'
-          placeholder='Description'
-          value={form.description}
-          onChange={(e) =>
-            setForm({
-              ...form,
-              description: e.target.value,
-            })
-          }
-        />
-        {/* <Input*/}
-        {/*  id={'type'}*/}
-        {/*  name={'type'}*/}
-        {/*  type={'text'}*/}
-        {/*  placeholder='Type'*/}
-        {/*  value={form.type}*/}
-        {/*  onChange={(e) => setForm({ ...form, type: e.target.value })}*/}
-        {/* />*/}
-        <Input
-          id={'price'}
-          name={'price'}
-          type={'number'}
-          placeholder='Price'
-          value={form.price}
-          onChange={(e) =>
-            setForm({
-              ...form,
-              price: toInteger(e.target.value) || undefined,
-            })
-          }
-        />
-        {/* toggle*/}
-        <label className='relative inline-flex cursor-pointer items-center'>
-          <input
-            type='checkbox'
-            checked={form.negotiable}
-            className='peer sr-only'
-            onChange={(e) =>
-              setForm({
-                ...form,
-                negotiable: e.target.checked,
-              })
-            }
+        <HorizontalDivider />
+        <div className='flex flex-col gap-2'>
+          <h4 className='text-lg font-bold'>{t('images')}</h4>
+          <ImageInput
+            images={images}
+            setImages={setImages}
+            errors={errors.images}
           />
-          <div className="peer-focus:ring-blue-300 peer-checked:after:border-white after:bg-white peer h-6 w-11 rounded-full border-stroke bg-primary transition-colors duration-500 after:absolute after:start-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:border after:border-stroke after:transition-all after:content-[''] peer-checked:bg-blue peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full"></div>
-        </label>
-        {/* <Input*/}
-        {/*  id={'negotiable'}*/}
-        {/*  name={'negotiable'}*/}
-        {/*  type={'boolean'}*/}
-        {/*  placeholder='Negotiable'*/}
-        {/*  value={form.negotiable}*/}
-        {/*  onChange={(e) => setForm({ ...form, negotiable: e.target.value })}*/}
-        {/* />*/}
-        <Input
-          id={'status'}
-          name={'status'}
-          type={'text'}
-          placeholder='Status'
-          value={form.status}
-          onChange={(e) =>
-            setForm({
-              ...form,
-              status: e.target.value === 'PRIVATE' ? 'PRIVATE' : 'PUBLIC',
-            })
-          }
-        />
-        <Input
-          id={'categoryId'}
-          name={'categoryId'}
-          type={'text'}
-          placeholder='Category Id'
-          value={form.categoryId}
-          onChange={(e) =>
-            setForm({
-              ...form,
-              categoryId: e.target.value,
-            })
-          }
-        />
-        {/* <Input*/}
-        {/*  id={'images'}*/}
-        {/*  name={'images'}*/}
-        {/*  type={'text'}*/}
-        {/*  placeholder='Images'*/}
-        {/*  value={form.images}*/}
-        {/*  onChange={(e) => setForm({ ...form, images: e.target.value })}*/}
-        {/* />*/}
-        {/* <Input*/}
-        {/*  id={'tags'}*/}
-        {/*  name={'tags'}*/}
-        {/*  type={'text'}*/}
-        {/*  placeholder='Tags'*/}
-        {/*  value={form.tags}*/}
-        {/*  onChange={(e) => setForm({ ...form, tags: e.target.value })}*/}
-        {/* />*/}
-        <div
-          className={
-            'flex w-full flex-wrap items-start justify-start gap-2 rounded-xl border border-stroke bg-primary p-2 text-text-secondary'
-          }
-        >
-          {form.tags.map((tag) => (
-            <div
-              key={tag}
-              className={
-                'flex items-center justify-center gap-2 rounded-xl border border-stroke bg-primary px-3 py-2 text-text-secondary transition-colors hover:border-stroke-secondary'
-              }
-            >
-              {tag}
-              <button
-                onClick={() => {
-                  setForm((prevState) => ({
-                    ...prevState,
-                    tags: prevState.tags.filter((t) => t !== tag),
-                  }));
-                }}
-                type={'button'}
-              >
-                <IconX
-                  size={16}
-                  className='text-text-secondary transition-colors hover:text-blue'
-                />
-              </button>
-            </div>
-          ))}
-          <input
-            type='text'
-            value={tagText}
-            onChange={handleTagTextChange}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                const input = e.target as HTMLInputElement;
-                const tag = input.value;
-                console.log(input.value);
-                setTagText('');
-                handleAddTag(tag);
-                input.value = '';
-              } else if (e.key === 'Backspace' && isEmpty(tagText)) {
-                e.preventDefault();
-                setTagText(form.tags[form.tags.length - 1]);
-                setForm((prevState) => ({
-                  ...prevState,
-                  tags: prevState.tags.slice(0, -1),
-                }));
-              }
-            }}
-            className='h-10 grow bg-transparent text-text-secondary outline-none'
-          />
+          {errors.images?.length > 0 && <FormErrors errors={errors.images} />}
         </div>
-        <button
-          onClick={() => {
-            navigator.clipboard
-              .writeText(`${form.tags.join(',')},`)
-              .then((r) => console.log(r))
-              .catch((e) => console.log(e));
-          }}
-          type={'button'}
-          className='bg-blue-500 hover:bg-blue-700 text-white rounded px-4 py-2 font-bold'
-        >
-          Copy
-        </button>
+        <DetailsCreate
+          {...form}
+          handleChange={handleChange}
+          handleCheckboxChange={handleCheckboxChange}
+          setForm={setForm}
+          errors={errors}
+        />
+        <MapCreate
+          location={form.location}
+          handleLocation={handleLocation}
+          errors={errors.location}
+        />
+        <div className='flex items-center justify-end gap-8'>
+          <button
+            type={'button'}
+            className='rounded-lg font-medium text-text-secondary transition-colors duration-200 ease-in-out hover:text-blue'
+          >
+            {t('reset')}
+          </button>
+          <SubmitButton
+            pendingContent={t('pending')}
+            pendingOverride={submitting}
+          >
+            {t('submit')}
+          </SubmitButton>
+        </div>
+        <FormErrors errors={errors.global} />
       </form>
     </div>
   );

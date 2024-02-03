@@ -1,6 +1,6 @@
 import { useTranslations } from 'next-intl';
 
-import Dates from '@/components/project/client/dates';
+import Dates from '@/components/common/dates';
 import Tag from '@/components/common/tag';
 
 const Description = ({

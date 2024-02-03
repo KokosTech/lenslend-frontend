@@ -6,10 +6,12 @@ import { useFormStatus } from 'react-dom';
 const SubmitButton = ({
   children,
   pendingContent,
+  pendingOverride,
   onClick,
 }: {
   children: ReactNode;
   pendingContent: ReactNode;
+  pendingOverride?: boolean;
   onClick?: () => void;
 }) => {
   const { pending } = useFormStatus();
@@ -22,7 +24,7 @@ const SubmitButton = ({
       aria-disabled={pending}
       onClick={onClick}
     >
-      {pending ? (
+      {pendingOverride || pending ? (
         <>
           <svg
             aria-hidden='true'

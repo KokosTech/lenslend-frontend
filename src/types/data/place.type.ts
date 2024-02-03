@@ -41,6 +41,15 @@ type ShortPlace = {
   icon: string;
 };
 
+type CardPlace = ShortPlace & {
+  name: string;
+  images: {
+    uuid: string;
+    url: string;
+    alt: string;
+  }[];
+};
+
 type Place = ShortPlace & {
   name: string;
   description: string;
@@ -82,4 +91,4 @@ type Place = ShortPlace & {
   updated_at: string;
 };
 
-export type { ShortPlace, Place, Service, Visitor, User, Review };
+export type { CardPlace, ShortPlace, Place, Service, Visitor, User, Review };
