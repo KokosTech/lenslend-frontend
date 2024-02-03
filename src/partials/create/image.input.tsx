@@ -10,6 +10,7 @@ type ImageInputProps = {
 type ImageInputType = {
   images: ImageInputProps[];
   setImages: Dispatch<SetStateAction<ImageInputProps[]>>;
+  errors: string[];
 };
 
 const ImageInput = ({ images, setImages }: ImageInputType) => {
