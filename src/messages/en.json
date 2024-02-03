@@ -156,6 +156,66 @@
       "signup": "Sign up!"
     }
   },
+  "create": {
+    "listing": {
+      "title": "Create a new listing",
+      "basic": {
+        "title": "Basic",
+        "name": "Title",
+        "category": "Category",
+        "status": {
+          "title": "Status",
+          "PRIVATE": "Private",
+          "PUBLIC": "Public"
+        },
+        "state": {
+          "title": "State",
+          "NEW": "New",
+          "LIKE_NEW": "Like New",
+          "USED": "Used",
+          "REFURBISHED": "Refurbished"
+        }
+      },
+      "images": "Images",
+      "details": {
+        "title": "Details",
+        "description": "Description",
+        "price": "Price",
+        "rental": "Rental",
+        "negotiable": "Negotiable",
+        "tags": "Tags"
+      },
+      "location": {
+        "title": "Meetup point"
+      },
+      "submit": "Create",
+      "pending": "Creating...",
+      "reset": "Reset",
+      "errors": {
+        "500": "Something went wrong, please try again",
+        "name": {
+          "min": "Title must be at least 3 characters long",
+          "max": "Title must be at most 60 characters long"
+        },
+        "description": {
+          "min": "Description must be at least 100 characters long",
+          "max": "Description must be at most 3000 characters long"
+        },
+        "price": "Invalid price",
+        "category": "Category is required",
+        "tags": "Tags must be at most 16",
+        "tag": {
+          "min": "Tag must be at least 3 characters long",
+          "max": "Tag must be at most 20 characters long"
+        },
+        "location": "Meetup location is required",
+        "images": {
+          "min": "At least 1 images are required",
+          "max": "At most 6 images are allowed"
+        }
+      }
+    }
+  },
   "common": {
     "created_at": "Created on:",
     "updated_at": "Updated on:",
