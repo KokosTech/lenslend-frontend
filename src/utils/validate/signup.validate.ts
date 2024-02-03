@@ -3,7 +3,7 @@ import { SignupFormErrors, SignupFormState } from '@/types/forms/signup.form';
 import { signupFromErrorsInitial } from '@/constants/forms/signup.initial';
 import { signupSchemas } from '@/schemas/signup.schema';
 import { formatErrors } from '@/utils/formatErrors';
-import { extractErrors } from '../extractErrors';
+import { extractTranslatedErrors } from '../extractErrors';
 
 type ValidationError = {
   constraints: {
@@ -37,7 +37,10 @@ const clientValidate = (
 
   if (!result.success) {
     const formatted = formatErrors(result);
-    const newErrors: Partial<SignupFormErrors> = extractErrors(formatted);
+    const newErrors: Partial<SignupFormErrors> = extractTranslatedErrors(
+      formatted,
+      t,
+    );
 
     return {
       ...signupFromErrorsInitial,

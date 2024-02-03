@@ -2,6 +2,9 @@ type ListingType = 'PRODUCT' | 'SERVICE';
 type ListingStatus = 'PUBLIC' | 'PRIVATE';
 type ListingState = 'NEW' | 'LIKE_NEW' | 'USED' | 'REFURBISHED';
 
+export const ListingStatusOptions = ['PUBLIC', 'PRIVATE'];
+export const ListingStateOptions = ['NEW', 'LIKE_NEW', 'USED', 'REFURBISHED'];
+
 type ListingCategory = {
   uuid: string;
   name: string;
@@ -13,8 +16,8 @@ type ListingImage = {
 };
 
 type LocationType = {
-  lat: number;
-  lng: number;
+  lat: number | null;
+  lng: number | null;
 };
 
 type CreateListingForm = {
@@ -29,7 +32,28 @@ type CreateListingForm = {
   category: ListingCategory;
   images: ListingImage[];
   tags: string[];
-  location: LocationType | null;
+  location: LocationType;
+};
+
+type CreateProductErrors = {
+  name: string[];
+  description: string[];
+  price: string[];
+  rental: string[];
+  negotiable: string[];
+  state: string[];
+  status: string[];
+  category: {
+    uuid: string[];
+    name: string[];
+  };
+  tags: string[];
+  location: {
+    lat: string[];
+    lng: string[];
+  };
+  images: string[];
+  global: string[];
 };
 
 export type {
@@ -40,4 +64,5 @@ export type {
   ListingImage,
   LocationType,
   CreateListingForm,
+  CreateProductErrors,
 };

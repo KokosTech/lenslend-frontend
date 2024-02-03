@@ -1,4 +1,7 @@
-import { CreateListingForm } from '@/types/forms/create-listing.form';
+import {
+  CreateListingForm,
+  CreateProductErrors,
+} from '@/types/forms/create-listing.form';
 
 const CreateListingInitial: CreateListingForm = {
   name: '',
@@ -15,7 +18,31 @@ const CreateListingInitial: CreateListingForm = {
   },
   images: [],
   tags: [],
-  location: null,
+  location: {
+    lat: null,
+    lng: null,
+  },
 };
 
-export { CreateListingInitial };
+const CreateListingInitialErrors: CreateProductErrors = {
+  name: [],
+  description: [],
+  price: [],
+  rental: [],
+  negotiable: [],
+  state: [],
+  status: [],
+  category: {
+    uuid: [],
+    name: [],
+  },
+  tags: [],
+  location: {
+    lat: [],
+    lng: [],
+  },
+  images: [],
+  global: [],
+};
+
+export { CreateListingInitial, CreateListingInitialErrors };
