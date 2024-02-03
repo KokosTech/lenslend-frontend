@@ -68,6 +68,12 @@ const CreateProductPage = () => {
     setSubmitting(false);
   };
 
+  const handleReset = () => {
+    setForm(CreateListingInitial);
+    setImages([]);
+    setErrors(CreateListingInitialErrors);
+  };
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSubmitting(true);
@@ -130,6 +136,7 @@ const CreateProductPage = () => {
         <div className='flex items-center justify-end gap-8'>
           <button
             type={'button'}
+            onClick={handleReset}
             className='rounded-lg font-medium text-text-secondary transition-colors duration-200 ease-in-out hover:text-blue'
           >
             {t('reset')}
