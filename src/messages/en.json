@@ -216,6 +216,17 @@
           "max": "At most 6 images are allowed"
         }
       }
+    },
+    "place": {
+      "title": "Create a new place",
+      "images": "Images",
+      "details": {
+        "title": "Details",
+        "description": "Description",
+        "tags": "Tags"
+      },
+      "location": "Location",
+      "tags": "Tags"
     }
   },
   "common": {
