@@ -6,6 +6,12 @@ const nextConfig = {
   images: {
     domains: ['localhost', 'tuesfest.bg', 'storage.lenslend.kaloyan.tech'],
   },
+  serverRuntimeConfig: {
+    withNextIntl: {
+      availableLocales: ['en', 'bg'],
+      defaultLocale: 'en',
+    },
+  },
 };
 
 module.exports = withNextIntl(nextConfig);

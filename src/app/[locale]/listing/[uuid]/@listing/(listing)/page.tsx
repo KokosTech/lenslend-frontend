@@ -11,7 +11,8 @@ import getListing from '@/fetch/listing.fetch';
 import PublishComment from '@/partials/listings/listing/publishComment';
 import { FullListingResponse } from '@/types/data/listing.type';
 import Gallery from '@/components/project/gallery';
-import { unstable_setRequestLocale } from 'next-intl/server';
+import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
+import Link from 'next/link';
 
 const ListingPage = async ({
   params: { uuid, locale },
@@ -19,7 +20,28 @@ const ListingPage = async ({
   params: { uuid: string; locale: string };
 }) => {
   unstable_setRequestLocale(locale);
-  const listing: FullListingResponse | null = await getListing(uuid);
+
+  const t = await getTranslations('listing');
+  let listing: FullListingResponse | null = null;
+
+  try {
+    listing = await getListing(uuid);
+  } catch (e) {
+    listing = null;
+    return (
+      <div className='flex h-screen w-full flex-col items-center justify-center'>
+        <h2 className='bg-gradient bg-clip-text p-2 text-5xl font-black text-transparent'>
+          {t('errors.unauthorized')}
+        </h2>
+        <Link
+          href={'/'}
+          className='text-white mt-8 rounded-md bg-primary px-5 py-2 transition-all hover:scale-105'
+        >
+          {t('errors.go_back')}
+        </Link>
+      </div>
+    );
+  }
 
   if (!listing) notFound();
 

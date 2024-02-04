@@ -8,6 +8,11 @@ import {
 } from 'next-intl/server';
 import Comment from '@/partials/listings/listing/comment';
 import { API_URL } from '@/configs/api';
+import {
+  HTTPForbiddenException,
+  HTTPUnauthorizedException,
+} from '@/errors/HTTPExceptions';
+import { getAuth } from '@/actions/auth';
 
 type Comment = {
   id: string;
@@ -21,7 +26,20 @@ const Comments = async ({ params: { uuid } }: { params: { uuid: string } }) => {
   const locale = await getLocale();
   unstable_setRequestLocale(locale);
 
-  const comments = await getComments(uuid);
+  let comments: Comment[] | null = null;
+  try {
+    comments = await getComments(uuid);
+  } catch (e) {
+    if (
+      e instanceof HTTPUnauthorizedException ||
+      e instanceof HTTPForbiddenException
+    ) {
+      return null;
+    }
+
+    throw e;
+  }
+
   const t = await getTranslations('listing.comments');
 
   if (!comments) {
@@ -80,13 +98,29 @@ const Comments = async ({ params: { uuid } }: { params: { uuid: string } }) => {
 };
 
 const getComments = async (listingUUID: string) => {
+  const auth = await getAuth();
+
   const res = await fetch(`${API_URL}/listing/${listingUUID}/comment`, {
     next: {
       tags: [`/listing/${listingUUID}/comment`],
     },
+    headers: auth
+      ? {
+          Authorization: auth,
+        }
+      : {},
   });
 
   if (!res.ok) {
+    switch (res.status) {
+      case 401:
+        throw new HTTPUnauthorizedException();
+      case 403:
+        throw new HTTPForbiddenException();
+      case 404:
+        return null;
+    }
+
     throw new Error(`Could not fetch comments for listing ${listingUUID}`);
   }
 

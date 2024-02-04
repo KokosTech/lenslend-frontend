@@ -1,6 +1,5 @@
 'use client'; // Error components must be Client components
 
-import { useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 
 export default function Error({
@@ -11,10 +10,6 @@ export default function Error({
   reset: () => void;
 }) {
   const t = useTranslations('errors');
-
-  useEffect(() => {
-    console.error(error);
-  }, [error]);
 
   return (
     <div className='flex h-screen w-full flex-col items-center justify-center'>
