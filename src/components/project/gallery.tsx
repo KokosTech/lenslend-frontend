@@ -26,7 +26,7 @@ const GalleryModal = ({
     if (index === pictures.length - 1) {
       setIndex(0);
     } else {
-      setIndex(index + 1);
+      setIndex((prev) => prev + 1);
     }
   }, [index, pictures.length]);
 
@@ -34,7 +34,7 @@ const GalleryModal = ({
     if (index === 0) {
       setIndex(pictures.length - 1);
     } else {
-      setIndex(index - 1);
+      setIndex((prevy) => prevy - 1);
     }
   }, [index, pictures.length]);
 
@@ -136,6 +136,7 @@ const GalleryModal = ({
               <div className='flex h-full max-h-screen w-full shrink-0 items-center justify-center overflow-hidden object-contain'>
                 <img
                   src={pictures[index]?.url}
+                  key={pictures[index]?.uuid}
                   alt={`снимка ${index + 1} на проект`}
                   className=' h-full rounded-xl object-contain'
                 />

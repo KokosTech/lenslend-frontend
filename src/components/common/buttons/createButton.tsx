@@ -67,7 +67,7 @@ const CreateButton = ({
                 onClick={close}
                 className='flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg border border-stroke bg-primary px-4 py-3 transition-colors hover:border-stroke-secondary'
               >
-                <CustomIcon name={icon} className='h-8 w-8 text-text' />
+                <CustomIcon name={icon} className='h-6 w-6 text-text' />
                 <p>{t(name)}</p>
               </Link>
             ))}

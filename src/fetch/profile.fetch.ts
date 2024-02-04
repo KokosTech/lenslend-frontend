@@ -1,5 +1,5 @@
 import { getAuth } from '@/actions/auth';
-import { User } from '@/types/data/place.type';
+import { UserProfile } from '@/types/data/user.type';
 
 const getProfile = async () => {
   const auth = await getAuth();
@@ -22,9 +22,10 @@ const getProfile = async () => {
     return null;
   }
 
-  console.log('fetching profile');
+  const user = (await res.json()) as UserProfile | null;
+  console.log('fetching profile', user);
 
-  return (await res.json()) as User | null;
+  return user;
 };
 
 export { getProfile };

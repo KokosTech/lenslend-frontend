@@ -17,11 +17,9 @@ type Visitor = {
 };
 
 type Service = {
-  service: {
-    uuid: string;
-    name: string;
-    icon: string;
-  };
+  uuid: string;
+  name: string;
+  icon: string;
 };
 
 type User = {
@@ -41,6 +39,15 @@ type ShortPlace = {
   icon: string;
 };
 
+type CardPlace = ShortPlace & {
+  name: string;
+  images: {
+    uuid: string;
+    url: string;
+    alt: string;
+  }[];
+};
+
 type Place = ShortPlace & {
   name: string;
   description: string;
@@ -55,7 +62,9 @@ type Place = ShortPlace & {
     url: string;
     alt: string;
   }[];
-  services: Service[];
+  services: {
+    service: Service;
+  }[];
   tags: Tag[];
   visitors: Visitor[];
   reviews: Review[];
@@ -82,4 +91,4 @@ type Place = ShortPlace & {
   updated_at: string;
 };
 
-export type { ShortPlace, Place, Service, Visitor, User, Review };
+export type { CardPlace, ShortPlace, Place, Service, Visitor, User, Review };

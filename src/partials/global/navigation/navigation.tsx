@@ -1,7 +1,5 @@
 'use client';
 
-import dynamic from 'next/dynamic';
-
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
@@ -23,7 +21,7 @@ const Navigation = () => {
   });
 
   const [show, setShow] = useState(false);
-  const [isAuth, setIsAuth] = useState(false);
+  const [isAuth, setIsAuth] = useState<boolean | null>(null);
 
   useEffect(() => {
     isAuthF()
@@ -43,14 +41,20 @@ const Navigation = () => {
       )}
       <nav
         className={`
-          fixed h-screen w-60 overflow-y-auto bg-background text-sm font-semibold text-text md:fixed md:left-0
-          ${show ? 'flex' : 'hidden md:flex'}
+          ${show ? 'flex' : 'hidden'}
+          fixed h-screen w-60 overflow-y-auto bg-background text-sm font-semibold text-text md:fixed md:left-0 md:flex
           `}
       >
         <div className='flex w-full flex-col gap-8 px-4 py-8'>
           <LogoComponent onClick={() => setShow(!show)} />
           {navigation.map(({ icon, text, href, auth }) => {
-            if ((auth && !isAuth) || (auth === false && isAuth)) return null;
+            if (
+              (auth === true && isAuth === false) ||
+              (auth === false && isAuth === true) ||
+              (auth !== undefined && isAuth === null)
+            ) {
+              return null;
+            }
             if (!href) return <HorizontalDivider key={text} />;
 
             return (
@@ -65,6 +69,7 @@ const Navigation = () => {
               />
             );
           })}
+          {isAuth === null && 'skeleton'}
         </div>
         <div className='h-full py-4'>
           <VerticalDivider />
@@ -75,6 +80,8 @@ const Navigation = () => {
   );
 };
 
-export default dynamic(() => Promise.resolve(Navigation), {
-  ssr: false,
-});
+// export default dynamic(() => Promise.resolve(Navigation), {
+//   ssr: false,
+// });
+
+export default Navigation;

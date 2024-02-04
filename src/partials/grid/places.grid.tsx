@@ -27,8 +27,7 @@ const PlacesGrid = async () => {
   if (!places) return null;
 
   return (
-    // <div className='grid w-full grid-cols-1 gap-4 xl:grid-cols-2 2xl:grid-cols-3'>
-    <div className='flex flex-wrap items-start justify-center gap-4'>
+    <div className='grid w-full grid-cols-1 gap-4 p-2 lg:grid-cols-2 2xl:grid-cols-3'>
       {places.map((place) => (
         <PlaceCard key={place.uuid} place={place} />
       ))}

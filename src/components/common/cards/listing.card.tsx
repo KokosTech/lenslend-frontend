@@ -16,11 +16,14 @@ const ListingCard = ({
   rental,
   user,
   images,
-}: ShortListingResponse) => {
+  noActions,
+}: ShortListingResponse & {
+  noActions?: boolean;
+}) => {
   const t = useTranslations('listing');
 
   return (
-    <div className='relative flex w-full max-w-xl gap-3 rounded-xl border border-stroke bg-primary p-2.5 transition hover:scale-[1.01] '>
+    <div className='relative flex w-full shrink grow gap-3 rounded-xl border border-stroke bg-primary p-2.5 transition hover:scale-[1.01]'>
       <ListingThumbnail
         image={images ? images[0] : null}
         state={t(`state.${state}`).toLowerCase()}
@@ -36,7 +39,9 @@ const ListingCard = ({
         </div>
         <div className='flex w-full items-center justify-between gap-4'>
           <Price price={price} rental={rental} />
-          <ListingActionButtons uuid={uuid} userUuid={user.uuid} />
+          {!noActions && (
+            <ListingActionButtons uuid={uuid} userUuid={user.uuid} />
+          )}
         </div>
       </div>
       <Link href={`/listing/${uuid}`} className='absolute h-full w-full' />

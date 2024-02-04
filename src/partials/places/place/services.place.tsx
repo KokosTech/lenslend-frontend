@@ -8,7 +8,7 @@ const ServicesPlace = ({ services }: { services: ServiceType[] | null }) => {
     <>
       <div className='flex gap-4'>
         {services.map((service) => (
-          <Service key={service.service.uuid} {...service} />
+          <Service key={service.uuid} service={service} />
         ))}
       </div>
       <HorizontalDivider />

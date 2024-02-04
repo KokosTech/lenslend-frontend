@@ -34,9 +34,9 @@ export default function LocaleLayout({
   const messages = useMessages();
 
   return (
-    <html lang={locale}>
+    <html lang={locale} className='dark'>
       <body
-        className={`${inter.className} flex hidden flex-row bg-background text-text`}
+        className={`${inter.className} flex flex-row bg-background text-text`}
       >
         <NextIntlClientProvider messages={messages}>
           <ThemeProvider>

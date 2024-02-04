@@ -13,7 +13,7 @@ const ActionButtons = ({
   addClass?: string;
 }) => (
   <div
-    className={`${addClass} z-10 flex shrink-0 gap-1 overflow-hidden rounded-lg`}
+    className={`${addClass} z-10 flex h-fit shrink-0 gap-1 overflow-hidden rounded-lg`}
   >
     <MessageButton uuid={userUuid} />
     <SaveButton uuid={uuid} onSave={onSave} />
