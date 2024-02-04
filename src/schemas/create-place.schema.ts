@@ -1,23 +1,14 @@
 import { z } from 'zod';
+import { emojiRegex } from '@/constants/emojiRegex';
 
-export const createListingSchema = z.object({
+export const createPlaceSchema = z.object({
   name: z.string().min(6, 'name.min').max(60, 'name.max'),
+  icon: z.string().regex(emojiRegex, 'icon'),
   description: z
     .string()
     .min(100, 'description.min')
     .max(3000, 'description.max'),
-  type: z.enum(['PRODUCT', 'SERVICE']),
-  price: z
-    .number({
-      required_error: 'price',
-      invalid_type_error: 'price',
-    })
-    .min(0, 'price')
-    .max(100000, 'price'),
-  rental: z.boolean(),
-  negotiable: z.boolean(),
   status: z.enum(['PUBLIC', 'PRIVATE']),
-  state: z.enum(['NEW', 'LIKE_NEW', 'USED', 'REFURBISHED']),
   category: z.object({
     uuid: z.string().min(1, 'category'),
     name: z.string().min(2, 'category'),
