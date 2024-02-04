@@ -5,10 +5,8 @@ import {
 import { ImageInputProps, SignedUrlResponse } from '@/types/s3.type';
 import { API_URL } from '@/configs/api';
 import { getAuth } from '@/actions/auth';
-import {
-  createListingImagesSchema,
-  createListingSchema,
-} from '@/schemas/create-listing.schema';
+import { createListingSchema } from '@/schemas/create-listing.schema';
+import { createImagesSchema } from '@/schemas/create-image.schema';
 import { formatErrors } from '@/utils/formatErrors';
 import { extractTranslatedErrors } from '@/utils/extractErrors';
 import { getSignedUrls, uploadImages } from '@/utils/create/s3';
@@ -32,7 +30,9 @@ export async function createListing(
     tags: data.tags,
     lat: data.location?.lat,
     lng: data.location?.lng,
-    images: signedUrls.map((url) => url.public_url),
+    images: signedUrls
+      .sort((a, b) => b.order - a.order)
+      .map((url) => url.public_url),
   };
 
   return fetch(`${API_URL}/listing`, {
@@ -58,7 +58,7 @@ export const handleCreateListing = async (
   }
 
   const result = createListingSchema.safeParse(data);
-  const imagesResult = createListingImagesSchema.safeParse(images);
+  const imagesResult = createImagesSchema.safeParse(images);
   let newErrors: Partial<CreateProductErrors> = {};
 
   if (!result.success) {
