@@ -59,7 +59,9 @@ const Place = ({ uuid, onClose }: { uuid: string; onClose: () => void }) => {
           <CloseButton onClick={onClose} />
           <ImagesPlace {...place} />
           <TextPlace {...place} />
-          <ServicesPlace services={place.services} />
+          <ServicesPlace
+            services={place.services.map((service) => service.service)}
+          />
           <VisitorsPlace place={place} />
           <ReviewsPlace place={place} />
           <OwnerPlace place={place} />
@@ -67,7 +69,7 @@ const Place = ({ uuid, onClose }: { uuid: string; onClose: () => void }) => {
           <ButtonsPlace uuid={place.uuid} />
         </div>
         <ActionsPlace
-          ownerUuid={place.owner.uuid}
+          ownerUuid={place.owner?.uuid}
           userUuid={place.creator.uuid}
           {...place}
         />

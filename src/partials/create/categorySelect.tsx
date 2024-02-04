@@ -54,11 +54,13 @@ const Options = ({
 );
 
 const CategorySelect = ({
+  type,
   value,
   placeholder,
   errors,
   onChange,
 }: {
+  type: 'LISTING' | 'PLACE';
   value: string;
   placeholder: string;
   errors: string[];
@@ -74,7 +76,7 @@ const CategorySelect = ({
     data: Category[] | undefined;
     error: undefined;
     isLoading: boolean;
-  } = useSWR('/category/LISTING', {
+  } = useSWR(`/category/${type}`, {
     fetcher: fetcher<Category[]>,
     keepPreviousData: true,
   });

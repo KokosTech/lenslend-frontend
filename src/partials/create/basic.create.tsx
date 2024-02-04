@@ -8,18 +8,16 @@ import DropdownInput from '@/components/common/dropdown.input';
 import {
   CreateListingForm,
   CreateProductErrors,
-  ListingCategory,
   ListingState,
   ListingStateOptions,
-  ListingStatus,
-  ListingStatusOptions,
 } from '@/types/forms/create-listing.form';
 import { useTranslations } from 'next-intl';
+import { Category, Status, StatusOptions } from '@/types/forms/common.form';
 
 type BasicCreateProps = {
   name: string;
-  category: ListingCategory;
-  status: ListingStatus;
+  category: Category;
+  status: Status;
   state: ListingState;
   handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
   setForm: Dispatch<SetStateAction<CreateListingForm>>;
@@ -37,7 +35,7 @@ const BasicCreate = ({
 }: BasicCreateProps) => {
   const t = useTranslations('create.listing.basic');
 
-  const handleCategoryChange = (category: ListingCategory) => {
+  const handleCategoryChange = (category: Category) => {
     setForm((prevState) => ({
       ...prevState,
       category,
@@ -60,6 +58,7 @@ const BasicCreate = ({
         errors={errors.name}
       />
       <CategorySelect
+        type='LISTING'
         value={category.name}
         placeholder={t('category')}
         errors={errors.category.name}
@@ -69,7 +68,7 @@ const BasicCreate = ({
         <DropdownInput
           value={status}
           onChange={handleChange}
-          dropdownOptions={ListingStatusOptions}
+          dropdownOptions={StatusOptions}
           id={'status'}
           name={'status'}
           type={'text'}

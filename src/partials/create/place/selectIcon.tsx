@@ -4,17 +4,19 @@ import EmojiPicker from '@/wrappers/emojiPicker';
 import { useTheme } from '@/context/ThemeProvider';
 import { Categories, Theme } from 'emoji-picker-react';
 
-const SelectIcon = () => {
+type SelectIconProps = {
+  icon: string;
+  errors?: string[];
+  setIcon: (icon: string) => void;
+};
+
+const SelectIcon = ({ icon, errors, setIcon }: SelectIconProps) => {
   const [show, setShow] = useState(false);
-  const [icon, setIcon] = useState('');
 
   const { theme } = useTheme();
   const ref = useRef<HTMLDivElement | null>(null);
 
-  //    <EmojiPicker />
-
-  const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    console.log('click');
+  const handleClick = () => {
     setShow(!show);
   };
 
@@ -37,10 +39,15 @@ const SelectIcon = () => {
       <div
         ref={ref}
         onClick={handleClick}
-        className='relative flex aspect-square h-[58px] w-[58px] shrink-0 cursor-pointer items-center justify-center rounded-lg border border-stroke text-2xl hover:border-stroke-secondary'
+        className={`relative flex aspect-square h-[58px] w-[58px] shrink-0 cursor-pointer items-center justify-center rounded-lg border text-2xl transition-colors
+        ${errors && errors.length > 0 ? 'border-error-secondary hover:border-error-primary' : 'border-stroke hover:border-stroke-secondary'}
+        `}
       >
         {icon === '' ? (
-          <IconIcons size={12} className='h-8 w-8 text-text' />
+          <IconIcons
+            size={12}
+            className={`h-8 w-8 ${errors && errors.length > 0 ? 'text-error-secondary' : 'text-text '}`}
+          />
         ) : (
           icon
         )}

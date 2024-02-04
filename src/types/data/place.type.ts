@@ -62,7 +62,9 @@ type Place = ShortPlace & {
     url: string;
     alt: string;
   }[];
-  services: Service[];
+  services: {
+    service: Service;
+  }[];
   tags: Tag[];
   visitors: Visitor[];
   reviews: Review[];

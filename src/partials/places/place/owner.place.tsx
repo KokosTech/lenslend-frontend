@@ -6,6 +6,10 @@ import { useTranslations } from 'next-intl';
 const OwnerPlace = ({ place: { owner } }: { place: Place }) => {
   const t = useTranslations('place');
 
+  if (!owner) {
+    return null;
+  }
+
   return (
     <>
       <div className='flex flex-col gap-4'>

@@ -57,7 +57,9 @@
         "title": "404 - Listing not found",
         "message": "The listing you're looking for doesn't exist or has been deleted.",
         "action": "Go back"
-      }
+      },
+      "go_back": "Go back",
+      "unauthorized": "You are not authorized to view this page"
     }
   },
   "categories": {

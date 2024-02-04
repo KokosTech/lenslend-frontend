@@ -1,7 +1,6 @@
 import useSWR from 'swr';
 import fetcher from '@/utils/fetcher';
 import Service from '@/components/service';
-import { useState } from 'react';
 import HorizontalDivider from '@/components/horizontalDivider';
 
 type ServiceType = {
@@ -10,9 +9,15 @@ type ServiceType = {
   icon: string;
 };
 
-const ServiceSelect = () => {
-  const [selected, setSelected] = useState<ServiceType[]>([]);
-
+const ServiceSelect = ({
+  title,
+  selected,
+  handleSelect,
+}: {
+  title: string;
+  selected: ServiceType[];
+  handleSelect: (service: ServiceType) => void;
+}) => {
   const {
     data,
     error,
@@ -25,21 +30,6 @@ const ServiceSelect = () => {
     fetcher: fetcher<ServiceType[]>,
     keepPreviousData: true,
   });
-
-  const handleSelect = (service: ServiceType) => {
-    // remove service if already selected
-    if (selected?.find((s) => s.uuid === service.uuid)) {
-      setSelected((prevState) =>
-        prevState?.filter((s) => s.uuid !== service.uuid),
-      );
-      return;
-    }
-
-    setSelected((prevState) =>
-      prevState ? [...prevState, service] : [service],
-    );
-  };
-
   if (isLoading) {
     return <div>Loading services...</div>;
   }
@@ -52,7 +42,7 @@ const ServiceSelect = () => {
     <>
       <HorizontalDivider />
       <div className='flex w-full flex-col gap-4'>
-        <h4 className='text-lg font-bold'>Services</h4>
+        <h4 className='text-lg font-bold'>{title}</h4>
         <div className='flex flex-wrap gap-2'>
           {data.map((service) => (
             <Service
