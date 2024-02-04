@@ -37,7 +37,7 @@ const Options = ({
           Select
         </button>
       </div>
-      {category.sub_categories && (
+      {category.sub_categories && category.sub_categories.length > 0 && (
         <div className='flex flex-col gap-2'>
           {category?.sub_categories?.map((subcategory) => (
             <Options
