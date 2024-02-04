@@ -1,41 +1,39 @@
 import {
-  CreateListingForm,
-  CreateProductErrors,
-} from '@/types/forms/create-listing.form';
+  CreatePlaceErrors,
+  CreatePlaceForm,
+} from '@/types/forms/create-place-form';
 import { ImageInputProps, SignedUrlResponse } from '@/types/s3.type';
 import { API_URL } from '@/configs/api';
 import { getAuth } from '@/actions/auth';
-import { createListingSchema } from '@/schemas/create-listing.schema';
+import { createPlaceSchema } from '@/schemas/create-place.schema';
 import { createImagesSchema } from '@/schemas/create-image.schema';
+import { CreateProductErrors } from '@/types/forms/create-listing.form';
 import { formatErrors } from '@/utils/formatErrors';
 import { extractTranslatedErrors } from '@/utils/extractErrors';
 import { getSignedUrls, uploadImages } from '@/utils/create/s3';
-import { FullListingResponse } from '@/types/data/listing.type';
+import { Place } from '@/types/data/place.type';
 
-export async function createListing(
-  data: CreateListingForm,
+export async function createPlace(
+  data: CreatePlaceForm,
   signedUrls: SignedUrlResponse[],
   token: string,
 ) {
   const body = {
-    title: data.name,
+    icon: data.icon,
+    name: data.name,
     description: data.description,
-    type: 'PRODUCT',
-    price: data.rental ? null : data.price,
-    rental: data.rental ? data.price : null,
-    negotiable: data.negotiable,
-    state: data.state,
     status: data.status,
-    categoryId: data.category.uuid,
+    categoryUuid: data.category.uuid,
     tags: data.tags,
-    lat: data.location?.lat,
-    lng: data.location?.lng,
+    services: data.services.map((service) => service.uuid),
+    lat: data.location.lat,
+    lng: data.location.lng,
     images: signedUrls
       .sort((a, b) => b.order - a.order)
       .map((url) => url.public_url),
   };
 
-  return fetch(`${API_URL}/listing`, {
+  return fetch(`${API_URL}/place`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -45,10 +43,10 @@ export async function createListing(
   });
 }
 
-export const handleCreateListing = async (
-  data: CreateListingForm,
+export const handleCreatePlace = async (
+  data: CreatePlaceForm,
   images: ImageInputProps[],
-  handleError: (newErrors: Partial<CreateProductErrors>) => void,
+  handleError: (newErrors: Partial<CreatePlaceErrors>) => void,
   t: (key: string) => string,
 ) => {
   const token = await getAuth();
@@ -57,7 +55,7 @@ export const handleCreateListing = async (
     return;
   }
 
-  const result = createListingSchema.safeParse(data);
+  const result = createPlaceSchema.safeParse(data);
   const imagesResult = createImagesSchema.safeParse(images);
   let newErrors: Partial<CreateProductErrors> = {};
 
@@ -117,14 +115,14 @@ export const handleCreateListing = async (
     return;
   }
 
-  const createListingResponse = await createListing(data, signedUrls, token);
-  if (!createListingResponse.ok) {
-    const listing = (await createListingResponse.json()) as {
+  const response = await createPlace(data, signedUrls, token);
+  if (!response.ok) {
+    const listing = (await response.json()) as {
       message: string;
     };
     handleError({ global: [listing.message] });
     return;
   }
 
-  return (await createListingResponse.json()) as FullListingResponse;
+  return (await response.json()) as Place;
 };

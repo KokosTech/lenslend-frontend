@@ -17,11 +17,9 @@ type Visitor = {
 };
 
 type Service = {
-  service: {
-    uuid: string;
-    name: string;
-    icon: string;
-  };
+  uuid: string;
+  name: string;
+  icon: string;
 };
 
 type User = {
@@ -64,7 +62,9 @@ type Place = ShortPlace & {
     url: string;
     alt: string;
   }[];
-  services: Service[];
+  services: {
+    service: Service;
+  }[];
   tags: Tag[];
   visitors: Visitor[];
   reviews: Review[];

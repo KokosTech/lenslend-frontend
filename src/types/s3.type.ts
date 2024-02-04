@@ -12,7 +12,7 @@ interface SignedUrlResponse {
   url: string;
   public_url: string;
   key: string;
-  order?: number;
+  order: number;
 }
 
 export type { ImageInputProps, Image, SignedUrlResponse };

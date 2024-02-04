@@ -9,9 +9,9 @@ import HorizontalDivider from '@/components/horizontalDivider';
 
 import { GMAPS_API, GMAPS_ID } from '@/configs/google';
 import { LocationType } from '@/types/forms/create-listing.form';
-import { useTranslations } from 'next-intl';
 
 type MapCreateProps = {
+  title: string;
   location: LocationType | null;
   handleLocation: (location: LocationType) => void;
   errors: {
@@ -20,9 +20,12 @@ type MapCreateProps = {
   };
 };
 
-const MapCreate = ({ location, handleLocation, errors }: MapCreateProps) => {
-  const t = useTranslations('create.listing.location');
-
+const MapCreate = ({
+  title,
+  location,
+  handleLocation,
+  errors,
+}: MapCreateProps) => {
   const [mapLoaded, setMapLoaded] = useState<boolean>(false);
 
   const handleMapLoaded = () => {
@@ -33,7 +36,7 @@ const MapCreate = ({ location, handleLocation, errors }: MapCreateProps) => {
     <>
       <HorizontalDivider />
       <APIProvider apiKey={GMAPS_API}>
-        <h4 className='text-lg font-bold'>{t('title')}</h4>
+        <h4 className='text-lg font-bold'>{title}</h4>
         <div
           className={`relative flex h-64 w-full flex-col gap-2 overflow-hidden rounded-lg border bg-primary
           ${errors?.lat.length > 0 || errors?.lng.length > 0 ? 'border-2 border-error-primary' : 'border-stroke'}`}

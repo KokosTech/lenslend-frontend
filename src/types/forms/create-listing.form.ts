@@ -1,24 +1,14 @@
+import {
+  Category,
+  ImageType,
+  LocationType,
+  Status,
+} from '@/types/forms/common.form';
+
 type ListingType = 'PRODUCT' | 'SERVICE';
-type ListingStatus = 'PUBLIC' | 'PRIVATE';
 type ListingState = 'NEW' | 'LIKE_NEW' | 'USED' | 'REFURBISHED';
 
-export const ListingStatusOptions = ['PUBLIC', 'PRIVATE'];
 export const ListingStateOptions = ['NEW', 'LIKE_NEW', 'USED', 'REFURBISHED'];
-
-type ListingCategory = {
-  uuid: string;
-  name: string;
-};
-
-type ListingImage = {
-  url: string;
-  order: number;
-};
-
-type LocationType = {
-  lat: number | null;
-  lng: number | null;
-};
 
 type CreateListingForm = {
   name: string;
@@ -27,10 +17,10 @@ type CreateListingForm = {
   price?: number;
   rental: boolean;
   negotiable: boolean;
-  status: ListingStatus;
+  status: Status;
   state: ListingState;
-  category: ListingCategory;
-  images: ListingImage[];
+  category: Category;
+  images: ImageType[];
   tags: string[];
   location: LocationType;
 };
@@ -58,10 +48,7 @@ type CreateProductErrors = {
 
 export type {
   ListingType,
-  ListingStatus,
   ListingState,
-  ListingCategory,
-  ListingImage,
   LocationType,
   CreateListingForm,
   CreateProductErrors,
