@@ -1,3 +1,5 @@
+/* eslint-disable indent */
+
 import { IconSortAscending } from '@tabler/icons-react';
 import { User } from '@/types/data/place.type';
 import React from 'react';
