@@ -17,11 +17,9 @@ type Visitor = {
 };
 
 type Service = {
-  service: {
-    uuid: string;
-    name: string;
-    icon: string;
-  };
+  uuid: string;
+  name: string;
+  icon: string;
 };
 
 type User = {
