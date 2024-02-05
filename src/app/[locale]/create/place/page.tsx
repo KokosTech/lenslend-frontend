@@ -81,7 +81,6 @@ const CreatePage = () => {
         router.push(`/place/${place.uuid}`);
       }
     } catch (error) {
-      console.error(error);
       handleError({ global: [t('errors.500')] });
     } finally {
       setSubmitting(false);

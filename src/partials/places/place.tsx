@@ -34,7 +34,6 @@ const Place = ({ uuid, onClose }: { uuid: string; onClose: () => void }) => {
   }
 
   if (error || !place) {
-    console.error(error);
     return (
       <div
         className={

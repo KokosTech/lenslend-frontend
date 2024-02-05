@@ -1,6 +1,6 @@
+import UserCard from '@/components/common/cards/user.card';
 import { API_URL } from '@/configs/api';
 import { User } from '@/types/data/place.type';
-import UserCard from '@/components/common/cards/user.card';
 
 const getUsers = async () => {
   const response = await fetch(`${API_URL}/user/profile`, {
@@ -13,7 +13,6 @@ const getUsers = async () => {
   }
 
   const data = (await response.json()) as User[];
-  // console.log(data);
 
   return data;
 };

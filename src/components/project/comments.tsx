@@ -77,7 +77,6 @@ const getComments = async (listingUUID: string) => {
   }
 
   const comments = (await res.json()) as Comment[];
-  console.log(comments);
 
   if (!comments) {
     throw new Error(`Could not fetch comments for listing ${listingUUID}`);

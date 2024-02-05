@@ -23,6 +23,7 @@ import {
   serverValidate,
 } from '@/utils/validate/signup.validate';
 import { signup } from '@/actions/auth';
+import FormErrors from '@/components/common/form/errors';
 
 const SignupFrom = () => {
   const t = useTranslations('auth.signup');
@@ -92,7 +93,10 @@ const SignupFrom = () => {
         const res = await serverValidate(currentStep, state, t);
 
         if (res && res !== true) {
-          setErrors(res.errors);
+          setErrors({
+            ...signupFromErrorsInitial,
+            ...res.errors,
+          });
           setIsSubmitting(false);
           return;
         }
@@ -112,7 +116,6 @@ const SignupFrom = () => {
         global: formState.messages,
       });
     } else {
-      console.log('success');
       setCurrentStep((prev) => (prev === steps.length - 1 ? prev : prev + 1));
     }
   }, [formState]);
@@ -120,7 +123,7 @@ const SignupFrom = () => {
   return (
     <form className='flex flex-col gap-4 font-semibold' action={formAction}>
       {steps[currentStep]}
-      {/* <FormErrors errors={errors.global} t={t} />*/}
+      <FormErrors errors={errors.global} t={t} />
       <div className='flex items-center justify-center gap-4'>
         <PrevButton
           currentStep={currentStep}

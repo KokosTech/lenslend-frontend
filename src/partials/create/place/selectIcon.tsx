@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
-import { IconIcons } from '@tabler/icons-react';
-import EmojiPicker from '@/wrappers/emojiPicker';
 import { useTheme } from '@/context/ThemeProvider';
+import EmojiPicker from '@/wrappers/emojiPicker';
+import { IconIcons } from '@tabler/icons-react';
 import { Categories, Theme } from 'emoji-picker-react';
+import { useEffect, useRef, useState } from 'react';
 
 type SelectIconProps = {
   icon: string;
@@ -56,8 +56,6 @@ const SelectIcon = ({ icon, errors, setIcon }: SelectIconProps) => {
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
-
-            console.log('click safe area');
           }}
         >
           <EmojiPicker

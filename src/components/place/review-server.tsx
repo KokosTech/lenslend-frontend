@@ -18,7 +18,7 @@ const ReviewServer = ({
   return (
     <div
       key={uuid}
-      className='flex flex-col justify-center gap-2 rounded-xl border border-stroke bg-primary p-4'
+      className='flex w-full flex-col justify-center gap-2 rounded-xl border border-stroke bg-primary p-4'
     >
       <Link
         href={`/${locale}/user/${user.username}`}

@@ -1,9 +1,9 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
-import { useState } from 'react';
 import { IconShare } from '@tabler/icons-react';
 import { useTranslations } from 'next-intl';
+import { usePathname } from 'next/navigation';
+import { useState } from 'react';
 
 const ShareButton = (): JSX.Element => {
   const path = usePathname();
@@ -30,19 +30,16 @@ const ShareButton = (): JSX.Element => {
       url: `${window.location.origin}${path}`,
     });
 
-    try {
-      navigator
-        ?.share({
-          title: window.document.title,
-          text: window.document.title,
-          url: `${window.location.origin}${path}`,
-        })
-        .then(() => console.log('Successful share! 🎉'))
-        .catch((err) => console.error(err));
-    } catch (err) {
-      console.log(err);
-      console.warn('Browser does not support native share');
-    }
+    navigator
+      ?.share({
+        title: window.document.title,
+        text: window.document.title,
+        url: `${window.location.origin}${path}`,
+      })
+      .then(() => console.log('Successful share! 🎉'))
+      .catch((err) =>
+        console.warn('Browser does not support native share', err),
+      );
 
     setTimeout(() => setCopied(false), 2000);
   };

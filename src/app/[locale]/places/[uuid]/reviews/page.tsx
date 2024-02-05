@@ -5,7 +5,7 @@ import BackButton from '@/components/common/buttons/backButton';
 import { unstable_setRequestLocale } from 'next-intl/server';
 
 const getReviews = async (uuid: string) => {
-  const response = await fetch(`${API_URL}/place/${uuid}/reviews`, {
+  const response = await fetch(`${API_URL}/place/${uuid}/review`, {
     cache: 'no-cache',
   });
 
@@ -27,7 +27,6 @@ const ReviewsPage = async ({
 }) => {
   unstable_setRequestLocale(locale);
 
-  console.log('REVIEWS', uuid);
   const reviews: ReviewType[] | null = await getReviews(uuid);
 
   if (!reviews) {

@@ -7,8 +7,6 @@ import { useLocale } from 'next-intl';
 const User = ({ name, username, profile_pic }: UserType) => {
   const locale = useLocale();
 
-  console.log('User', locale);
-
   return (
     <Link
       href={`/${locale}/user/${username}`}
