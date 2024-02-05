@@ -33,14 +33,12 @@ type ShortListingResponse = {
     profile_pic?: string;
     header_pic?: string;
   };
-  images?: [
-    {
-      uuid: string;
-      url: string;
-      alt: string;
-      status: string;
-    },
-  ];
+  thumbnail?: {
+    uuid: string;
+    url: string;
+    alt: string;
+    status: string;
+  };
   created_at: string;
   updated_at: string;
 };
@@ -48,6 +46,14 @@ type ShortListingResponse = {
 type FullListingResponse = ShortListingResponse & {
   description: string;
   tags?: Tag[];
+  images: [
+    {
+      uuid: string;
+      url: string;
+      alt: string;
+      status: string;
+    },
+  ];
 };
 
 type ListingRequest = {
@@ -63,4 +69,4 @@ type ListingRequest = {
   userId: string;
 };
 
-export type { ShortListingResponse, FullListingResponse, ListingRequest, Tag };
+export type { FullListingResponse, ListingRequest, ShortListingResponse, Tag };

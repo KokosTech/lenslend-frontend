@@ -46,7 +46,7 @@ const ListingPage = async ({
   if (!listing) notFound();
 
   const { title, images, user } = listing;
-  const thumbnail = images && images.length > 0 ? { ...images[0] } : undefined;
+  const thumbnail = images && images.length > 0 ? images[0] : undefined;
 
   return (
     <div className='flex w-full flex-col justify-center gap-4 pb-4 pt-2 md:pt-8 lg:flex-row'>

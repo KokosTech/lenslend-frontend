@@ -15,7 +15,7 @@ const ListingCard = ({
   state,
   rental,
   user,
-  images,
+  thumbnail,
   noActions,
 }: ShortListingResponse & {
   noActions?: boolean;
@@ -25,7 +25,7 @@ const ListingCard = ({
   return (
     <div className='relative flex w-full shrink grow gap-3 rounded-xl border border-stroke bg-primary p-2.5 transition hover:scale-[1.01]'>
       <ListingThumbnail
-        image={images ? images[0] : null}
+        image={thumbnail}
         state={t(`state.${state}`).toLowerCase()}
       />
       <div className='flex w-full flex-col justify-between'>
