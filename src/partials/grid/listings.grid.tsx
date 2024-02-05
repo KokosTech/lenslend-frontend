@@ -1,6 +1,6 @@
-import { ShortListingResponse } from '@/types/data/listing.type';
 import ListingCard from '@/components/common/cards/listing.card';
 import { API_URL } from '@/configs/api';
+import { ShortListingResponse } from '@/types/data/listing.type';
 
 const getListings = async (username?: string) => {
   const response = await fetch(
@@ -11,6 +11,7 @@ const getListings = async (username?: string) => {
   }
 
   const data = (await response.json()) as ShortListingResponse[];
+  console.log(data.map((listing) => listing.thumbnail));
 
   return data;
 };

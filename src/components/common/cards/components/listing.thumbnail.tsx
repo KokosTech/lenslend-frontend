@@ -5,10 +5,12 @@ const ListingThumbnail = ({
   image,
   state,
 }: {
-  image: {
-    url: string;
-    alt: string;
-  } | null;
+  image:
+    | {
+        url: string;
+        alt: string;
+      }
+    | undefined;
   state: string;
 }) => (
   <div className='relative flex h-full w-28 shrink-0 items-center justify-center self-center md:h-[136px] md:w-[136px]'>
