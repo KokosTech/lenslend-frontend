@@ -9,6 +9,7 @@ import StarInput from '@/components/common/star.input';
 
 type PublishReviewPlaceProps = {
   placeUuid: string;
+  setHasReview: (hasReview: boolean) => void;
 };
 
 export type ReviewState = {
@@ -21,7 +22,10 @@ const reviewInitialState = {
   rating: 0,
 };
 
-const PublishReviewPlace = ({ placeUuid }: PublishReviewPlaceProps) => {
+const PublishReviewPlace = ({
+  placeUuid,
+  setHasReview,
+}: PublishReviewPlaceProps) => {
   const [review, setReview] = useState<ReviewState>(reviewInitialState);
 
   const t = useTranslations('place.reviews');
@@ -33,6 +37,7 @@ const PublishReviewPlace = ({ placeUuid }: PublishReviewPlaceProps) => {
     console.log('form state', state);
     if (state === true) {
       setReview(reviewInitialState);
+      setHasReview(true);
     }
   }, [state]);
 

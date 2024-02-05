@@ -1,4 +1,4 @@
-import useSWR from 'swr';
+import useSWR, { useSWRConfig } from 'swr';
 import { Review } from '@/types/data/place.type';
 import { getAuth } from '@/actions/auth';
 import { API_URL } from '@/configs/api';
@@ -6,6 +6,7 @@ import { ReviewClient } from '@/components/place/review';
 import PublishReviewPlace from '@/partials/places/place/publishReview.place';
 import HorizontalDivider from '@/components/horizontalDivider';
 import { useTranslations } from 'next-intl';
+import { useEffect, useState } from 'react';
 
 const yourReviewFetcher = async (tags: string[], url: string) => {
   const auth = await getAuth();
@@ -38,6 +39,9 @@ const yourReviewFetcher = async (tags: string[], url: string) => {
 };
 
 const YourReviewPlace = ({ uuid }: { uuid: string }) => {
+  const { mutate } = useSWRConfig();
+  const [hasReview, setHasReview] = useState<boolean>(false);
+
   const t = useTranslations('place.reviews');
   const fetcher = yourReviewFetcher.bind(null, [
     `/place/${uuid}/review/my-review`,
@@ -57,6 +61,14 @@ const YourReviewPlace = ({ uuid }: { uuid: string }) => {
 
   console.log('review', review);
 
+  useEffect(() => {
+    if (hasReview && !review) {
+      mutate(`${API_URL}/place/${uuid}/review/my-review`).then((r) => {
+        console.log('mutate', r);
+      });
+    }
+  }, [hasReview, review]);
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -67,16 +79,18 @@ const YourReviewPlace = ({ uuid }: { uuid: string }) => {
   }
 
   if (!review) {
-    return <PublishReviewPlace placeUuid={uuid} />;
+    return <PublishReviewPlace placeUuid={uuid} setHasReview={setHasReview} />;
   }
 
-  return (
-    <div className='flex flex-col gap-4'>
-      <h4 className='text-xl font-semibold text-text'>{t('your_review')}</h4>
-      <ReviewClient {...review} />
-      <HorizontalDivider />
-    </div>
-  );
+  if (review || hasReview) {
+    return (
+      <div className='flex flex-col gap-4'>
+        <h4 className='text-xl font-semibold text-text'>{t('your_review')}</h4>
+        <ReviewClient {...review} />
+        <HorizontalDivider />
+      </div>
+    );
+  }
 };
 
 export default YourReviewPlace;
