@@ -1,13 +1,13 @@
 /* eslint-disable indent */
 
-import { unstable_setRequestLocale } from 'next-intl/server';
-import Search from '@/partials/common/seatch';
-import { API_URL } from '@/configs/api';
-import { ShortListingResponse } from '@/types/data/listing.type';
-import { CardPlace, User } from '@/types/data/place.type';
 import ListingCard from '@/components/common/cards/listing.card';
 import PlaceCard from '@/components/common/cards/place.card';
 import UserCard from '@/components/common/cards/user.card';
+import { API_URL } from '@/configs/api';
+import Search from '@/partials/common/seatch';
+import { ShortListingResponse } from '@/types/data/listing.type';
+import { CardPlace, User } from '@/types/data/place.type';
+import { unstable_setRequestLocale } from 'next-intl/server';
 
 const getSearch = async (search: string, category?: string) => {
   const res = await fetch(
@@ -23,10 +23,6 @@ const getSearch = async (search: string, category?: string) => {
     places: CardPlace[];
     users: User[];
   };
-
-  console.log(data.places);
-
-  console.log(data);
 
   return data;
 };

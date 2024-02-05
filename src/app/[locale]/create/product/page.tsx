@@ -90,7 +90,6 @@ const CreateProductPage = () => {
         router.push(`/listing/${listing.uuid}`);
       }
     } catch (error) {
-      console.error(error);
       handleError({ global: [t('errors.500')] });
     } finally {
       setSubmitting(false);

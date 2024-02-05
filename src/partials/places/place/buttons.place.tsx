@@ -1,10 +1,8 @@
 import { useTranslations } from 'next-intl';
 import { IconEdit, IconMessageReport } from '@tabler/icons-react';
 
-const ButtonsPlace = ({ uuid }: { uuid: string }) => {
+const ButtonsPlace = ({}: { uuid: string }) => {
   const t = useTranslations('place.buttons');
-
-  console.log(uuid);
 
   return (
     <>

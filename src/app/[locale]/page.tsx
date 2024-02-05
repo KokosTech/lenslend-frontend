@@ -1,11 +1,11 @@
-import { unstable_setRequestLocale } from 'next-intl/server';
-import ListingsGrid from '@/partials/grid/listings.grid';
-import { Suspense } from 'react';
-import PlacesGrid from '@/partials/grid/places.grid';
-import Link from 'next/link';
-import { IconChevronRight } from '@tabler/icons-react';
 import Search from '@/partials/common/seatch';
+import ListingsGrid from '@/partials/grid/listings.grid';
+import PlacesGrid from '@/partials/grid/places.grid';
 import UsersGrid from '@/partials/grid/users.grid';
+import { IconChevronRight } from '@tabler/icons-react';
+import { unstable_setRequestLocale } from 'next-intl/server';
+import Link from 'next/link';
+import { Suspense } from 'react';
 
 const HeaderImage = () => (
   <div className='!aspect-[32/9] w-full rounded-xl border border-stroke bg-primary p-4'></div>
@@ -27,7 +27,6 @@ const CategoryTitle = ({ title, url }: { title: string; url: string }) => (
 const Home = ({ params: { locale } }: { params: { locale: string } }) => {
   unstable_setRequestLocale(locale);
 
-  console.log('Hello from src/app/page.tsx');
   return (
     <div className='flex w-full justify-center'>
       <div className='flex max-w-screen-2xl flex-col gap-4'>

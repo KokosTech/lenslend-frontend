@@ -86,7 +86,6 @@ export const handleCreateListing = async (
   }
 
   if (Object.keys(newErrors).length) {
-    console.log('new errors:', newErrors);
     handleError(newErrors);
     return;
   }

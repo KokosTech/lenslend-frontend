@@ -45,8 +45,6 @@ const login = async (email: string, password: string): Promise<boolean> => {
     }),
   });
 
-  console.log(res.status);
-
   if (res.status === 201) {
     const { access_token, refresh_token } = (await res.json()) as AuthResponse;
 
@@ -68,8 +66,6 @@ const loginAction = async (prevState: unknown, formData: FormData) => {
   });
 
   if (!validatedData.success) {
-    console.log('invalid data');
-    console.log(validatedData.error);
     return {
       messages: validatedData.error.issues.map((issue) => issue.message),
     };
@@ -78,7 +74,6 @@ const loginAction = async (prevState: unknown, formData: FormData) => {
   const { email, password } = validatedData.data;
 
   try {
-    console.log('login');
     logged = await login(email, password);
     revalidateTag('user');
   } catch (err) {
@@ -101,8 +96,6 @@ const signup = async (
   prevState: unknown,
   formData: FormData,
 ) => {
-  console.log('submitting');
-
   try {
     const res = await fetch(`${API_URL}/auth/signup`, {
       method: 'POST',
@@ -116,20 +109,14 @@ const signup = async (
       const { access_token, refresh_token } =
         (await res.json()) as AuthResponse;
 
-      console.log(access_token, refresh_token);
-
       setTokens(access_token, refresh_token);
       return true;
     }
-
-    console.log(res.status);
-    console.log(res.json());
 
     return {
       messages: ['errors.500'],
     };
   } catch (e) {
-    console.log(e);
     return {
       messages: ['errors.500'],
     };

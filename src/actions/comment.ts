@@ -1,44 +1,88 @@
 'use server';
 
-import { axiosInstance } from '@/configs/axios';
 import { revalidateTag } from 'next/cache';
 import { getAuth } from '@/actions/auth';
+import { unstable_noStore as noStore } from 'next/dist/server/web/spec-extension/unstable-no-store';
+import { CreateCommentSchema } from '@/schemas/create-comment.schema';
+import { API_URL } from '@/configs/api';
+import extractServerErrors, {
+  ExtractedServerErrors,
+} from '@/utils/extractServerErrors';
 
 export default async function postComment(
   listing_uuid: string,
+  prevState: unknown,
   formData: FormData,
-) {
-  const content = formData.get('comment');
-  console.log('COMMENT', content, listing_uuid);
+): Promise<
+  | true
+  | {
+      messages: string[];
+    }
+> {
+  noStore();
+
+  const content = formData.get('comment') as string;
 
   if (!content || !listing_uuid) {
-    throw new Error('Invalid form data');
+    return {
+      messages: ['errors.empty'],
+    };
+  }
+
+  const newContent = content.trim();
+
+  const validatedData = CreateCommentSchema.safeParse({
+    content: newContent,
+  });
+
+  if (!validatedData.success) {
+    return {
+      messages: validatedData.error.issues.map((issue) => issue.message),
+    };
   }
 
   const auth = await getAuth();
 
   if (!auth) {
-    throw new Error('Access token is missing');
+    return {
+      messages: ['errors.unauthorized'],
+    };
   }
 
   try {
-    const res = await axiosInstance.post(
-      `/listing/${listing_uuid}/comment`,
-      {
-        content,
+    const res = await fetch(`${API_URL}/listing/${listing_uuid}/comment`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: auth,
+      },
+      body: JSON.stringify({
+        content: newContent,
         listing_uuid,
-      },
-      {
-        headers: {
-          Authorization: auth,
-        },
-      },
-    );
+      }),
+    });
 
     if (res.status === 201) {
       revalidateTag(`/listing/${listing_uuid}/comment`);
+      return true;
+    } else {
+      const extractedServerErrors: ExtractedServerErrors =
+        await extractServerErrors(res);
+
+      if (extractedServerErrors) {
+        return {
+          messages: Object.values(extractedServerErrors.errors).flat(),
+        };
+      }
+
+      return {
+        messages: ['errors.500'],
+      };
     }
   } catch (err) {
-    throw err;
+    console.error('COMMENT ERRORS', err);
+    return {
+      messages: ['errors.500'],
+    };
   }
 }

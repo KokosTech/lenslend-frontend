@@ -8,7 +8,6 @@ const getProfile = async () => {
     return null;
   }
 
-  console.log(`${process.env.NEXT_PUBLIC_API_URL}/user/me`);
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/me`, {
     headers: {
       Authorization: auth,
@@ -23,7 +22,6 @@ const getProfile = async () => {
   }
 
   const user = (await res.json()) as UserProfile | null;
-  console.log('fetching profile', user);
 
   return user;
 };
