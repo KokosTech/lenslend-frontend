@@ -32,7 +32,9 @@ const Comment = ({
           <p className='text-xs text-text-secondary'>@{user.username}</p>
         </div>
       </div>
-      <p className='px-2 text-text'>{content}</p>
+      <p className='whitespace-pre-line px-2 font-semibold text-text'>
+        {content}
+      </p>
       <Dates created_at={created_at} updated_at={updated_at} />
     </div>
   </div>
