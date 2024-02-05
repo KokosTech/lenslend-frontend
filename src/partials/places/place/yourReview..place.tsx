@@ -63,9 +63,13 @@ const YourReviewPlace = ({ uuid }: { uuid: string }) => {
 
   useEffect(() => {
     if (hasReview && !review) {
-      mutate(`${API_URL}/place/${uuid}/review/my-review`).then((r) => {
-        console.log('mutate', r);
-      });
+      mutate(`${API_URL}/place/${uuid}/review/my-review`)
+        .then((r) => {
+          console.log('mutate', r);
+        })
+        .catch((e) => {
+          console.error('mutate error', e);
+        });
     }
   }, [hasReview, review]);
 
