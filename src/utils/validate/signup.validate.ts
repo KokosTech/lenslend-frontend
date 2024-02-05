@@ -4,22 +4,7 @@ import { signupFromErrorsInitial } from '@/constants/forms/signup.initial';
 import { signupSchemas } from '@/schemas/signup.schema';
 import { formatErrors } from '@/utils/formatErrors';
 import { extractTranslatedErrors } from '../extractErrors';
-
-type ValidationError = {
-  constraints: {
-    [key: string]: string;
-  };
-  property: string;
-};
-
-type ValidationErrorsResponse = {
-  errors: ValidationError[];
-};
-
-type ErrorResponse = {
-  code: string;
-  message: string; // field in this case
-};
+import extractServerErrors from '@/utils/extractServerErrors';
 
 const unhandledErrors = {
   errors: {
@@ -72,36 +57,9 @@ const serverValidate = async (
       return true;
     }
 
-    if (res.status === 400) {
-      const body = (await res.json()) as ValidationErrorsResponse;
-
-      const serverErrors = body.errors.reduce(
-        (acc, { constraints, property }) => ({
-          ...acc,
-          [property]: Object.keys(constraints).map((key) =>
-            t(`errors.server.${key}`),
-          ),
-        }),
-        {},
-      );
-
-      return {
-        errors: {
-          ...signupFromErrorsInitial,
-          ...serverErrors,
-        },
-      };
-    }
-
-    if (res.status === 409) {
-      const body = (await res.json()) as ErrorResponse;
-
-      return {
-        errors: {
-          ...signupFromErrorsInitial,
-          [body.message]: [t(`errors.server.${body.code}`)],
-        },
-      };
+    const extractedErrors = await extractServerErrors(res, t);
+    if (extractedErrors) {
+      return extractedErrors;
     }
 
     return unhandledErrors;

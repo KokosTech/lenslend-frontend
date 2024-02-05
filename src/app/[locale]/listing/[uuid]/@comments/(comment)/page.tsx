@@ -1,20 +1,19 @@
 /* eslint-disable indent */
 
-import { IconSortAscending } from '@tabler/icons-react';
-import { User } from '@/types/data/place.type';
-import React from 'react';
-import {
-  getLocale,
-  getTranslations,
-  unstable_setRequestLocale,
-} from 'next-intl/server';
-import Comment from '@/partials/listings/listing/comment';
+import { getAuth } from '@/actions/auth';
 import { API_URL } from '@/configs/api';
 import {
   HTTPForbiddenException,
   HTTPUnauthorizedException,
 } from '@/errors/HTTPExceptions';
-import { getAuth } from '@/actions/auth';
+import Comment from '@/partials/listings/listing/comment';
+import { User } from '@/types/data/place.type';
+import { IconSortAscending } from '@tabler/icons-react';
+import {
+  getLocale,
+  getTranslations,
+  unstable_setRequestLocale,
+} from 'next-intl/server';
 
 type Comment = {
   id: string;
@@ -127,7 +126,6 @@ const getComments = async (listingUUID: string) => {
   }
 
   const comments = (await res.json()) as Comment[];
-  console.log(comments);
 
   if (!comments) {
     throw new Error(`Could not fetch comments for listing ${listingUUID}`);

@@ -40,12 +40,6 @@
         "no-shadow": 1,
         "no-undef-init": "error",
         "no-label-var": "error",
-        "array-bracket-newline": [
-          "error",
-          {
-            "multiline": true
-          }
-        ],
         "array-bracket-spacing": ["error", "never"],
         "block-spacing": ["error", "never"],
         "comma-spacing": [
@@ -179,12 +173,6 @@
         "no-shadow": 1,
         "no-undef-init": "error",
         "no-label-var": "error",
-        "array-bracket-newline": [
-          "error",
-          {
-            "multiline": true
-          }
-        ],
         "array-bracket-spacing": ["error", "never"],
         "block-spacing": ["error", "never"],
         "comma-spacing": [

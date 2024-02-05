@@ -11,7 +11,6 @@ const getListings = async (username?: string) => {
   }
 
   const data = (await response.json()) as ShortListingResponse[];
-  // console.log(data);
 
   return data;
 };

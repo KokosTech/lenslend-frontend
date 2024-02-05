@@ -13,6 +13,7 @@
     "@formatjs/intl-localematcher": "^0.5.4",
     "@formkit/auto-animate": "^0.8.1",
     "@googlemaps/js-api-loader": "^1.16.2",
+    "@googlemaps/markerclusterer": "^2.5.3",
     "@tabler/icons-react": "^2.47.0",
     "@types/google-map-react": "^2.1.10",
     "@types/google.maps": "^3.55.1",

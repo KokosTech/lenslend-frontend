@@ -16,7 +16,6 @@ const getPlaces = async () => {
       url: string;
     }[];
   }[];
-  console.log(data);
 
   return data;
 };

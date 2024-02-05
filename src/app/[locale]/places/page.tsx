@@ -4,15 +4,17 @@ import { useState } from 'react';
 import { AxiosError } from 'axios';
 import useSWR, { SWRConfig } from 'swr';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
-import { AdvancedMarker, APIProvider, Map } from '@vis.gl/react-google-maps';
+import { APIProvider, Map } from '@vis.gl/react-google-maps';
 
 import { axiosInstance } from '@/configs/axios';
 import { GMAPS_API, GMAPS_ID } from '@/configs/google';
 
 import Place from '@/partials/places/place';
 
-import { ShortPlace } from '@/types/data/place.type';
+import type { ShortPlace } from '@/types/data/place.type';
+
 import fetcher from '@/utils/fetcher';
+import MarkersMap from '@/app/[locale]/places/markers.map';
 
 const PlacesPage = () => {
   const [openPlace, setOpenPlace] = useState<string | null>(null);
@@ -40,8 +42,6 @@ const PlacesPage = () => {
     console.log(error);
     return <div>Error:</div>;
   }
-
-  console.log(data);
 
   return (
     <SWRConfig
@@ -80,24 +80,11 @@ const PlacesPage = () => {
               mapTypeControl={false}
               mapId={GMAPS_ID}
             >
-              {data.map((place) => (
-                <AdvancedMarker
-                  key={place.uuid}
-                  position={{
-                    lat: place.lat,
-                    lng: place.lng,
-                  }}
-                  onClick={() => {
-                    if (openPlace === place.uuid) {
-                      setOpenPlace(null);
-                    } else {
-                      setOpenPlace(place.uuid);
-                    }
-                  }}
-                >
-                  <span className='text-5xl'>{place.icon}</span>
-                </AdvancedMarker>
-              ))}
+              <MarkersMap
+                data={data}
+                openPlace={openPlace}
+                setOpenPlace={setOpenPlace}
+              />
             </Map>
           </div>
           {openPlace && (

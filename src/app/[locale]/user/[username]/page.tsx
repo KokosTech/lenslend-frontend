@@ -25,7 +25,6 @@ const UserPage = async ({
 };
 
 const getUser = async (username: string) => {
-  console.log('getUser', username);
   const response = await fetch(`${API_URL}/user/${username}`, {
     next: {
       revalidate: 1,

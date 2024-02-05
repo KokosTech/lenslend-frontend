@@ -14,6 +14,9 @@ dependencies:
   '@googlemaps/js-api-loader':
     specifier: ^1.16.2
     version: 1.16.2
+  '@googlemaps/markerclusterer':
+    specifier: ^2.5.3
+    version: 2.5.3
   '@tabler/icons-react':
     specifier: ^2.47.0
     version: 2.47.0(react@18.2.0)
@@ -268,6 +271,13 @@ packages:
     resolution: {integrity: sha512-psGw5u0QM6humao48Hn4lrChOM2/rA43ZCm3tKK9qQsEj1/VzqkCqnvGfEOshDbBQflydfaRovbKwZMF4AyqbA==}
     dependencies:
       fast-deep-equal: 3.1.3
+    dev: false
+
+  /@googlemaps/markerclusterer@2.5.3:
+    resolution: {integrity: sha512-x7lX0R5yYOoiNectr10wLgCBasNcXFHiADIBdmn7jQllF2B5ENQw5XtZK+hIw4xnV0Df0xhN4LN98XqA5jaiOw==}
+    dependencies:
+      fast-deep-equal: 3.1.3
+      supercluster: 8.0.1
     dev: false
 
   /@humanwhocodes/config-array@0.11.14:
@@ -2256,6 +2266,10 @@ packages:
     engines: {node: '>=18'}
     dev: false
 
+  /kdbush@4.0.2:
+    resolution: {integrity: sha512-WbCVYJ27Sz8zi9Q7Q0xHC+05iwkm3Znipc2XTlrnJbsHMYktW4hPhXUE8Ys1engBrvffoSCqbil1JQAa7clRpA==}
+    dev: false
+
   /keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
     dependencies:
@@ -3200,6 +3214,12 @@ packages:
       pirates: 4.0.6
       ts-interface-checker: 0.1.13
     dev: true
+
+  /supercluster@8.0.1:
+    resolution: {integrity: sha512-IiOea5kJ9iqzD2t7QJq/cREyLHTtSmUT6gQsweojg9WH2sYJqZK9SswTu6jrscO6D1G5v5vYZ9ru/eq85lXeZQ==}
+    dependencies:
+      kdbush: 4.0.2
+    dev: false
 
   /supports-color@7.2.0:
     resolution: {integrity: sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==}

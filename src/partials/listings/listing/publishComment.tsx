@@ -1,24 +1,31 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 
 import TextareaAutosize from 'react-textarea-autosize';
 import postComment from '@/actions/comment';
+import { useFormState } from 'react-dom';
+import FormErrors from '@/components/common/form/errors';
 
 const PublishComment = ({ listingId }: { listingId: string }) => {
   const [comment, setComment] = useState('');
   const postCommentAction = postComment.bind(null, listingId);
+  const [state, formAction] = useFormState(postCommentAction, { messages: [] });
 
   const t = useTranslations('listing.comments');
 
+  useEffect(() => {
+    console.log('form state', state);
+    if (state === true) {
+      setComment('');
+    }
+  }, [state]);
+
   return (
     <div className='w-full'>
-      <div className='flex gap-4 rounded-xl border-2 border-stroke bg-primary text-justify'>
-        <form
-          className='flex w-full items-center gap-4 px-8 py-4'
-          action={postCommentAction}
-        >
+      <div className='flex flex-col items-center justify-center gap-4 rounded-xl border-2 border-stroke bg-primary px-8 py-4 text-justify'>
+        <form className='flex w-full items-center gap-4' action={formAction}>
           <TextareaAutosize
             name='comment'
             id='comment'
@@ -37,6 +44,10 @@ const PublishComment = ({ listingId }: { listingId: string }) => {
             {t('action')}
           </button>
         </form>
+        <FormErrors
+          errors={state !== true ? state?.messages : undefined}
+          t={t}
+        />
       </div>
     </div>
   );
