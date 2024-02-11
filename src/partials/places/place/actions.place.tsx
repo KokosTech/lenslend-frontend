@@ -32,6 +32,7 @@ const ActionsPlace = ({
           <ListingActionButtons
             uuid={uuid}
             userUuid={ownerUuid ?? userUuid}
+            phone={ownerUuid ?? userUuid}
             addClass='h-full'
           />
         </div>

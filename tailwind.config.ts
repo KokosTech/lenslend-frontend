@@ -16,7 +16,7 @@ const config: Config = {
       transparent: 'transparent',
       current: 'current',
       background: 'var(--background)',
-      primary: 'var(--primary)',
+      primary: 'rgba(var(--primary),<alpha-value>)',
       blue: '#06A7F5',
       green: '#28EDA3',
       error: {

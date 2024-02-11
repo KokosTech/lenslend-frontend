@@ -11,7 +11,6 @@ export async function getSignedUrls(
     try {
       return {
         ...(await getSignedUrl(image.file, acl, token)),
-        order: image.order,
       };
     } catch (error) {
       throw new Error('Failed to get signed URL');
@@ -24,10 +23,8 @@ export async function uploadImages(
   signedUrls: SignedUrlResponse[],
   imagesInput: Image[],
 ): Promise<boolean[]> {
-  const promises = signedUrls.map(async (imageUrl) => {
-    const imageToUpload = imagesInput.find(
-      (image) => image.order === imageUrl.order,
-    );
+  const promises = signedUrls.map(async (imageUrl, i) => {
+    const imageToUpload = imagesInput[i];
     if (!imageToUpload) {
       throw new Error('Image not found');
     }

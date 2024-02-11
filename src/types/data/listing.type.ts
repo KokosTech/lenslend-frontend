@@ -29,7 +29,7 @@ type ShortListingResponse = {
     name: string;
     username: string;
     bio: string;
-    phone?: string;
+    phone: string;
     profile_pic?: string;
     header_pic?: string;
   };

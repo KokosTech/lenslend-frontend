@@ -30,9 +30,7 @@ export async function createListing(
     tags: data.tags,
     lat: data.location?.lat,
     lng: data.location?.lng,
-    images: signedUrls
-      .sort((a, b) => b.order - a.order)
-      .map((url) => url.public_url),
+    images: signedUrls.map((url) => url.public_url),
   };
 
   return fetch(`${API_URL}/listing`, {
@@ -121,6 +119,7 @@ export const handleCreateListing = async (
     const listing = (await createListingResponse.json()) as {
       message: string;
     };
+    console.log('NONONO', listing);
     handleError({ global: [listing.message] });
     return;
   }

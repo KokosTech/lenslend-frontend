@@ -1,7 +1,6 @@
 /* eslint-disable indent */
 
 import { getAuth } from '@/actions/auth';
-import { API_URL } from '@/configs/api';
 import {
   HTTPForbiddenException,
   HTTPUnauthorizedException,
@@ -14,6 +13,8 @@ import {
   getTranslations,
   unstable_setRequestLocale,
 } from 'next-intl/server';
+import { paginatedFetch } from '@/utils/paginated-fetch';
+import PageOptions from '@/partials/common/pageOptions';
 
 type Comment = {
   id: string;
@@ -23,13 +24,30 @@ type Comment = {
   updated_at: string;
 };
 
-const Comments = async ({ params: { uuid } }: { params: { uuid: string } }) => {
+const Comments = async ({
+  params: { uuid },
+  searchParams: { page = 1, limit = 12 },
+}: {
+  params: { uuid: string };
+  searchParams: {
+    page: number;
+    limit: number;
+  };
+}) => {
   const locale = await getLocale();
   unstable_setRequestLocale(locale);
 
+  if (Number.isNaN(page) || Number.isNaN(limit)) {
+    return <div>Invalid page or limit</div>;
+  }
+
   let comments: Comment[] | null = null;
+  let totalItes = 0;
+
   try {
-    comments = await getComments(uuid);
+    const data = await getComments(uuid, page, limit);
+    comments = data.data;
+    totalItes = data.totalCount;
   } catch (e) {
     if (
       e instanceof HTTPUnauthorizedException ||
@@ -86,6 +104,7 @@ const Comments = async ({ params: { uuid } }: { params: { uuid: string } }) => {
               <Comment key={comment.id} {...comment} />
             ))}
           </div>
+          <PageOptions page={page} limit={limit} totalItems={totalItes} />
         </div>
       </div>
       <div className='hidden flex-col items-center gap-4 lg:flex'>
@@ -98,39 +117,27 @@ const Comments = async ({ params: { uuid } }: { params: { uuid: string } }) => {
   );
 };
 
-const getComments = async (listingUUID: string) => {
+const getComments = async (
+  listingUUID: string,
+  page: number = 1,
+  limit: number = 12,
+) => {
   const auth = await getAuth();
 
-  const res = await fetch(`${API_URL}/listing/${listingUUID}/comment`, {
-    next: {
-      tags: [`/listing/${listingUUID}/comment`],
+  return paginatedFetch<Comment>(
+    `/listing/${listingUUID}/comment`,
+    page,
+    limit,
+    {
+      next: {
+        tags: [`/listing/${listingUUID}/comment`],
+      },
+      headers: auth
+        ? {
+            Authorization: auth,
+          }
+        : {},
     },
-    headers: auth
-      ? {
-          Authorization: auth,
-        }
-      : {},
-  });
-
-  if (!res.ok) {
-    switch (res.status) {
-      case 401:
-        throw new HTTPUnauthorizedException();
-      case 403:
-        throw new HTTPForbiddenException();
-      case 404:
-        return null;
-    }
-
-    throw new Error(`Could not fetch comments for listing ${listingUUID}`);
-  }
-
-  const comments = (await res.json()) as Comment[];
-
-  if (!comments) {
-    throw new Error(`Could not fetch comments for listing ${listingUUID}`);
-  }
-
-  return comments;
+  );
 };
 export default Comments;
