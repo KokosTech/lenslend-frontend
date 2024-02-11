@@ -85,8 +85,6 @@ const CreateProductPage = () => {
         (key: string) => t(`errors.${key}`),
       );
       if (listing) {
-        setForm(CreateListingInitial);
-        setImages([]);
         router.push(`/listing/${listing.uuid}`);
       }
     } catch (error) {
