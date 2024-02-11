@@ -295,11 +295,20 @@
   "search": {
     "title": "Търси",
     "description": "Търси обяви, места и хора в LensLend",
+    "metadata": {
+      "search_for": "Търсене за",
+      "in": "в/ъв",
+      "all_categories": "всички категории"
+    },
     "placeholder": "Търси обяви, места и хора",
     "categories": {
       "Places": "Места",
       "Equipment": "Оборудване",
       "Freelancers": "Хора"
-    }
+    },
+    "relevant places": "Подходящи места",
+    "relevant listings": "Подходящи обяви",
+    "relevant_users": "Подходящи потребители",
+    "to": "за"
   }
 }

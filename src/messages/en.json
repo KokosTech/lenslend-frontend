@@ -273,12 +273,21 @@
   "search": {
     "title": "Search",
     "description": "Find listings, places and people in LensLend",
+    "metadata": {
+      "search_for": "Search for",
+      "in": "in",
+      "all_categories": "all categories"
+    },
     "placeholder": "what are you looking for today?",
     "categories": {
       "Places": "Places",
       "Equipment": "Equipment",
       "Freelancers": "Freelancers"
-    }
+    },
+    "relevant places": "Relevant places",
+    "relevant listings": "Relevant listings",
+    "relevant_users": "Relevant users",
+    "to": "to"
   },
   "discover": {
     "latest_locations": "Latest locations on the map",

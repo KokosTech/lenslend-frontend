@@ -23,10 +23,10 @@ const ListingCard = ({
   const t = useTranslations('listing');
 
   return (
-    <div className='relative flex h-fit w-full shrink grow gap-3 rounded-xl border border-stroke bg-primary p-2.5 transition hover:border-stroke-secondary'>
+    <div className='relative flex h-auto w-full shrink grow gap-3 rounded-xl border border-stroke bg-primary p-2.5 transition hover:border-stroke-secondary'>
       <ListingThumbnail
         image={thumbnail}
-        state={t(`state.${state}`).toLowerCase()}
+        state={t(`state.${state ?? 'NEW'}`).toLowerCase()}
       />
       <div className='flex w-full flex-col justify-between'>
         <div>
