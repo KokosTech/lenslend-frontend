@@ -28,9 +28,7 @@ export async function createPlace(
     services: data.services.map((service) => service.uuid),
     lat: data.location.lat,
     lng: data.location.lng,
-    images: signedUrls
-      .sort((a, b) => b.order - a.order)
-      .map((url) => url.public_url),
+    images: signedUrls.map((url) => url.public_url),
   };
 
   return fetch(`${API_URL}/place`, {

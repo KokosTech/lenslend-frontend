@@ -273,7 +273,8 @@
     "created_at": "Създадено на:",
     "updated_at": "Обновено на:",
     "share": "Сподели",
-    "copied": "Копирано!"
+    "copied": "Копирано!",
+    "view_all": "виж всички"
   },
   "errors": {
     "something_went_wrong": "Нещо се обърка, пробвай пак",
@@ -287,5 +288,18 @@
     "RUB": "₽",
     "UAH": "₴",
     "BGN": "лв."
+  },
+  "chats": {
+    "title": "Очаквайте скоро в v2.0"
+  },
+  "search": {
+    "title": "Търси",
+    "description": "Търси обяви, места и хора в LensLend",
+    "placeholder": "Търси обяви, места и хора",
+    "categories": {
+      "Places": "Места",
+      "Equipment": "Оборудване",
+      "Freelancers": "Хора"
+    }
   }
 }
