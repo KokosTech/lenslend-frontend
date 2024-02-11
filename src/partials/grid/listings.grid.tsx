@@ -1,37 +1,81 @@
 import ListingCard from '@/components/common/cards/listing.card';
-import { API_URL } from '@/configs/api';
 import { ShortListingResponse } from '@/types/data/listing.type';
+import { getListings } from '@/fetch/listing.fetch';
+import CategoryTitle from '@/components/common/cateogry-title';
 
-const getListings = async (username?: string) => {
-  const response = await fetch(
-    `${API_URL}/${username ? `user/${username}/` : ''}listing`,
-  );
-  if (!response.ok) {
-    throw new Error(response.statusText);
-  }
+// const getListings = async (username?: string) => {
+//   const response = await fetch(
+//     `${API_URL}/${username ? `user/${username}/` : ''}listing`,
+//   );
+//   if (!response.ok) {
+//     throw new Error(response.statusText);
+//   }
+//
+//   const data = (await response.json()) as ShortListingResponse[];
+//
+//   return data;
+// };
 
-  const data = (await response.json()) as ShortListingResponse[];
-  console.log(data.map((listing) => listing.thumbnail));
-
-  return data;
-};
+// const getListings = async (username?: string) => {
+//   try {
+//     const data = await paginatedFetch<ShortListingResponse>(
+//       `/${username ? `user/${username}/` : ''}listing`,
+//       1,
+//       6,
+//       {
+//         next: {
+//           revalidate: 60,
+//         },
+//       },
+//     );
+//
+//     return data.data;
+//   } catch (error) {
+//     console.error(error);
+//     return null;
+//   }
+// };
 
 const ListingsGrid = async ({
+  title,
+  url,
   username,
+  category,
   noActions,
 }: {
+  title?: string;
+  url?: string;
   username?: string;
+  category?: string;
   noActions?: boolean;
   visibility?: 'PUBLIC' | 'PRIVATE';
 }) => {
-  const listings: ShortListingResponse[] = await getListings(username);
+  const listingsData = await getListings(1, 6, username, category);
+
+  if (!listingsData) {
+    return <div>Failed to load listings</div>;
+  }
+
+  const { data: listings, totalCount } = listingsData;
+
+  if (listings.length === 0) {
+    return null;
+  }
 
   return (
-    // <div className='grid w-full grid-cols-1 gap-4 xl:grid-cols-2 2xl:grid-cols-3'>
-    <div className='grid gap-4 p-2 min-[1300px]:grid-cols-2'>
-      {listings.map((listing: ShortListingResponse) => (
-        <ListingCard key={listing.uuid} {...listing} noActions={noActions} />
-      ))}
+    <div className='flex w-full flex-col gap-4'>
+      {title && (
+        <CategoryTitle title={title} url={totalCount < 6 ? undefined : url} />
+      )}
+      <div
+        className={`grid grid-cols-1 content-start gap-4 ${
+          username ? '2xl:grid-cols-2' : 'min-[1300px]:grid-cols-2'
+        }`}
+      >
+        {listings.map((listing: ShortListingResponse) => (
+          <ListingCard key={listing.uuid} {...listing} noActions={noActions} />
+        ))}
+      </div>
     </div>
   );
 };
