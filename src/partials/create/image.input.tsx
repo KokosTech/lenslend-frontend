@@ -4,7 +4,6 @@ import { useAutoAnimate } from '@formkit/auto-animate/react';
 
 type ImageInputProps = {
   file: File;
-  order: number;
 };
 
 type ImageInputType = {
@@ -31,9 +30,8 @@ const ImageInput = ({ images, setImages }: ImageInputType) => {
             image.file.lastModified === file.lastModified,
         ),
     );
-    const newImages = newFiles.map((file, index) => ({
+    const newImages = newFiles.map((file) => ({
       file,
-      order: images.length + index + 1,
     }));
     setImages([...images, ...newImages]);
   };
@@ -109,9 +107,8 @@ const ImageInput = ({ images, setImages }: ImageInputType) => {
               />
               <button
                 onClick={() => {
-                  setImages((prevState) => {
-                    // delete image and fix order
-                    const newImages = prevState
+                  setImages((prevState) =>
+                    prevState
                       .filter(
                         (img) =>
                           img.file.name !== image.file.name &&
@@ -119,10 +116,9 @@ const ImageInput = ({ images, setImages }: ImageInputType) => {
                       )
                       .map((img, index) => ({
                         ...img,
-                        order: index,
-                      }));
-                    return newImages;
-                  });
+                        order: index + 1,
+                      })),
+                  );
                 }}
                 type={'button'}
                 className='absolute bottom-1 right-1 rounded-full border border-stroke bg-primary p-1 transition-colors hover:border-stroke-secondary'

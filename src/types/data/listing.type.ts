@@ -29,7 +29,7 @@ type ShortListingResponse = {
     name: string;
     username: string;
     bio: string;
-    phone?: string;
+    phone: string;
     profile_pic?: string;
     header_pic?: string;
   };
@@ -46,6 +46,14 @@ type ShortListingResponse = {
 type FullListingResponse = ShortListingResponse & {
   description: string;
   tags?: Tag[];
+  images: [
+    {
+      uuid: string;
+      url: string;
+      alt: string;
+      status: string;
+    },
+  ];
 };
 
 type ListingRequest = {

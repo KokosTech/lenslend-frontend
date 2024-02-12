@@ -35,10 +35,10 @@ const BasicCreate = ({
 }: BasicCreateProps) => {
   const t = useTranslations('create.listing.basic');
 
-  const handleCategoryChange = (category: Category) => {
+  const handleCategoryChange = (newCategory: Category) => {
     setForm((prevState) => ({
       ...prevState,
-      category,
+      category: newCategory,
     }));
   };
 

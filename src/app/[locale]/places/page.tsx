@@ -15,6 +15,7 @@ import type { ShortPlace } from '@/types/data/place.type';
 
 import fetcher from '@/utils/fetcher';
 import MarkersMap from '@/app/[locale]/places/markers.map';
+import { PaginatedResponse } from '@/types/paginated-response.type';
 
 const PlacesPage = () => {
   const [openPlace, setOpenPlace] = useState<string | null>(null);
@@ -27,10 +28,12 @@ const PlacesPage = () => {
     error,
     isLoading,
   }: {
-    data: ShortPlace[] | undefined;
+    data: PaginatedResponse<ShortPlace> | undefined;
     error: undefined;
     isLoading: boolean;
-  } = useSWR('/place', { fetcher: fetcher<ShortPlace[]> });
+  } = useSWR('/place?limit=99999', {
+    fetcher: fetcher<PaginatedResponse<ShortPlace>>,
+  });
 
   if (isLoading) {
     // TODO: Skeleton
@@ -42,6 +45,8 @@ const PlacesPage = () => {
     console.log(error);
     return <div>Error:</div>;
   }
+
+  const places = data.data;
 
   return (
     <SWRConfig
@@ -64,7 +69,7 @@ const PlacesPage = () => {
     >
       <APIProvider apiKey={GMAPS_API}>
         <div
-          className='flex h-[calc(100vh-7rem)] gap-4 md:h-[calc(100vh-2rem)]'
+          className='flex h-[calc(100vh-7rem)] w-full gap-4 md:h-[calc(100vh-2rem)]'
           ref={parent}
         >
           <div className='h-full w-full overflow-hidden rounded-xl border border-stroke'>
@@ -81,7 +86,7 @@ const PlacesPage = () => {
               mapId={GMAPS_ID}
             >
               <MarkersMap
-                data={data}
+                data={places}
                 openPlace={openPlace}
                 setOpenPlace={setOpenPlace}
               />

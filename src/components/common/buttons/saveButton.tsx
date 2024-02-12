@@ -52,7 +52,7 @@ const SaveButton = ({
 
   return (
     <button
-      className='flex aspect-square h-10 w-10 shrink-0 items-center justify-center rounded-sm bg-blue transition-opacity duration-200 ease-in-out hover:opacity-90 md:h-12 md:w-12'
+      className='flex aspect-square h-10 w-10 shrink-0 items-center justify-center rounded-sm bg-blue transition-opacity duration-200 ease-in-out hover:opacity-90 sm:h-12 sm:w-12 lg:h-10 lg:w-10 xl:h-12 xl:w-12'
       onClick={onClick}
     >
       <IconBookmark className='h-6 w-6 text-background md:h-7 md:w-7' />

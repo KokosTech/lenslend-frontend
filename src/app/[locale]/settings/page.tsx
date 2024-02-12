@@ -14,7 +14,7 @@ const SettingsPage = ({
   const t = useTranslations('settings');
 
   return (
-    <div className='flex flex-1 flex-col gap-4 py-4'>
+    <div className='flex max-w-screen-2xl flex-1 flex-col gap-4 py-4'>
       <h1 className='text-3xl font-bold'>{t('title')}</h1>
       <HorizontalDivider />
       <ChangeLanguage />

@@ -1,12 +1,12 @@
 'use server';
 
-import { unstable_noStore as noStore } from 'next/dist/server/web/spec-extension/unstable-no-store';
 import { getAuth } from '@/actions/auth';
-import extractServerErrors from '@/utils/extractServerErrors';
 import { API_URL } from '@/configs/api';
-import { CreateReviewSchema } from '@/schemas/create-review.schema';
-import { revalidateTag } from 'next/cache';
 import { ReviewState } from '@/partials/places/place/publishReview.place';
+import { CreateReviewSchema } from '@/schemas/create-review.schema';
+import extractServerErrors from '@/utils/extractServerErrors';
+import { revalidateTag } from 'next/cache';
+import { unstable_noStore as noStore } from 'next/dist/server/web/spec-extension/unstable-no-store';
 
 export default async function postReview(
   place_uuid: string,
@@ -18,7 +18,6 @@ export default async function postReview(
     }
 > {
   noStore();
-  console.log('POST REVIEW ACTION');
   const { content, rating } = review;
 
   if (!rating || !place_uuid) {
@@ -27,7 +26,7 @@ export default async function postReview(
     };
   }
 
-  const newContent = content?.trim() || '';
+  const newContent = content?.trim() || undefined;
 
   const validatedData = CreateReviewSchema.safeParse({
     content: newContent,
@@ -58,7 +57,6 @@ export default async function postReview(
       body: JSON.stringify({
         content: newContent,
         rating,
-        place_uuid,
       }),
     });
 
@@ -77,7 +75,7 @@ export default async function postReview(
       };
     }
 
-    console.log(res.json());
+    console.log('====== RES =====', await res.json());
 
     return {
       messages: ['errors.server.unknown'],
