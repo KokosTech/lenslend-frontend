@@ -66,7 +66,7 @@ const ReviewsPage = async ({
   }
 
   return (
-    <div className='flex w-full max-w-2xl flex-col items-center gap-4'>
+    <div className='flex flex-col gap-4 p-4'>
       <div className='flex items-center justify-center gap-4'>
         <BackButton className='' />
         <h4 className='text-2xl font-semibold text-text'>Reviews</h4>

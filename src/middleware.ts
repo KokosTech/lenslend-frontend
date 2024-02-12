@@ -63,7 +63,8 @@ export default async function middleware(request: NextRequest) {
 
   if (
     NOT_LOGGED_IN_PAGES.some((page) => path.startsWith(page)) &&
-    request.cookies.get('access_token')
+    (request.cookies.get('access_token') ||
+      response.cookies.get('access_token'))
   ) {
     return NextResponse.redirect(new URL('/', request.url));
   }
@@ -72,9 +73,12 @@ export default async function middleware(request: NextRequest) {
 
   if (
     LOGGED_IN_PAGES.some((page) => path.startsWith(page)) &&
-    !request.cookies.get('access_token')
+    !(
+      request.cookies.get('access_token') ||
+      response.cookies.get('access_token')
+    )
   ) {
-    return NextResponse.redirect(new URL('/login', request.url));
+    return NextResponse.redirect(new URL('/auth/login', request.url));
   }
 
   return response;

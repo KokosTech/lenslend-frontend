@@ -2,7 +2,7 @@
 
 import { jwtDecode } from 'jwt-decode';
 
-import { unstable_noStore as noStore, revalidateTag } from 'next/cache';
+import { revalidateTag, unstable_noStore as noStore } from 'next/cache';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { NextResponse } from 'next/server';
@@ -262,7 +262,7 @@ async function logout(response: NextResponse) {
 const canModify = async (userUuid: string) => {
   noStore();
 
-  const accessToken = await getAuth();
+  const accessToken = await getAuth('client');
 
   if (!accessToken) {
     return false;
@@ -289,4 +289,3 @@ const canModify = async (userUuid: string) => {
 };
 
 export { canModify, deleteTokensMiddleware, loginAction, logout, signup };
-

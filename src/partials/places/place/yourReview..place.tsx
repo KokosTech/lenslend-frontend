@@ -1,3 +1,5 @@
+'use client';
+
 import useSWR, { useSWRConfig } from 'swr';
 import { Review } from '@/types/data/place.type';
 import { getAuth } from '@/actions/auth';

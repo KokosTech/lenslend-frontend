@@ -25,7 +25,7 @@ const ModifyPlace = ({
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
-        authorization: (await getAuth()) || '',
+        authorization: (await getAuth('client')) || '',
       },
     });
 

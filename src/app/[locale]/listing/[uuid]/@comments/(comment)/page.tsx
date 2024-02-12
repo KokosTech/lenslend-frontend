@@ -117,7 +117,6 @@ const Comments = async ({
   );
 };
 
-
 const getComments = async (
   listingUUID: string,
   page: number = 1,
