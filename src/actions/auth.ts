@@ -1,15 +1,18 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 'use server';
 
 import { jwtDecode } from 'jwt-decode';
-import { revalidateTag, unstable_noStore as noStore } from 'next/cache';
+
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+import { NextResponse } from 'next/server';
+import { revalidateTag, unstable_noStore as noStore } from 'next/cache';
 
 import { API_URL } from '@/configs/api';
-import { z } from 'zod';
-import { NextResponse } from 'next/server';
+
 import { SignupFormState } from '@/types/forms/signup.form';
+import { HTTPUnauthorizedException } from '@/errors/HTTPExceptions';
+import { ResponseCookies } from 'next/dist/compiled/@edge-runtime/cookies';
+import { loginSchema } from '@/schemas/login.auth.schema';
 
 type AuthResponse = {
   access_token: string;
@@ -21,15 +24,6 @@ class FormError extends Error {
     super();
   }
 }
-
-const loginSchema = z.object({
-  email: z.string().email({
-    message: 'errors.invalid_email',
-  }),
-  password: z.string().min(8, {
-    message: 'errors.min_length',
-  }),
-});
 
 const login = async (email: string, password: string): Promise<boolean> => {
   noStore();
@@ -91,11 +85,7 @@ const loginAction = async (prevState: unknown, formData: FormData) => {
   if (logged) redirect('/');
 };
 
-const signup = async (
-  data: SignupFormState,
-  prevState: unknown,
-  formData: FormData,
-) => {
+const signup = async (data: SignupFormState) => {
   try {
     const res = await fetch(`${API_URL}/auth/signup`, {
       method: 'POST',
@@ -123,7 +113,7 @@ const signup = async (
   }
 };
 
-export async function refreshTokens() {
+export const refreshTokensAndReturnAccess = async () => {
   noStore();
 
   const cookieStore = cookies();
@@ -142,65 +132,74 @@ export async function refreshTokens() {
   });
 
   if (response.status !== 200) {
+    if (response.status === 401) {
+      throw new HTTPUnauthorizedException();
+    }
+
     throw new Error('Failed to refresh tokens');
   }
 
   const data = (await response.json()) as {
     access_token: string;
-    refresh_token: string;
   };
 
-  const { access_token, refresh_token } = data;
+  return data.access_token;
+};
 
-  setTokens(access_token, refresh_token);
-}
-
-async function isAuth() {
+export const isAuth = async (
+  rendering: 'client' | 'ssr',
+): Promise<string | false> => {
   noStore();
 
   const cookieStore = cookies();
-  let accessToken = cookieStore.get('access_token');
+  const accessToken = cookieStore.get('access_token');
 
   if (!accessToken) {
     try {
-      await refreshTokens();
-      accessToken = cookieStore.get('access_token');
+      const new_access = await refreshTokensAndReturnAccess();
+
+      // In client server actions you can mutate the cookie store directly
+      // In SSR server actions you can't mutate the cookie store, so in this unlikely case (since we have a middleware for this), we just create a new access token and return it (without storing it)
+      if (rendering === 'client') {
+        setTokens(new_access);
+      }
+
+      return new_access;
     } catch (err) {
       return false;
     }
   }
 
-  return accessToken !== undefined;
-}
+  return accessToken.value;
+};
 
-async function getAuth() {
+export const getAuth = async (
+  rendering: 'client' | 'ssr',
+): Promise<string | null> => {
   noStore();
 
-  const cookieStore = cookies();
-  const auth = await isAuth();
+  const auth = await isAuth(rendering);
 
   if (!auth) {
     return null;
   }
 
-  const accessToken = cookieStore.get('access_token');
+  return `Bearer ${auth}`;
+};
 
-  if (!accessToken) {
-    return null;
-  }
-
-  return `Bearer ${accessToken.value}`;
-}
-
-const setTokens = (accessToken: string, refreshToken: string) => {
-  const accessExpiry = jwtDecode(accessToken).exp;
-  const refreshExpiry = jwtDecode(refreshToken).exp;
+const setTokens = (accessToken: string, refreshToken?: string | null) => {
+  noStore();
 
   const cookieStore = cookies();
 
+  const accessExpiry = jwtDecode(accessToken).exp;
   cookieStore.set('access_token', accessToken, {
     expires: accessExpiry ? accessExpiry * 1000 : undefined,
   });
+
+  if (!refreshToken) return;
+
+  const refreshExpiry = jwtDecode(refreshToken).exp;
   cookieStore.set('refresh_token', refreshToken, {
     expires: refreshExpiry ? refreshExpiry * 1000 : undefined,
   });
@@ -217,9 +216,18 @@ const getTokens = () => {
   };
 };
 
-const deleteTokens = () => {
-  const cookieStore = cookies();
+// === Middleware Auth Functions ===
 
+export const refreshTokensMiddleware = async (cookieStore: ResponseCookies) => {
+  const newToken = await refreshTokensAndReturnAccess();
+  const newTokenExpiry = jwtDecode(newToken).exp;
+
+  cookieStore.set('access_token', newToken, {
+    expires: newTokenExpiry ? newTokenExpiry * 1000 : undefined,
+  });
+};
+
+const deleteTokensMiddleware = (cookieStore: ResponseCookies) => {
   cookieStore.delete('access_token');
   cookieStore.delete('refresh_token');
 };
@@ -230,9 +238,7 @@ async function logout(response: NextResponse) {
   const { accessToken, refreshToken } = getTokens();
 
   if (!refreshToken || !accessToken) {
-    response.cookies.delete('access_token');
-    response.cookies.delete('refresh_token');
-    // revalidateTag('user');
+    deleteTokensMiddleware(response.cookies);
     return;
   }
 
@@ -249,11 +255,8 @@ async function logout(response: NextResponse) {
   });
 
   if (res.status === 200 || res.status === 201 || res.status === 401) {
-    response.cookies.delete('access_token');
-    response.cookies.delete('refresh_token');
-
-    // revalidateTag('user');
+    deleteTokensMiddleware(response.cookies);
   }
 }
 
-export { getAuth, signup, loginAction, logout, isAuth };
+export { signup, loginAction, logout, deleteTokensMiddleware };

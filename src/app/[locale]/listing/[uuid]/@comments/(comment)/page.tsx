@@ -99,7 +99,7 @@ const Comments = async ({ params: { uuid } }: { params: { uuid: string } }) => {
 };
 
 const getComments = async (listingUUID: string) => {
-  const auth = await getAuth();
+  const auth = await getAuth('ssr');
 
   const res = await fetch(`${API_URL}/listing/${listingUUID}/comment`, {
     next: {

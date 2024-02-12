@@ -9,7 +9,7 @@ import {
 } from '@/errors/HTTPExceptions';
 
 const getListing = async (uuid: string) => {
-  const auth = await getAuth();
+  const auth = await getAuth('ssr');
 
   const response = await fetch(`${API_URL}/listing/${uuid}`, {
     cache: 'no-cache',
