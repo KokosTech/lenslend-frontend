@@ -39,7 +39,7 @@ export default async function postReview(
     };
   }
 
-  const auth = await getAuth();
+  const auth = await getAuth('client');
 
   if (!auth) {
     return {

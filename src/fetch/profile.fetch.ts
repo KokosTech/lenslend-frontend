@@ -2,7 +2,7 @@ import { getAuth } from '@/actions/auth';
 import { UserProfile } from '@/types/data/user.type';
 
 const getProfile = async () => {
-  const auth = await getAuth();
+  const auth = await getAuth('ssr');
 
   if (!auth) {
     return null;

@@ -41,7 +41,7 @@ export default async function postComment(
     };
   }
 
-  const auth = await getAuth();
+  const auth = await getAuth('client');
 
   if (!auth) {
     return {

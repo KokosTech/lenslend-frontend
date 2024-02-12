@@ -9,7 +9,7 @@ import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 
 const yourReviewFetcher = async (tags: string[], url: string) => {
-  const auth = await getAuth();
+  const auth = await getAuth('ssr');
   if (!auth) {
     return null;
   }
