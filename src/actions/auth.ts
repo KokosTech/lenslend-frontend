@@ -274,8 +274,6 @@ const canModify = async (userUuid: string) => {
     },
   });
 
-  console.log('res', res.status);
-
   if (!res.ok) {
     return false;
   }

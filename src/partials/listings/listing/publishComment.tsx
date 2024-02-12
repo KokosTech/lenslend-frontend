@@ -16,7 +16,6 @@ const PublishComment = ({ listingId }: { listingId: string }) => {
   const t = useTranslations('listing.comments');
 
   useEffect(() => {
-    console.log('form state', state);
     if (state === true) {
       setComment('');
     }

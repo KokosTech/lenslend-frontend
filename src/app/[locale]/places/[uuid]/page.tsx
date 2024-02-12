@@ -13,6 +13,67 @@ import { getPlace } from '@/fetch/place.fetch';
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
+import { Suspense } from 'react';
+
+export async function generateMetadata({
+  params: { uuid, locale },
+}: {
+  params: {
+    uuid: string;
+    locale: string;
+  };
+}): Promise<Metadata> {
+  let place: Place | null;
+
+  console.log('METADATA', uuid, locale);
+
+  try {
+    place = await getPlace(uuid);
+  } catch (e) {
+    place = null;
+  }
+
+  if (!place) {
+    notFound();
+    return {
+      title: '404 Place not found',
+      description: 'Place not found',
+    };
+  }
+
+  const images =
+    place.images && place.images.length > 0 ? place.images : undefined;
+
+  const meta = {
+    title: place.name,
+    description: place.description,
+    twitter: {
+      card: 'summary_large_image',
+      site: '@lenslend',
+      title: place.name,
+      description: place.description,
+      images: images?.map((image) => ({
+        url: image.url,
+        alt: image.alt,
+      })),
+    },
+    openGraph: {
+      title: `${place.name} | LensLend`,
+      description: place.description,
+      siteName: 'LensLend',
+      images: images?.map((image) => ({
+        url: image.url,
+      })),
+      type: 'website',
+      locale: locale === 'bg' ? 'bg_BG' : 'en_US',
+      alternateLocale: locale === 'bg' ? 'en_US' : 'bg_BG',
+    },
+  };
+
+  console.log('META', meta);
+
+  return meta;
+}
 
 const PlacePage = async ({
   params: { uuid },
@@ -45,14 +106,16 @@ const PlacePage = async ({
   }
 
   if (!place) {
-    notFound();
+    return notFound();
   }
 
   return (
     <>
       <div className='flex min-h-full flex-col gap-4 p-4'>
         <CloseButton />
-        <ImagesPlace {...place} />
+        <Suspense fallback={null}>
+          <ImagesPlace {...place} />
+        </Suspense>
         <TextPlace {...place} />
         <ServicesPlace
           services={place.services.map((service) => service.service)}
@@ -60,10 +123,12 @@ const PlacePage = async ({
         <VisitorsPlace place={place} />
         <ReviewsPlace place={place} />
         <OwnerPlace place={place} />
-        <ModifyPlace
-          uuid={place.uuid}
-          userUuid={place.owner.uuid ?? place.creator.uuid}
-        />
+        <Suspense fallback={null}>
+          <ModifyPlace
+            uuid={place.uuid}
+            userUuid={place.owner.uuid ?? place.creator.uuid}
+          />
+        </Suspense>
       </div>
       <ActionsPlace
         ownerUuid={place.owner?.uuid}
@@ -73,58 +138,5 @@ const PlacePage = async ({
     </>
   );
 };
-
-export async function generateMetadata({
-  params: { uuid, locale },
-}: {
-  params: {
-    uuid: string;
-    locale: string;
-  };
-}): Promise<Metadata> {
-  let place: Place | null;
-
-  try {
-    place = await getPlace(uuid);
-  } catch (e) {
-    place = null;
-  }
-
-  if (!place) {
-    return {
-      title: 'Error',
-      description: 'Error',
-    };
-  }
-
-  const images =
-    place.images && place.images.length > 0 ? place.images : undefined;
-
-  return {
-    title: place.name,
-    description: place.description,
-    twitter: {
-      card: 'summary_large_image',
-      site: '@lenslend',
-      title: place.name,
-      description: place.description,
-      images: images?.map((image) => ({
-        url: image.url,
-        alt: image.alt,
-      })),
-    },
-    openGraph: {
-      title: `${place.name} | LensLend`,
-      description: place.description,
-      siteName: 'LensLend',
-      images: images?.map((image) => ({
-        url: image.url,
-      })),
-      type: 'website',
-      locale: locale === 'bg' ? 'bg_BG' : 'en_US',
-      alternateLocale: locale === 'bg' ? 'en_US' : 'bg_BG',
-    },
-  };
-}
 
 export default PlacePage;

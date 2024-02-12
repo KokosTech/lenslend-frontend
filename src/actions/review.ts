@@ -60,8 +60,6 @@ export default async function postReview(
       }),
     });
 
-    console.log('auth', res.status);
-
     if (res.status === 201) {
       revalidateTag(`/place/${place_uuid}/review/my-review`);
       return true;
@@ -75,13 +73,11 @@ export default async function postReview(
       };
     }
 
-    console.log('====== RES =====', await res.json());
-
     return {
       messages: ['errors.server.unknown'],
     };
   } catch (e) {
-    console.log(e);
+    console.error(e);
 
     return {
       messages: ['errors.server.unknown'],

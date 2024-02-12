@@ -4,7 +4,6 @@ import PlacesGrid from '@/partials/grid/places.grid';
 import UsersGrid from '@/partials/grid/users.grid';
 import { unstable_setRequestLocale } from 'next-intl/server';
 import { Suspense } from 'react';
-import CategoryTitle from '@/components/common/cateogry-title';
 import Image from 'next/image';
 import HorizontalDivider from '@/components/horizontalDivider';
 import { useTranslations } from 'next-intl';
@@ -34,14 +33,13 @@ const Home = ({ params: { locale } }: { params: { locale: string } }) => {
         <Search />
       </Suspense>
       <Suspense fallback='Loading...'>
-        <PlacesGrid title={t('latest_locations')} url={'/places/list'} />
+        <PlacesGrid title={t('latest_locations')} url={'/place'} />
       </Suspense>
       <Suspense fallback='Loading...'>
         <ListingsGrid title={t('latest_listings')} url={'/listing'} />
       </Suspense>
-      <CategoryTitle title={t('popular_users')} url={'/user'} />
       <Suspense fallback='Loading...'>
-        <UsersGrid />
+        <UsersGrid title={t('popular_users')} url={'/users'} />
       </Suspense>
       <Suspense fallback='Loading...'>
         <ListingsGrid

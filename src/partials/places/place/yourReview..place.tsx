@@ -27,8 +27,6 @@ const yourReviewFetcher = async (tags: string[], url: string) => {
     },
   });
 
-  console.log('response', response.status);
-
   if (!response.ok) {
     if (response.status === 404) {
       return null;
@@ -60,8 +58,6 @@ const YourReviewPlace = ({ uuid }: { uuid: string }) => {
   } = useSWR(`${API_URL}/place/${uuid}/review/my-review`, {
     fetcher,
   });
-
-  console.log('review', review);
 
   useEffect(() => {
     if (hasReview && !review) {

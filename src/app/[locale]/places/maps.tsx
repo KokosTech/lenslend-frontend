@@ -11,6 +11,16 @@ import MarkersMap from '@/app/[locale]/places/markers.map';
 const MapsPartialPage = ({ uuid }: { uuid: string | null }) => {
   const router = useRouter();
 
+  const setOpenPlace = (newUuid: string | null) => {
+    if (newUuid === uuid) {
+      return;
+    }
+
+    router.replace(`/places${newUuid ? `/${newUuid}` : ''}`, {
+      scroll: false,
+    });
+  };
+
   const {
     data,
     error,
@@ -40,12 +50,6 @@ const MapsPartialPage = ({ uuid }: { uuid: string | null }) => {
   }
 
   const places = data.data;
-
-  const setOpenPlace = (uuid: string | null) => {
-    router.replace(`/places${uuid ? `/${uuid}` : ''}`, {
-      scroll: false,
-    });
-  };
 
   return (
     <div className='h-full w-full overflow-hidden rounded-xl border border-stroke bg-primary'>

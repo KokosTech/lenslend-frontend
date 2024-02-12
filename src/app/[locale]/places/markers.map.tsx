@@ -16,6 +16,7 @@ const MarkersMap = ({
   const [markers, setMarkers] = useState<{
     [key: string]: Marker;
   }>({});
+
   const cluster = useRef<MarkerClusterer | null>(null);
 
   const setMarkerRef = (marker: Marker | null, key: string) => {

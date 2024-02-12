@@ -119,7 +119,6 @@ export const handleCreateListing = async (
     const listing = (await createListingResponse.json()) as {
       message: string;
     };
-    console.log('NONONO', listing);
     handleError({ global: [listing.message] });
     return;
   }

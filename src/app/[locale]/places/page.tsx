@@ -1,3 +1,3 @@
-const DefaultPlacePage = () => null;
+const DefaultPlacePage = () => <></>;
 
 export default DefaultPlacePage;
