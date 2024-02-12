@@ -9,11 +9,11 @@ import VisitorsPlace from '@/partials/places/place/visitors.place';
 import ReviewsPlace from '@/partials/places/place/reviews.place';
 import OwnerPlace from '@/partials/places/place/owner.place';
 import ActionsPlace from '@/partials/places/place/actions.place';
-import ButtonsPlace from '@/partials/places/place/buttons.place';
 
 import CloseButton from '@/components/common/buttons/closeButton';
 
 import type { Place } from '@/types/data/place.type';
+import ModifyPlace from '@/partials/places/modify.place';
 
 const Place = ({ uuid, onClose }: { uuid: string; onClose: () => void }) => {
   const { place, isLoading, error } = usePlace(uuid);
@@ -64,8 +64,10 @@ const Place = ({ uuid, onClose }: { uuid: string; onClose: () => void }) => {
           <VisitorsPlace place={place} />
           <ReviewsPlace place={place} />
           <OwnerPlace place={place} />
-          {/* TODO Last 3 Contributors */}
-          <ButtonsPlace uuid={place.uuid} />
+          <ModifyPlace
+            uuid={place.uuid}
+            userUuid={place.owner.uuid ?? place.creator.uuid}
+          />
         </div>
         <ActionsPlace
           ownerUuid={place.owner?.uuid}

@@ -256,4 +256,33 @@ async function logout(response: NextResponse) {
   }
 }
 
-export { getAuth, signup, loginAction, logout, isAuth };
+const canModify = async (userUuid: string) => {
+  noStore();
+
+  const accessToken = await getAuth();
+
+  if (!accessToken) {
+    return false;
+  }
+
+  const res = await fetch(`${API_URL}/user/me`, {
+    headers: {
+      Authorization: accessToken,
+    },
+  });
+
+  console.log('res', res.status);
+
+  if (!res.ok) {
+    return false;
+  }
+
+  const data = (await res.json()) as {
+    uuid: string;
+    role: 'ADMIN' | 'MOD' | 'USER';
+  };
+
+  return data.uuid === userUuid || data.role === 'ADMIN' || data.role === 'MOD';
+};
+
+export { getAuth, signup, loginAction, logout, isAuth, canModify };

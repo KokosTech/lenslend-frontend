@@ -17,7 +17,13 @@ import fetcher from '@/utils/fetcher';
 import MarkersMap from '@/app/[locale]/places/markers.map';
 import { PaginatedResponse } from '@/types/paginated-response.type';
 
-const PlacesPage = () => {
+const PlacesPage = ({
+  searchParams: { uuid },
+}: {
+  searchParams: {
+    uuid: string;
+  };
+}) => {
   const [openPlace, setOpenPlace] = useState<string | null>(null);
   const [parent] = useAutoAnimate({
     duration: 500,
