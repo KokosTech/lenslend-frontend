@@ -60,6 +60,10 @@
       },
       "go_back": "Go back",
       "unauthorized": "You are not authorized to view this page"
+    },
+    "buttons": {
+      "edit": "Edit",
+      "delete": "Delete"
     }
   },
   "categories": {
@@ -78,14 +82,26 @@
       "placeholder": "Add a review...",
       "read_all": "Read all",
       "show_more": "show more",
-      "show_less": "show less"
+      "show_less": "show less",
+      "rating": "Rating",
+      "publish": "Publish a review",
+      "errors": {
+        "unauthorized": "You have to be logged in to post a review",
+        "min_length": "Review must be at least 3 characters long",
+        "max_length": "Review must be at most 480 characters long",
+        "empty": "Rating is required",
+        "min": "Rating must be at least 1",
+        "max": "Rating must be at most 5"
+      }
     },
     "buttons": {
       "edit": "Edit",
+      "delete": "Delete",
       "report": "Report",
       "open_map": "Open in Google Maps"
     },
-    "owner": "Owner"
+    "owner": "Owner",
+    "creator": "Creator"
   },
   "settings": {
     "title": "Application settings",
@@ -235,7 +251,8 @@
     "created_at": "Created on:",
     "updated_at": "Updated on:",
     "share": "Share",
-    "copied": "Copied!"
+    "copied": "Copied!",
+    "view_all": "view all"
   },
   "errors": {
     "something_went_wrong": "Something went wrong, please try again",
@@ -249,5 +266,37 @@
     "RUB": "₽",
     "UAH": "₴",
     "BGN": "BGN"
+  },
+  "chats": {
+    "title": "Coming soon in v2.0"
+  },
+  "search": {
+    "title": "Search",
+    "description": "Find listings, places and people in LensLend",
+    "metadata": {
+      "search_for": "Search for",
+      "in": "in",
+      "all_categories": "all categories"
+    },
+    "placeholder": "what are you looking for today?",
+    "categories": {
+      "Places": "Places",
+      "Equipment": "Equipment",
+      "Freelancers": "Freelancers"
+    },
+    "relevant places": "Relevant places",
+    "relevant listings": "Relevant listings",
+    "relevant_users": "Relevant users",
+    "to": "to"
+  },
+  "discover": {
+    "latest_locations": "Latest locations on the map",
+    "latest_listings": "Latest equipment on sale",
+    "popular_users": "Popular users",
+    "photography": "Photography equipment",
+    "video": "Video equipment",
+    "cafes": "Great cafes",
+    "restaurants": "Amazing restaurants",
+    "offices": "Cool offices"
   }
 }

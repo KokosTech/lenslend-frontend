@@ -1,15 +1,44 @@
 /* eslint-disable indent */
 
 import { API_URL } from '@/configs/api';
-import { FullListingResponse } from '@/types/data/listing.type';
+import {
+  FullListingResponse,
+  ShortListingResponse,
+} from '@/types/data/listing.type';
 import { getAuth } from '@/actions/auth';
 import {
   HTTPForbiddenException,
   HTTPUnauthorizedException,
 } from '@/errors/HTTPExceptions';
+import { paginatedFetch } from '@/utils/paginated-fetch';
+
+export const getListings = async (
+  page: number = 1,
+  limit: number = 6,
+  username?: string,
+  category?: string,
+) => {
+  try {
+    return await paginatedFetch<ShortListingResponse>(
+      `/${username ? `user/${username}/` : ''}listing${
+        category ? `?category=${category}` : ''
+      }`,
+      page,
+      limit,
+      {
+        next: {
+          revalidate: 60,
+        },
+      },
+    );
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
 
 const getListing = async (uuid: string) => {
-  const auth = await getAuth();
+  const auth = await getAuth('ssr');
 
   const response = await fetch(`${API_URL}/listing/${uuid}`, {
     cache: 'no-cache',

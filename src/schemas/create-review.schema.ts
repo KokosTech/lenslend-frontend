@@ -1,17 +1,19 @@
 import { z } from 'zod';
 
 export const CreateReviewSchema = z.object({
-  content: z
-    .string()
-    .min(3, {
-      message: 'errors.min_length',
-    })
-    .max(240, {
-      message: 'errors.max_length',
-    })
-    .refine((val) => val.trim().length > 3, {
-      message: 'errors.min_length',
-    }),
+  content: z.optional(
+    z
+      .string()
+      .min(3, {
+        message: 'errors.min_length',
+      })
+      .max(480, {
+        message: 'errors.max_length',
+      })
+      .refine((val) => val.trim().length > 3, {
+        message: 'errors.min_length',
+      }),
+  ),
   rating: z
     .number()
     .min(1, {

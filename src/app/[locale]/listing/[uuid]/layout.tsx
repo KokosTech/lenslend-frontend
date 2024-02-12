@@ -7,11 +7,9 @@ const ListingLayout = ({
   listing: ReactNode;
   comments: ReactNode;
 }) => (
-  <div>
-    <div className='flex w-full flex-col justify-center'>
-      {listing}
-      {comments}
-    </div>
+  <div className='flex w-full flex-col justify-center'>
+    {listing}
+    {comments}
   </div>
 );
 

@@ -133,7 +133,7 @@ const GalleryModal = ({
         <div className='h-full'>
           <div className='flex h-full flex-col gap-4'>
             <div className='flex h-full items-center justify-center gap-4 p-4'>
-              <div className='flex h-full max-h-screen w-full shrink-0 items-center justify-center overflow-hidden object-contain'>
+              <div className='flex h-full max-h-screen w-full items-center justify-center overflow-hidden object-contain'>
                 <img
                   src={pictures[index]?.url}
                   key={pictures[index]?.uuid}
@@ -182,9 +182,9 @@ const Gallery = ({
         }`}
       >
         <div className='h-full'>
-          <div className='flex h-full shrink-0 flex-col gap-4'>
+          <div className='flex h-full flex-col gap-4'>
             <div
-              className={`flex items-center justify-start gap-4 overflow-x-auto ${
+              className={`flex w-full shrink items-center justify-start gap-4 overflow-x-auto ${
                 borderless ? '' : 'p-4'
               }`}
             >

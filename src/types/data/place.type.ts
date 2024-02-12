@@ -31,6 +31,7 @@ type User = {
   phone?: string;
   profile_pic?: string;
   header_pic?: string;
+  rating?: number;
 };
 
 type ShortPlace = {
@@ -42,11 +43,12 @@ type ShortPlace = {
 
 type CardPlace = ShortPlace & {
   name: string;
-  images: {
+  thumbnail: {
     uuid: string;
     url: string;
     alt: string;
-  }[];
+  };
+  rating: number;
 };
 
 type Place = ShortPlace & {
@@ -69,6 +71,7 @@ type Place = ShortPlace & {
   tags: Tag[];
   visitors: Visitor[];
   reviews: Review[];
+  rating: number;
   status: Status;
   creator: {
     uuid: string;

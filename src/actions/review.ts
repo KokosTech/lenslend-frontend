@@ -1,12 +1,12 @@
 'use server';
 
-import { unstable_noStore as noStore } from 'next/dist/server/web/spec-extension/unstable-no-store';
 import { getAuth } from '@/actions/auth';
-import extractServerErrors from '@/utils/extractServerErrors';
 import { API_URL } from '@/configs/api';
-import { CreateReviewSchema } from '@/schemas/create-review.schema';
-import { revalidateTag } from 'next/cache';
 import { ReviewState } from '@/partials/places/place/publishReview.place';
+import { CreateReviewSchema } from '@/schemas/create-review.schema';
+import extractServerErrors from '@/utils/extractServerErrors';
+import { revalidateTag } from 'next/cache';
+import { unstable_noStore as noStore } from 'next/dist/server/web/spec-extension/unstable-no-store';
 
 export default async function postReview(
   place_uuid: string,
@@ -18,7 +18,6 @@ export default async function postReview(
     }
 > {
   noStore();
-  console.log('POST REVIEW ACTION');
   const { content, rating } = review;
 
   if (!rating || !place_uuid) {
@@ -27,7 +26,7 @@ export default async function postReview(
     };
   }
 
-  const newContent = content?.trim() || '';
+  const newContent = content?.trim() || undefined;
 
   const validatedData = CreateReviewSchema.safeParse({
     content: newContent,
@@ -40,7 +39,7 @@ export default async function postReview(
     };
   }
 
-  const auth = await getAuth();
+  const auth = await getAuth('client');
 
   if (!auth) {
     return {
@@ -58,11 +57,8 @@ export default async function postReview(
       body: JSON.stringify({
         content: newContent,
         rating,
-        place_uuid,
       }),
     });
-
-    console.log('auth', res.status);
 
     if (res.status === 201) {
       revalidateTag(`/place/${place_uuid}/review/my-review`);
@@ -77,13 +73,11 @@ export default async function postReview(
       };
     }
 
-    console.log(res.json());
-
     return {
       messages: ['errors.server.unknown'],
     };
   } catch (e) {
-    console.log(e);
+    console.error(e);
 
     return {
       messages: ['errors.server.unknown'],

@@ -1,33 +1,24 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { usePathname } from 'next/navigation';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
-
-import { isAuth as isAuthF } from '@/actions/auth';
+import { usePathname } from 'next/navigation';
+import { useState } from 'react';
 
 import HorizontalDivider from '@/components/horizontalDivider';
 import LogoComponent from '@/components/navigation/logoComponent';
-import NavigationComponent from '@/components/navigation/navigationComponent';
 import VerticalDivider from '@/components/verticalDivider';
 
-import { navigation, noNavigation } from '@/constants/navigation';
+import { noNavigation } from '@/constants/navigation';
+import NavigationOptions from '@/partials/common/navigationOptions';
 
 const Navigation = () => {
-  const pathname = usePathname();
+  const [show, setShow] = useState(false);
   const [parent] = useAutoAnimate({
     duration: 300,
     easing: 'ease-in-out',
   });
 
-  const [show, setShow] = useState(false);
-  const [isAuth, setIsAuth] = useState<boolean | null>(null);
-
-  useEffect(() => {
-    isAuthF()
-      .then((auth) => setIsAuth(auth))
-      .catch(() => setIsAuth(false));
-  }, [pathname]);
+  const pathname = usePathname();
 
   if (noNavigation.includes(pathname)) return null;
 
@@ -45,32 +36,7 @@ const Navigation = () => {
           fixed h-screen w-60 overflow-y-auto bg-background text-sm font-semibold text-text md:fixed md:left-0 md:flex
           `}
       >
-        <div className='flex w-full flex-col gap-8 px-4 py-8'>
-          <LogoComponent onClick={() => setShow(!show)} />
-          {navigation.map(({ icon, text, href, auth }) => {
-            if (
-              (auth === true && isAuth === false) ||
-              (auth === false && isAuth === true) ||
-              (auth !== undefined && isAuth === null)
-            ) {
-              return null;
-            }
-            if (!href) return <HorizontalDivider key={text} />;
-
-            return (
-              <NavigationComponent
-                key={href}
-                icon={icon}
-                text={text}
-                href={href}
-                auth={auth}
-                selected={(pathname.replace(/^\/\w{2}/, '') || '/') === href}
-                close={() => setShow(false)}
-              />
-            );
-          })}
-          {isAuth === null && 'skeleton'}
-        </div>
+        <NavigationOptions setShow={setShow} />
         <div className='h-full py-4'>
           <VerticalDivider />
         </div>

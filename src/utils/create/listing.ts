@@ -30,9 +30,7 @@ export async function createListing(
     tags: data.tags,
     lat: data.location?.lat,
     lng: data.location?.lng,
-    images: signedUrls
-      .sort((a, b) => b.order - a.order)
-      .map((url) => url.public_url),
+    images: signedUrls.map((url) => url.public_url),
   };
 
   return fetch(`${API_URL}/listing`, {
@@ -51,7 +49,7 @@ export const handleCreateListing = async (
   handleError: (newErrors: Partial<CreateProductErrors>) => void,
   t: (key: string) => string,
 ) => {
-  const token = await getAuth();
+  const token = await getAuth('client');
   if (!token) {
     handleError({ global: ['You must be logged in to create a listing'] });
     return;

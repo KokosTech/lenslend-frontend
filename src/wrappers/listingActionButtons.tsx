@@ -4,16 +4,16 @@ import ActionButtons from '@/components/common/buttons/actionButtons';
 
 const ListingActionButtons = ({
   uuid,
-  userUuid,
+  phone,
   addClass,
 }: {
   uuid: string;
-  userUuid: string;
+  phone: string;
   addClass?: string;
 }) => (
   <ActionButtons
     uuid={uuid}
-    userUuid={userUuid}
+    phone={phone}
     onSave={onSave}
     addClass={addClass}
   />

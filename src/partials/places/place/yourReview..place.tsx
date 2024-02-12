@@ -1,3 +1,5 @@
+'use client';
+
 import useSWR, { useSWRConfig } from 'swr';
 import { Review } from '@/types/data/place.type';
 import { getAuth } from '@/actions/auth';
@@ -9,7 +11,7 @@ import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 
 const yourReviewFetcher = async (tags: string[], url: string) => {
-  const auth = await getAuth();
+  const auth = await getAuth('ssr');
   if (!auth) {
     return null;
   }
@@ -24,8 +26,6 @@ const yourReviewFetcher = async (tags: string[], url: string) => {
       tags,
     },
   });
-
-  console.log('response', response.status);
 
   if (!response.ok) {
     if (response.status === 404) {
@@ -58,8 +58,6 @@ const YourReviewPlace = ({ uuid }: { uuid: string }) => {
   } = useSWR(`${API_URL}/place/${uuid}/review/my-review`, {
     fetcher,
   });
-
-  console.log('review', review);
 
   useEffect(() => {
     if (hasReview && !review) {

@@ -34,16 +34,11 @@ const PublishReviewPlace = ({
   const [state, formAction] = useFormState(postReviewAction, { messages: [] });
 
   useEffect(() => {
-    console.log('form state', state);
     if (state === true) {
       setReview(reviewInitialState);
       setHasReview(true);
     }
   }, [state]);
-
-  useEffect(() => {
-    console.log('review', review);
-  }, [review.rating]);
 
   return (
     <div className='flex w-full flex-col gap-4 rounded-xl text-justify'>

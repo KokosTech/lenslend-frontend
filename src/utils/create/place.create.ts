@@ -28,9 +28,7 @@ export async function createPlace(
     services: data.services.map((service) => service.uuid),
     lat: data.location.lat,
     lng: data.location.lng,
-    images: signedUrls
-      .sort((a, b) => b.order - a.order)
-      .map((url) => url.public_url),
+    images: signedUrls.map((url) => url.public_url),
   };
 
   return fetch(`${API_URL}/place`, {
@@ -49,7 +47,7 @@ export const handleCreatePlace = async (
   handleError: (newErrors: Partial<CreatePlaceErrors>) => void,
   t: (key: string) => string,
 ) => {
-  const token = await getAuth();
+  const token = await getAuth('client');
   if (!token) {
     handleError({ global: ['You must be logged in to create a listing'] });
     return;

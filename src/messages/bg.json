@@ -60,6 +60,14 @@
       },
       "go_back": "Върни се назад",
       "unauthorized": "Нямаш права да видиш тази обява"
+    },
+    "buttons": {
+      "edit": "Редактирай",
+      "report": "Докладвай",
+      "save": "Запази",
+      "saved": "Запазено",
+      "share": "Сподели",
+      "view_all": "Виж всички"
     }
   },
   "categories": {
@@ -88,7 +96,8 @@
       "report": "Докладвай",
       "open_map": "Отвори в Google Maps"
     },
-    "owner": "Собственик"
+    "owner": "Собственик",
+    "creator": "Създател"
   },
   "settings": {
     "title": "Настройки на приложението",
@@ -273,7 +282,8 @@
     "created_at": "Създадено на:",
     "updated_at": "Обновено на:",
     "share": "Сподели",
-    "copied": "Копирано!"
+    "copied": "Копирано!",
+    "view_all": "виж всички"
   },
   "errors": {
     "something_went_wrong": "Нещо се обърка, пробвай пак",
@@ -287,5 +297,27 @@
     "RUB": "₽",
     "UAH": "₴",
     "BGN": "лв."
+  },
+  "chats": {
+    "title": "Очаквайте скоро в v2.0"
+  },
+  "search": {
+    "title": "Търси",
+    "description": "Търси обяви, места и хора в LensLend",
+    "metadata": {
+      "search_for": "Търсене за",
+      "in": "в/ъв",
+      "all_categories": "всички категории"
+    },
+    "placeholder": "Търси обяви, места и хора",
+    "categories": {
+      "Places": "Места",
+      "Equipment": "Оборудване",
+      "Freelancers": "Хора"
+    },
+    "relevant places": "Подходящи места",
+    "relevant listings": "Подходящи обяви",
+    "relevant_users": "Подходящи потребители",
+    "to": "за"
   }
 }

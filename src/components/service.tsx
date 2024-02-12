@@ -1,5 +1,5 @@
-import { Service } from '@/types/data/place.type';
 import CustomIcon from '@/components/common/customIcon';
+import { Service } from '@/types/data/place.type';
 
 const Service = ({
   service: { uuid, name, icon },
@@ -10,7 +10,7 @@ const Service = ({
   className?: string;
   onClick?: () => void;
 }) => {
-  console.log(uuid);
+  console.log('service', uuid);
   return (
     <div
       className={`${className} flex flex-col gap-1 rounded-lg border-2 border-stroke p-2`}
