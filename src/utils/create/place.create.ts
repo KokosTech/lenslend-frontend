@@ -47,7 +47,7 @@ export const handleCreatePlace = async (
   handleError: (newErrors: Partial<CreatePlaceErrors>) => void,
   t: (key: string) => string,
 ) => {
-  const token = await getAuth();
+  const token = await getAuth('client');
   if (!token) {
     handleError({ global: ['You must be logged in to create a listing'] });
     return;

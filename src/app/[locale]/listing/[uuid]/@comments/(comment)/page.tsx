@@ -117,12 +117,13 @@ const Comments = async ({
   );
 };
 
+
 const getComments = async (
   listingUUID: string,
   page: number = 1,
   limit: number = 12,
 ) => {
-  const auth = await getAuth();
+  const auth = await getAuth('ssr');
 
   return paginatedFetch<Comment>(
     `/listing/${listingUUID}/comment`,

@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { usePathname } from 'next/navigation';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 import { isAuth as isAuthF } from '@/actions/auth';
 
@@ -24,8 +24,8 @@ const Navigation = () => {
   const [isAuth, setIsAuth] = useState<boolean | null>(null);
 
   useEffect(() => {
-    isAuthF()
-      .then((auth) => setIsAuth(auth))
+    isAuthF('client')
+      .then((auth) => setIsAuth(auth !== false))
       .catch(() => setIsAuth(false));
   }, [pathname]);
 
