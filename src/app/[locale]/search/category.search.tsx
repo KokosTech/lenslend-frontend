@@ -1,3 +1,5 @@
+/* eslint-disable indent */
+
 import { ShortListingResponse } from '@/types/data/listing.type';
 import { CardPlace, User } from '@/types/data/place.type';
 import PlacesSearch from '@/app/[locale]/search/places.search';
@@ -10,9 +12,6 @@ const CategorySearch = ({
   category,
   search,
   categoryData,
-  page,
-  limit,
-  totalCount,
 }: {
   category: string;
   search: string;

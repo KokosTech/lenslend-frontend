@@ -4,6 +4,7 @@ import HorizontalDivider from '@/components/horizontalDivider';
 
 const ServicesPlace = ({ services }: { services: ServiceType[] | null }) => {
   if (!services?.length) return null;
+
   return (
     <>
       <div className='flex gap-4'>

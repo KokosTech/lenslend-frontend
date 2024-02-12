@@ -4,6 +4,7 @@ import HorizontalDivider from '@/components/horizontalDivider';
 import { ReviewClient } from '@/components/place/review';
 import { useTranslations } from 'next-intl';
 import YourReviewPlace from '@/partials/places/place/yourReview..place';
+import { Suspense } from 'react';
 
 const ReviewsPlace = ({ place: { uuid, reviews } }: { place: Place }) => {
   const t = useTranslations('place.reviews');
@@ -11,7 +12,9 @@ const ReviewsPlace = ({ place: { uuid, reviews } }: { place: Place }) => {
   return (
     <>
       <div className='flex flex-col gap-4'>
-        <YourReviewPlace uuid={uuid} />
+        <Suspense fallback={null}>
+          <YourReviewPlace uuid={uuid} />
+        </Suspense>
         <h4 className='text-xl font-semibold text-text'>{t('title')}</h4>
         {!reviews || !reviews.length ? (
           <div className='flex flex-col gap-2 text-center'>{t('none')}</div>

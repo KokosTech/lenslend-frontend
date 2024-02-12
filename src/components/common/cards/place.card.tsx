@@ -40,16 +40,8 @@ const PlaceCard = ({
         <Address lat={place.lat} lng={place.lng} size='text-sm' />
       </div>
       <PlaceActionButtons uuid={place.uuid} />
-
-      {/* <div className='flex w-full items-center justify-between gap-4'>*/}
-      {/*  <div className='flex w-full items-center justify-between gap-4'>*/}
-      {/*    <p className='text-lg font-semibold sm:text-xl md:text-2xl'>*/}
-      {/*      /!*{place.price} BGN*!/*/}
-      {/*    </p>*/}
-      {/*  </div>*/}
-      {/* </div>*/}
     </div>
-    <Link href={`/place/${place.uuid}`} className='absolute h-full w-full' />
+    <Link href={`/places/${place.uuid}`} className='absolute h-full w-full' />
   </div>
 );
 

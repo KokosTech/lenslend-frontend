@@ -29,7 +29,6 @@ const ListingPage = async ({
   try {
     listing = await getListing(uuid);
   } catch (e) {
-    listing = null;
     return (
       <div className='flex h-screen w-full flex-col items-center justify-center'>
         <h2 className='bg-gradient bg-clip-text p-2 text-5xl font-black text-transparent'>
@@ -76,7 +75,6 @@ const ListingPage = async ({
 
 export async function generateMetadata({
   params: { uuid, locale },
-  parent,
 }: {
   params: { uuid: string; locale: string };
   parent: ResolvingMetadata;

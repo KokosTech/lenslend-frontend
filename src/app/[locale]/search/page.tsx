@@ -11,18 +11,22 @@ import GlobalSearch from '@/app/[locale]/search/global.search';
 import SearchWrapper from '@/app/[locale]/search/search.wrapper';
 import { getSearch } from '@/fetch/search.fetch';
 
-const SearchPage = async ({
-  searchParams: { search, category, page, limit },
-  params: { locale },
-}: {
+type SearchPageProps = {
   searchParams: {
     search: string;
     category?: string;
     page?: number;
     limit?: number;
   };
-  params: { locale: string };
-}) => {
+  params: {
+    locale: string;
+  };
+};
+
+const SearchPage = async ({
+  searchParams: { search, category, page, limit },
+  params: { locale },
+}: SearchPageProps) => {
   unstable_setRequestLocale(locale);
 
   if (Number.isNaN(toInteger(page)) || Number.isNaN(toInteger(limit))) {
@@ -75,15 +79,9 @@ const SearchPage = async ({
 };
 
 export async function generateMetadata({
-  locale,
+  params: { locale },
   searchParams: { search, category },
-}: {
-  locale: string;
-  searchParams: {
-    search: string;
-    category?: 'Places' | 'Equipment' | 'Freelancers';
-  };
-}): Promise<Metadata> {
+}: SearchPageProps): Promise<Metadata> {
   const t = await getTranslations({
     locale,
     namespace: 'search',

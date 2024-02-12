@@ -2,17 +2,17 @@
 
 import { jwtDecode } from 'jwt-decode';
 
+import { revalidateTag, unstable_noStore as noStore } from 'next/cache';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { NextResponse } from 'next/server';
-import { revalidateTag, unstable_noStore as noStore } from 'next/cache';
 
 import { API_URL } from '@/configs/api';
 
-import { SignupFormState } from '@/types/forms/signup.form';
 import { HTTPUnauthorizedException } from '@/errors/HTTPExceptions';
-import { ResponseCookies } from 'next/dist/compiled/@edge-runtime/cookies';
 import { loginSchema } from '@/schemas/login.auth.schema';
+import { SignupFormState } from '@/types/forms/signup.form';
+import { ResponseCookies } from 'next/dist/compiled/@edge-runtime/cookies';
 
 type AuthResponse = {
   access_token: string;
@@ -259,4 +259,31 @@ async function logout(response: NextResponse) {
   }
 }
 
-export { signup, loginAction, logout, deleteTokensMiddleware };
+const canModify = async (userUuid: string) => {
+  noStore();
+
+  const accessToken = await getAuth('client');
+
+  if (!accessToken) {
+    return false;
+  }
+
+  const res = await fetch(`${API_URL}/user/me`, {
+    headers: {
+      Authorization: accessToken,
+    },
+  });
+
+  if (!res.ok) {
+    return false;
+  }
+
+  const data = (await res.json()) as {
+    uuid: string;
+    role: 'ADMIN' | 'MOD' | 'USER';
+  };
+
+  return data.uuid === userUuid || data.role === 'ADMIN' || data.role === 'MOD';
+};
+
+export { canModify, deleteTokensMiddleware, loginAction, logout, signup };

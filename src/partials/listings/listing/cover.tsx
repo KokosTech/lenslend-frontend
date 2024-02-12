@@ -5,7 +5,6 @@ import Image from 'next/image';
 
 const Cover = ({
   uuid,
-  userUuid,
   userPhone,
   image,
   title,
@@ -37,7 +36,6 @@ const Cover = ({
         )}
         <ListingActionButtons
           uuid={uuid}
-          userUuid={userUuid}
           phone={userPhone}
           addClass='absolute bottom-4 right-4 z-10'
         />
