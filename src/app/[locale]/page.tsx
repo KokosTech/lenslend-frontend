@@ -45,7 +45,7 @@ const Home = ({ params: { locale } }: { params: { locale: string } }) => {
       </Suspense>
       <Suspense fallback='Loading...'>
         <ListingsGrid
-          title={'photography'}
+          title={t('photography')}
           url={'/listing/category/aaaa-bbbb-cccc-dddd'}
           category={'aaaa-bbbb-cccc-dddd'}
         />
