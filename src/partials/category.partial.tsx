@@ -1,6 +1,7 @@
-import { useTranslations } from 'next-intl';
 import CategoryTitle from '@/components/common/cateogry-title';
 import Link from 'next/link';
+import { API_URL } from '@/configs/api';
+import { getTranslations } from 'next-intl/server';
 
 type Category = {
   uuid: string;
@@ -10,11 +11,17 @@ type Category = {
 
 type CategoriesPartialProps = {
   title: string;
-  data: Category[];
+  type: 'LISTING' | 'PLACES';
 };
 
-const CategoriesPartial = ({ title, data }: CategoriesPartialProps) => {
-  const t = useTranslations('search.categories');
+const CategoriesPartial = async ({ title, type }: CategoriesPartialProps) => {
+  const t = await getTranslations('search.categories');
+
+  const data = await getCategories(type);
+
+  if (!data) {
+    return null;
+  }
 
   return (
     <div className='flex w-full flex-col gap-4'>
@@ -22,7 +29,7 @@ const CategoriesPartial = ({ title, data }: CategoriesPartialProps) => {
       {data.map((category: Category) => (
         <CategoryCard
           key={category.uuid}
-          type={title === 'Equipment' ? 'listing' : 'place'}
+          type={type.toLowerCase()}
           {...category}
         />
       ))}
@@ -48,4 +55,18 @@ const CategoryCard = ({
   </div>
 );
 
+const getCategories = async (type: string) => {
+  const res = await fetch(`${API_URL}/category/${type}`, {
+    next: {
+      revalidate: 60,
+    },
+    cache: 'no-store',
+  });
+
+  if (!res.ok) {
+    return null;
+  }
+
+  return (await res.json()) as Category[];
+};
 export default CategoriesPartial;
