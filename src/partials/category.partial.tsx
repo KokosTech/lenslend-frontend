@@ -57,9 +57,6 @@ const CategoryCard = ({
 
 const getCategories = async (type: string) => {
   const res = await fetch(`${API_URL}/category/${type}`, {
-    next: {
-      revalidate: 60,
-    },
     cache: 'no-store',
   });
 
