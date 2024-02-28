@@ -2,21 +2,14 @@ import Address from '@/components/common/address';
 import { IconStar } from '@tabler/icons-react';
 import Link from 'next/link';
 import PlaceActionButtons from '@/wrappers/placeActionButtons';
+import { CardPlace } from '@/types/data/place.type';
 
 const PlaceCard = ({
   place,
+  noActions,
 }: {
-  place: {
-    uuid: string;
-    name: string;
-    lat: number;
-    lng: number;
-    thumbnail: {
-      url: string;
-      alt: string;
-    };
-    rating: number;
-  };
+  place: CardPlace;
+  noActions?: boolean;
 }) => (
   <div className='relative flex w-full flex-col gap-3 rounded-xl border border-stroke bg-primary p-2.5 transition-all hover:border-stroke-secondary'>
     <div className='relative !aspect-[5/3] w-full overflow-hidden rounded-lg border border-stroke'>
@@ -39,7 +32,7 @@ const PlaceCard = ({
         </h3>
         <Address lat={place.lat} lng={place.lng} size='text-sm' />
       </div>
-      <PlaceActionButtons uuid={place.uuid} />
+      {!noActions && <PlaceActionButtons uuid={place.uuid} />}
     </div>
     <Link href={`/places/${place.uuid}`} className='absolute h-full w-full' />
   </div>

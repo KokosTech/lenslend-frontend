@@ -1,6 +1,7 @@
 import { getProfile } from '@/fetch/profile.fetch';
 import { notFound } from 'next/navigation';
 import { unstable_setRequestLocale } from 'next-intl/server';
+import { getAuth } from '@/actions/auth';
 
 const EditProfilePage = async ({
   params: { locale },
@@ -9,7 +10,10 @@ const EditProfilePage = async ({
 }) => {
   unstable_setRequestLocale(locale);
 
-  const profile = await getProfile();
+  const auth = await getAuth('ssr');
+  if (!auth) notFound();
+
+  const profile = await getProfile(auth);
 
   if (!profile) notFound();
 

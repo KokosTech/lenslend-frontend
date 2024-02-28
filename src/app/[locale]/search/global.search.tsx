@@ -1,10 +1,9 @@
-import { CardPlace } from '@/types/data/place.type';
-import PlaceCard from '@/components/common/cards/place.card';
-import ListingCard from '@/components/common/cards/listing.card';
 import UserCard from '@/components/common/cards/user.card';
 import { GlobalSearchResult } from '@/types/data/search.type';
 import CategoryTitle from '@/components/common/cateogry-title';
 import { useTranslations } from 'next-intl';
+import PlacesGrid from '@/partials/grid/places.grid';
+import ListingsGrid from '@/partials/grid/listings.grid';
 
 const GlobalSearch = ({
   data: { listings, places, users },
@@ -20,20 +19,13 @@ const GlobalSearch = ({
   return (
     <>
       <div className='flex flex-col gap-4'>
-        <CategoryTitle title={t('relevant places')} />
-        <div className='grid grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-3'>
-          {places.data.map((place: CardPlace) => (
-            <PlaceCard place={place} key={place.uuid} />
-          ))}
-        </div>
+        <PlacesGrid title={t('relevant places')} placesDataFetched={places} />
       </div>
       <div className='flex flex-col gap-4'>
-        <CategoryTitle title={t('relevant listings')} />
-        <div className='grid grid-cols-1 gap-4 lg:grid-cols-2'>
-          {listings.data.map((listing) => (
-            <ListingCard key={listing.uuid} {...listing} />
-          ))}
-        </div>
+        <ListingsGrid
+          title={t('relevant listings')}
+          listingDataFetched={listings}
+        />
       </div>
       <div className='flex flex-col gap-4'>
         <CategoryTitle title={t('relevant_users')} />

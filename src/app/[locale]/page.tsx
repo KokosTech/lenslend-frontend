@@ -33,13 +33,13 @@ const Home = ({ params: { locale } }: { params: { locale: string } }) => {
         <Search />
       </Suspense>
       <Suspense fallback='Loading...'>
-        <PlacesGrid title={t('latest_locations')} url={'/place'} />
+        <PlacesGrid title={t('latest_locations')} url={'/place/list'} />
       </Suspense>
       <Suspense fallback='Loading...'>
         <ListingsGrid title={t('latest_listings')} url={'/listing'} />
       </Suspense>
       <Suspense fallback='Loading...'>
-        <UsersGrid title={t('popular_users')} url={'/users'} />
+        <UsersGrid title={t('popular_users')} url={'/user'} />
       </Suspense>
       <Suspense fallback='Loading...'>
         <ListingsGrid
@@ -56,23 +56,19 @@ const Home = ({ params: { locale } }: { params: { locale: string } }) => {
         />
       </Suspense>
       <Suspense fallback='Loading...'>
-        <PlacesGrid
-          title={t('cafes')}
-          url={'/places/category/1'}
-          category='1'
-        />
+        <PlacesGrid title={t('cafes')} url={'/place/category/1'} category='1' />
       </Suspense>
       <Suspense fallback='Loading...'>
         <PlacesGrid
           title={t('restaurants')}
-          url={'/places/category/650cf655-3247-4c58-976e-caaf48d1ba86'}
+          url={'/place/category/650cf655-3247-4c58-976e-caaf48d1ba86'}
           category='650cf655-3247-4c58-976e-caaf48d1ba86'
         />
       </Suspense>
       <Suspense fallback='Loading...'>
         <PlacesGrid
           title={t('offices')}
-          url={'/places/category/4f1e7e29-d640-4928-9572-1ccfd592e089'}
+          url={'/place/category/4f1e7e29-d640-4928-9572-1ccfd592e089'}
           category='4f1e7e29-d640-4928-9572-1ccfd592e089'
         />
       </Suspense>

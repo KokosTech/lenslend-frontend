@@ -17,6 +17,7 @@ export const getListings = async (
   limit: number = 6,
   username?: string,
   category?: string,
+  auth?: string,
 ) => {
   try {
     return await paginatedFetch<ShortListingResponse>(
@@ -28,6 +29,9 @@ export const getListings = async (
       {
         next: {
           revalidate: 60,
+        },
+        headers: {
+          Authorization: auth || '',
         },
       },
     );

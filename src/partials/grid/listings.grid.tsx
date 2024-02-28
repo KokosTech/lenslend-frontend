@@ -2,6 +2,7 @@ import ListingCard from '@/components/common/cards/listing.card';
 import { ShortListingResponse } from '@/types/data/listing.type';
 import { getListings } from '@/fetch/listing.fetch';
 import CategoryTitle from '@/components/common/cateogry-title';
+import { PaginatedResponse } from '@/types/paginated-response.type';
 
 // const getListings = async (username?: string) => {
 //   const response = await fetch(
@@ -42,6 +43,9 @@ const ListingsGrid = async ({
   username,
   category,
   noActions,
+  page,
+  limit,
+  listingDataFetched,
 }: {
   title?: string;
   url?: string;
@@ -49,8 +53,13 @@ const ListingsGrid = async ({
   category?: string;
   noActions?: boolean;
   visibility?: 'PUBLIC' | 'PRIVATE';
+  page?: number;
+  limit?: number;
+  listingDataFetched?: PaginatedResponse<ShortListingResponse>;
 }) => {
-  const listingsData = await getListings(1, 6, username, category);
+  const listingsData =
+    listingDataFetched ??
+    (await getListings(page || 1, limit || 6, username, category));
 
   if (!listingsData) {
     return <div>Failed to load listings</div>;

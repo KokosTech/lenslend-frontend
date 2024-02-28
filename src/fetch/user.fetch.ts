@@ -6,6 +6,7 @@ const getUsers = async (page: number = 1, limit = 12) => {
     return await paginatedFetch<User>('/user/profile', page, limit, {
       next: {
         revalidate: 60,
+        tags: ['users'],
       },
     });
   } catch (error) {

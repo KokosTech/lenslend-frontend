@@ -1,10 +1,8 @@
 import { unstable_setRequestLocale } from 'next-intl/server';
 import { getListings } from '@/fetch/listing.fetch';
-import { ShortListingResponse } from '@/types/data/listing.type';
-import ListingCard from '@/components/common/cards/listing.card';
 import PageOptions from '@/partials/common/pageOptions';
-import CategoryTitle from '@/components/common/cateogry-title';
 import getCategory from '@/fetch/category.fetch';
+import ListingsGrid from '@/partials/grid/listings.grid';
 
 const ListingCategoryPage = async ({
   params: { locale, uuid },
@@ -36,12 +34,10 @@ const ListingCategoryPage = async ({
 
   return (
     <div className='flex w-full flex-col gap-4'>
-      <CategoryTitle title={categoryData.name} />
-      <div className='grid gap-4 min-[1300px]:grid-cols-2'>
-        {listings.map((listing: ShortListingResponse) => (
-          <ListingCard key={listing.uuid} {...listing} />
-        ))}
-      </div>
+      <ListingsGrid
+        title={categoryData.name}
+        listingDataFetched={listingsData}
+      />
       <PageOptions page={page} limit={limit} totalItems={totalItems} />
     </div>
   );

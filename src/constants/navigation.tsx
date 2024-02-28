@@ -61,15 +61,18 @@ export const navigation = [
     icon: <IconMessage2 className='h-6 w-6' />,
     text: 'chats',
     href: '/chats',
+    auth: true,
   },
   {
     icon: <IconStar className='h-6 w-6' />,
     text: 'favorites',
     href: '/favorites',
+    auth: true,
   },
   {
     text: 'Divider 2',
     href: null,
+    auth: true,
   },
   {
     icon: <IconLogin className='h-6 w-6' />,

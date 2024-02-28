@@ -1,14 +1,15 @@
 'use client';
 
-import Link from 'next/link';
 import { useTranslations } from 'next-intl';
+import Link from 'next/link';
 
-import { useState } from 'react';
 import { IconGps } from '@tabler/icons-react';
 import { APIProvider, Map, Marker } from '@vis.gl/react-google-maps';
+import { useState } from 'react';
 
 import Address from '@/components/common/address';
 import LoadingMap from '@/components/common/map/loading.map';
+import { GMAPS_API, GMAPS_ID } from '@/configs/google';
 
 const ContactMap = ({ lat, lng }: { lat: number; lng: number }) => {
   const [mapLoaded, setMapLoaded] = useState(false);
@@ -16,7 +17,7 @@ const ContactMap = ({ lat, lng }: { lat: number; lng: number }) => {
   const t = useTranslations('listing');
 
   return (
-    <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string}>
+    <APIProvider apiKey={GMAPS_API}>
       <div className='flex w-full flex-col gap-2 rounded-xl border-2 border-stroke bg-primary p-2'>
         <div className='relative aspect-video h-full w-full overflow-hidden rounded-lg border-2 border-stroke lg:w-80 xl:w-96'>
           <LoadingMap isLoading={!mapLoaded} />
@@ -30,7 +31,7 @@ const ContactMap = ({ lat, lng }: { lat: number; lng: number }) => {
             gestureHandling={'greedy'}
             streetViewControl={false}
             mapTypeControl={false}
-            mapId={process.env.NEXT_PUBLIC_GOOGLE_MAPS_ID as string}
+            mapId={GMAPS_ID}
             onTilesLoaded={() => {
               if (!mapLoaded) setMapLoaded(true);
             }}

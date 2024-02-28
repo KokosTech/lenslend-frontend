@@ -40,7 +40,11 @@ const ListingCard = ({
         <div className='flex w-full items-center justify-between gap-2'>
           <Price price={price} rental={rental} />
           {!noActions && (
-            <ListingActionButtons uuid={uuid} phone={user.phone} />
+            <ListingActionButtons
+              uuid={uuid}
+              title={title}
+              phone={user.phone}
+            />
           )}
         </div>
       </div>

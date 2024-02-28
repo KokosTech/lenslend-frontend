@@ -81,20 +81,28 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const t = await getTranslations({
     locale,
-    namespace: 'listing',
+    namespace: 'errors',
   });
 
   const listing = await getListing(uuid);
 
   if (!listing) {
     return {
-      title: `${t('errors.not_found')}`,
-      description: t('errors.not_found'),
+      title: `${t('not_found')}`,
+      description: t('not_found'),
       twitter: {
         card: 'summary',
         site: '@lenslend',
-        title: `${t('errors.not_found')} | LensLend`,
-        description: t('errors.not_found'),
+        title: `${t('not_found')} | LensLend`,
+        description: t('not_found'),
+      },
+      openGraph: {
+        title: `${t('not_found')}`,
+        description: t('not_found'),
+        siteName: 'LensLend',
+        type: 'website',
+        locale: locale === 'bg' ? 'bg_BG' : 'en_US',
+        alternateLocale: locale === 'bg' ? 'en_US' : 'bg_BG',
       },
     };
   }
@@ -116,7 +124,7 @@ export async function generateMetadata({
       })),
     },
     openGraph: {
-      title: `${listing.title} | LensLend`,
+      title: `${listing.title}`,
       description: listing.description,
       siteName: 'LensLend',
       images: images?.map((image) => ({

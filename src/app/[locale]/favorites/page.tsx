@@ -1,5 +1,9 @@
 import { unstable_setRequestLocale } from 'next-intl/server';
 
+// const getFavorites = async (locale: string) => ({
+//   locale,
+// });
+
 const FavoritesPage = ({
   params: { locale },
 }: {

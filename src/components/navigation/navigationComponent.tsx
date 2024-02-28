@@ -39,7 +39,12 @@ const NavigationComponent = ({
 
   if (href.includes('create')) {
     return (
-      <CreateButton icon={icon} text={text} selected={selected} close={close} />
+      <CreateButton
+        icon={icon}
+        text={text as 'place' | 'service' | 'product'}
+        selected={selected}
+        close={close}
+      />
     );
   }
 
