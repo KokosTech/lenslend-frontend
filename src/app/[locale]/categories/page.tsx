@@ -1,5 +1,4 @@
 import { API_URL } from '@/configs/api';
-import { unstable_setRequestLocale } from 'next-intl/server';
 import CategoriesPartial from '@/partials/category.partial';
 
 type Category = {
@@ -23,13 +22,7 @@ const getCategories = async (type: string) => {
   return (await res.json()) as Category[];
 };
 
-const CategoriesPage = async ({
-  params: { locale },
-}: {
-  params: { locale: string };
-}) => {
-  unstable_setRequestLocale(locale);
-
+const CategoriesPage = async () => {
   const listingCategories = await getCategories('LISTING');
   const placeCategories = await getCategories('PLACE');
 
