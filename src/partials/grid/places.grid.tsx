@@ -1,61 +1,31 @@
 import PlaceCard from '@/components/common/cards/place.card';
-import { paginatedFetch } from '@/utils/paginated-fetch';
 import CategoryTitle from '@/components/common/cateogry-title';
 import { PaginatedResponse } from '@/types/paginated-response.type';
-
-const getPlaces = async (category?: string, username?: string) => {
-  try {
-    const data = await paginatedFetch<{
-      uuid: string;
-      name: string;
-      lat: number;
-      lng: number;
-      thumbnail: {
-        url: string;
-        alt: string;
-      };
-      rating: number;
-    }>(
-      `${username ? `/user/${username}` : ''}/place?format=card${category ? `&category=${category}` : ''}`,
-      1,
-      4,
-      {
-        next: {
-          revalidate: 60,
-        },
-        cache: 'no-cache',
-      },
-    );
-
-    return data;
-  } catch (error) {
-    console.error(error);
-    return null;
-  }
-};
+import { CardPlace } from '@/types/data/place.type';
+import { getPlaces } from '@/fetch/place.fetch';
 
 const PlacesGrid = async ({
   title,
   url,
   username,
   category,
+  noActions,
+  page,
+  limit,
+  placesDataFetched,
 }: {
   title?: string;
   url?: string;
   username?: string;
   category?: string;
+  noActions?: boolean;
+  visibility?: 'PUBLIC' | 'PRIVATE';
+  page?: number;
+  limit?: number;
+  placesDataFetched?: PaginatedResponse<CardPlace>;
 }) => {
-  const placesData: PaginatedResponse<{
-    uuid: string;
-    name: string;
-    lat: number;
-    lng: number;
-    thumbnail: {
-      url: string;
-      alt: string;
-    };
-    rating: number;
-  }> | null = await getPlaces(category, username);
+  const placesData: PaginatedResponse<CardPlace> | null =
+    placesDataFetched ?? (await getPlaces(page, limit, username, category));
 
   if (!placesData) {
     return <div>Failed to load places</div>;
@@ -84,7 +54,7 @@ const PlacesGrid = async ({
         }`}
       >
         {places.map((place) => (
-          <PlaceCard key={place.uuid} place={place} />
+          <PlaceCard key={place.uuid} place={place} noActions={noActions} />
         ))}
       </div>
     </div>

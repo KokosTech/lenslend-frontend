@@ -36,6 +36,7 @@ const Cover = ({
         )}
         <ListingActionButtons
           uuid={uuid}
+          title={title}
           phone={userPhone}
           addClass='absolute bottom-4 right-4 z-10'
         />

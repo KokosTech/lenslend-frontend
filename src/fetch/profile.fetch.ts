@@ -1,14 +1,8 @@
-import { getAuth } from '@/actions/auth';
 import { UserProfile } from '@/types/data/user.type';
+import { API_URL } from '@/configs/api';
 
-const getProfile = async () => {
-  const auth = await getAuth('ssr');
-
-  if (!auth) {
-    return null;
-  }
-
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/me`, {
+const getProfile = async (auth: string) => {
+  const res = await fetch(`${API_URL}/user/me`, {
     headers: {
       Authorization: auth,
     },
@@ -21,9 +15,7 @@ const getProfile = async () => {
     return null;
   }
 
-  const user = (await res.json()) as UserProfile | null;
-
-  return user;
+  return (await res.json()) as UserProfile | null;
 };
 
 export { getProfile };

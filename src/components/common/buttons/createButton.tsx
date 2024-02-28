@@ -28,7 +28,7 @@ const CreateButton = ({
   close,
 }: {
   icon: ReactNode;
-  text: string;
+  text: 'product' | 'service' | 'place';
   selected: boolean;
   close: () => void;
 }) => {
@@ -68,7 +68,7 @@ const CreateButton = ({
                 className='flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg border border-stroke bg-primary px-4 py-3 transition-colors hover:border-stroke-secondary'
               >
                 <CustomIcon name={icon} className='h-6 w-6 text-text' />
-                <p>{t(name)}</p>
+                <p>{t(name as 'place' | 'product' | 'service')}</p>
               </Link>
             ))}
           </div>

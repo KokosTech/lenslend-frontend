@@ -1,37 +1,11 @@
 import { unstable_setRequestLocale } from 'next-intl/server';
 import getCategory from '@/fetch/category.fetch';
-import CategoryTitle from '@/components/common/cateogry-title';
-import { paginatedFetch } from '@/utils/paginated-fetch';
 import { CardPlace } from '@/types/data/place.type';
 import { PaginatedResponse } from '@/types/paginated-response.type';
-import PlaceCard from '@/components/common/cards/place.card';
 import PageOptions from '@/partials/common/pageOptions';
 import { toInteger } from 'lodash';
-
-const getPlaces = async (
-  page: number = 1,
-  limit: number = 12,
-  username?: string,
-  category?: string,
-) => {
-  try {
-    return await paginatedFetch<CardPlace>(
-      `/${username ? `user/${username}/` : ''}place${
-        category ? `?category=${category}` : ''
-      }`,
-      page,
-      limit,
-      {
-        next: {
-          revalidate: 60,
-        },
-      },
-    );
-  } catch (error) {
-    console.error(error);
-    return null;
-  }
-};
+import { getPlaces } from '@/fetch/place.fetch';
+import PlacesGrid from '@/partials/grid/places.grid';
 
 const PlacesCategoryPage = async ({
   params: { locale, uuid },
@@ -72,12 +46,7 @@ const PlacesCategoryPage = async ({
 
   return (
     <div className='flex w-full flex-col gap-4'>
-      <CategoryTitle title={categoryData.name} />
-      <div className='grid grid-cols-3 gap-4'>
-        {places.map((place: CardPlace) => (
-          <PlaceCard place={place} key={place.uuid} />
-        ))}
-      </div>
+      <PlacesGrid title={categoryData.name} placesDataFetched={placesData} />
       <PageOptions page={page} limit={limit} totalItems={totalItems} />
     </div>
   );

@@ -18,7 +18,7 @@ const UserPage = async ({
   if (!profile) notFound();
 
   return (
-    <div className='flex w-full flex-col-reverse justify-end gap-4 lg:flex-row'>
+    <div className='flex h-full w-full flex-col-reverse justify-end gap-4 lg:flex-row'>
       <div className='flex w-full flex-col gap-4'>
         <ListingsGrid
           title={`@${username}'s listings`}
@@ -42,6 +42,7 @@ const getUser = async (username: string) => {
   const response = await fetch(`${API_URL}/user/${username}`, {
     next: {
       revalidate: 1,
+      tags: [`/user/${username}`],
     },
   });
 

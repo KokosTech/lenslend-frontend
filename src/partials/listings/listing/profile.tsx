@@ -3,10 +3,12 @@ import HorizontalDivider from '@/components/horizontalDivider';
 import Link from 'next/link';
 import {
   IconPhoneCall,
+  IconStar,
   IconUserCircle,
   IconUserHexagon,
 } from '@tabler/icons-react';
 import { useLocale, useTranslations } from 'next-intl';
+import StarForm from '@/components/common/form/star.form';
 
 const Profile = ({
   name,
@@ -15,6 +17,7 @@ const Profile = ({
   phone,
   profile_pic,
   header_pic,
+  rating,
 }: {
   uuid: string;
   name: string;
@@ -23,6 +26,7 @@ const Profile = ({
   phone?: string;
   profile_pic?: string;
   header_pic?: string;
+  rating?: number;
 }) => {
   const t = useTranslations('listing');
   const locale = useLocale();
@@ -44,6 +48,14 @@ const Profile = ({
                   layout='fill'
                   className='object-cover'
                 />
+              )}
+              {rating !== undefined && rating > 0 && (
+                <div className='absolute bottom-2 right-2 flex items-center justify-center gap-2 rounded-lg bg-primary/90 p-2'>
+                  <IconStar className='h-4 w-4 text-text-important' />
+                  <p className='text-md font-semibold text-text-important'>
+                    {rating ? rating.toFixed(1) : 0}
+                  </p>
+                </div>
               )}
             </div>
             <div className='relative w-full'>
@@ -79,6 +91,7 @@ const Profile = ({
           <p className='whitespace-pre-wrap text-sm'>{bio}</p>
         </div>
         <div className='flex w-full flex-col gap-2 break-words rounded-lg p-2 pt-0 lg:w-80 xl:w-96'>
+          <StarForm username={username} revalidate={`/user/${username}`} />
           <HorizontalDivider />
           <Link
             href={`tel:${phone}`}

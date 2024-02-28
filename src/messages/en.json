@@ -1,302 +1,351 @@
 {
-  "navigation": {
-    "discover_feed": "Discover Feed",
-    "categories": "Categories",
-    "search": "Search",
-    "places": "Places",
-    "chats": "Chats",
-    "favorites": "Favorites",
-    "my_profile": "My Profile",
-    "settings": "Settings",
-    "logout": "Log out",
-    "create": {
-      "name": "Create",
-      "product": "Product",
-      "service": "Service",
-      "place": "Place"
-    },
-    "login": "Log in",
-    "signup": "Sign up"
-  },
-  "listing": {
-    "state": {
-      "NEW": "New",
-      "LIKE_NEW": "Like New",
-      "USED": "Used",
-      "REFURBISHED": "Refurbished"
-    },
-    "negotiable": "Negotiable",
-    "modal": {
-      "saved": {
-        "title": "Saved",
-        "message": "The listing has been saved successfully.",
-        "view_all": "View favorites",
-        "close": "Close"
-      }
-    },
-    "comments": {
-      "action": "Comment",
-      "placeholder": "Add a comment...",
-      "plural": "Comments",
-      "singular": "Comment",
-      "none": "No comments yet...",
-      "errorLoading": "Problem loading comments, please try again",
-      "tryAgain": "Try again",
-      "sort": {
-        "newest": "Newest",
-        "oldest": "Oldest",
-        "popular": "Popular"
+  "auth": {
+    "login": {
+      "email": "email address",
+      "errors": {
+        "500": "Something went wrong, please try again",
+        "invalid_credentials": "Invalid credentials",
+        "invalid_email": "Invalid email",
+        "min_length": "Password must be at least 8 characters long"
       },
-      "sortBy": "Sort by"
+      "forgot_password": "Forgot password?",
+      "new_here": "Are you new here?",
+      "password": "password",
+      "pending": "Logging in...",
+      "signup": "Sign up!",
+      "submit": "Login",
+      "title": "Log In"
     },
-    "hour": "hr",
-    "view_profile": "View profile",
-    "get_directions": "Get directions",
-    "errors": {
-      "404": {
-        "title": "404 - Listing not found",
-        "message": "The listing you're looking for doesn't exist or has been deleted.",
-        "action": "Go back"
+    "signup": {
+      "already_have_account": "Already have an account?",
+      "confirm_password": "confirm password",
+      "date_of_birth": "Date of birth",
+      "email": "email",
+      "errors": {
+        "500": "Something went wrong, please try again",
+        "confirmPassword": "Passwords do not match",
+        "date_of_birth": "Invalid date of birth",
+        "email": "Invalid email",
+        "firstName": {
+          "max_length": "First name must be at most 16 characters long",
+          "min_length": "First name must be at least 3 characters long"
+        },
+        "lastName": {
+          "max_length": "Last name must be at most 16 characters long",
+          "min_length": "Last name must be at least 3 characters long"
+        },
+        "password": "Password must be at least 8 characters long",
+        "phone": "Invalid phone number",
+        "server": {
+          "EMAIL_ALREADY_IN_USE": "Email already in use",
+          "PASSWORDS_DO_NOT_MATCH": "Passwords do not match",
+          "PHONE_ALREADY_IN_USE": "Phone number already in use",
+          "USERNAME_ALREADY_IN_USE": "Username already in use",
+          "isNotEmpty": "Field is required",
+          "isPhoneNumber": "Invalid phone number",
+          "isStrongPassword": "Insecure password"
+        },
+        "username": {
+          "max_length": "Username must be at most 16 characters long",
+          "min_length": "Username must be at least 3 characters long"
+        }
       },
-      "go_back": "Go back",
-      "unauthorized": "You are not authorized to view this page"
-    },
-    "buttons": {
-      "edit": "Edit",
-      "delete": "Delete"
+      "finish": "Finish",
+      "first_name": "first name",
+      "last_name": "last name",
+      "login": "Log In",
+      "next": "Next",
+      "password": "password",
+      "pending": "Signing up...",
+      "phone": "Phone",
+      "prev": "Back",
+      "skip": "Skip",
+      "submit": "Sign Up",
+      "title": "Sign Up",
+      "username": "username"
     }
   },
   "categories": {
     "title": "Categories"
   },
-  "place": {
-    "visitors": {
-      "title": "People who've been here",
-      "view_all": "View all"
-    },
-    "reviews": {
-      "title": "Reviews",
-      "none": "No reviews yet...",
-      "first": "Be the first one to add a review!",
-      "action": "Post",
-      "placeholder": "Add a review...",
-      "read_all": "Read all",
-      "show_more": "show more",
-      "show_less": "show less",
-      "rating": "Rating",
-      "publish": "Publish a review",
-      "errors": {
-        "unauthorized": "You have to be logged in to post a review",
-        "min_length": "Review must be at least 3 characters long",
-        "max_length": "Review must be at most 480 characters long",
-        "empty": "Rating is required",
-        "min": "Rating must be at least 1",
-        "max": "Rating must be at most 5"
-      }
-    },
-    "buttons": {
-      "edit": "Edit",
-      "delete": "Delete",
-      "report": "Report",
-      "open_map": "Open in Google Maps"
-    },
-    "owner": "Owner",
-    "creator": "Creator"
+  "chats": {
+    "title": "Coming soon in v2.0"
   },
-  "settings": {
-    "title": "Application settings",
-    "change_language": "Change Language",
-    "change_theme": "Change Theme"
-  },
-  "auth": {
-    "signup": {
-      "errors": {
-        "email": "Invalid email",
-        "username": {
-          "min_length": "Username must be at least 3 characters long",
-          "max_length": "Username must be at most 16 characters long"
-        },
-        "password": "Password must be at least 8 characters long",
-        "confirmPassword": "Passwords do not match",
-        "firstName": {
-          "min_length": "First name must be at least 3 characters long",
-          "max_length": "First name must be at most 16 characters long"
-        },
-        "lastName": {
-          "min_length": "Last name must be at least 3 characters long",
-          "max_length": "Last name must be at most 16 characters long"
-        },
-        "date_of_birth": "Invalid date of birth",
-        "phone": "Invalid phone number",
-        "server": {
-          "isStrongPassword": "Insecure password",
-          "isPhoneNumber": "Invalid phone number",
-          "isNotEmpty": "Field is required",
-          "EMAIL_ALREADY_IN_USE": "Email already in use",
-          "USERNAME_ALREADY_IN_USE": "Username already in use",
-          "PHONE_ALREADY_IN_USE": "Phone number already in use",
-          "PASSWORDS_DO_NOT_MATCH": "Passwords do not match"
-        },
-        "500": "Something went wrong, please try again"
-      },
-      "title": "Sign Up",
-      "email": "email",
-      "username": "username",
-      "password": "password",
-      "confirm_password": "confirm password",
-      "first_name": "first name",
-      "last_name": "last name",
-      "date_of_birth": "Date of birth",
-      "phone": "Phone",
-      "prev": "Back",
-      "next": "Next",
-      "skip": "Skip",
-      "finish": "Finish",
-      "submit": "Sign Up",
-      "pending": "Signing up...",
-      "already_have_account": "Already have an account?",
-      "login": "Log In"
-    },
-    "login": {
-      "title": "Log In",
-      "errors": {
-        "invalid_email": "Invalid email",
-        "min_length": "Password must be at least 8 characters long",
-        "invalid_credentials": "Invalid credentials",
-        "500": "Something went wrong, please try again"
-      },
-      "email": "email address",
-      "password": "password",
-      "forgot_password": "Forgot password?",
-      "submit": "Login",
-      "pending": "Logging in...",
-      "new_here": "Are you new here?",
-      "signup": "Sign up!"
-    }
+  "common": {
+    "copied": "Copied!",
+    "created_at": "Created on:",
+    "share": "Share",
+    "updated_at": "Updated on:",
+    "view_all": "view all"
   },
   "create": {
     "listing": {
-      "title": "Create a new listing",
       "basic": {
-        "title": "Basic",
-        "name": "Title",
         "category": "Category",
-        "status": {
-          "title": "Status",
-          "PRIVATE": "Private",
-          "PUBLIC": "Public"
-        },
+        "name": "Title",
         "state": {
-          "title": "State",
-          "NEW": "New",
           "LIKE_NEW": "Like New",
+          "NEW": "New",
+          "REFURBISHED": "Refurbished",
           "USED": "Used",
-          "REFURBISHED": "Refurbished"
+          "title": "State"
+        },
+        "status": {
+          "PRIVATE": "Private",
+          "PUBLIC": "Public",
+          "title": "Status"
+        },
+        "title": "Basic"
+      },
+      "details": {
+        "description": "Description",
+        "negotiable": "Negotiable",
+        "price": "Price",
+        "rental": "Rental",
+        "tags": "Tags",
+        "title": "Details"
+      },
+      "errors": {
+        "500": "Something went wrong, please try again",
+        "category": "Category is required",
+        "description": {
+          "max": "Description must be at most 3000 characters long",
+          "min": "Description must be at least 100 characters long"
+        },
+        "images": {
+          "max": "At most 6 images are allowed",
+          "min": "At least 1 images are required"
+        },
+        "location": "Meetup location is required",
+        "name": {
+          "max": "Title must be at most 60 characters long",
+          "min": "Title must be at least 3 characters long"
+        },
+        "price": "Invalid price",
+        "tag": {
+          "max": "Tag must be at most 20 characters long",
+          "min": "Tag must be at least 3 characters long"
+        },
+        "tags": {
+          "max": "Tags must be at most 16"
         }
       },
       "images": "Images",
-      "details": {
-        "title": "Details",
-        "description": "Description",
-        "price": "Price",
-        "rental": "Rental",
-        "negotiable": "Negotiable",
-        "tags": "Tags"
-      },
       "location": {
         "title": "Meetup point"
       },
-      "submit": "Create",
       "pending": "Creating...",
       "reset": "Reset",
-      "errors": {
-        "500": "Something went wrong, please try again",
-        "name": {
-          "min": "Title must be at least 3 characters long",
-          "max": "Title must be at most 60 characters long"
-        },
-        "description": {
-          "min": "Description must be at least 100 characters long",
-          "max": "Description must be at most 3000 characters long"
-        },
-        "price": "Invalid price",
-        "category": "Category is required",
-        "tags": {
-          "max": "Tags must be at most 16"
-        },
-        "tag": {
-          "min": "Tag must be at least 3 characters long",
-          "max": "Tag must be at most 20 characters long"
-        },
-        "location": "Meetup location is required",
-        "images": {
-          "min": "At least 1 images are required",
-          "max": "At most 6 images are allowed"
-        }
-      }
+      "submit": "Create",
+      "title": "Create a new listing"
     },
     "place": {
-      "title": "Create a new place",
-      "images": "Images",
-      "details": {
-        "title": "Details",
-        "description": "Description",
-        "tags": "Tags"
+      "basic": {
+        "category": "Category",
+        "name": "Name",
+        "title": "Basic"
       },
-      "location": "Location",
-      "tags": "Tags"
+      "details": {
+        "description": "Description",
+        "services": "Services",
+        "tags": "Tags",
+        "title": "Details"
+      },
+      "errors": {
+        "500": "Something went wrong, please try again",
+        "category": "Category is required",
+        "description": {
+          "max": "Description must be at most 3000 characters long",
+          "min": "Description must be at least 100 characters long"
+        },
+        "icon": "Icon required",
+        "images": {
+          "max": "At most 6 images are allowed",
+          "min": "At least 1 images are required"
+        },
+        "location": "Location is required",
+        "name": {
+          "max": "Name must be at most 60 characters long",
+          "min": "Name must be at least 3 characters long"
+        },
+        "tag": {
+          "max": "Tag must be at most 20 characters long",
+          "min": "Tag must be at least 3 characters long"
+        },
+        "tags": {
+          "max": "Tags must be at most 16"
+        }
+      },
+      "images": "Images",
+      "location": {
+        "title": "Location"
+      },
+      "pending": "Creating...",
+      "reset": "Reset",
+      "submit": "Create",
+      "title": "Create a new place"
     }
   },
-  "common": {
-    "created_at": "Created on:",
-    "updated_at": "Updated on:",
-    "share": "Share",
-    "copied": "Copied!",
-    "view_all": "view all"
-  },
-  "errors": {
-    "something_went_wrong": "Something went wrong, please try again",
-    "try_again": "Try again"
-  },
   "currency": {
-    "USD": "$",
+    "BGN": "BGN",
     "EUR": "€",
     "GBP": "£",
     "JPY": "¥",
     "RUB": "₽",
     "UAH": "₴",
-    "BGN": "BGN"
-  },
-  "chats": {
-    "title": "Coming soon in v2.0"
-  },
-  "search": {
-    "title": "Search",
-    "description": "Find listings, places and people in LensLend",
-    "metadata": {
-      "search_for": "Search for",
-      "in": "in",
-      "all_categories": "all categories"
-    },
-    "placeholder": "what are you looking for today?",
-    "categories": {
-      "Places": "Places",
-      "Equipment": "Equipment",
-      "Freelancers": "Freelancers"
-    },
-    "relevant places": "Relevant places",
-    "relevant listings": "Relevant listings",
-    "relevant_users": "Relevant users",
-    "to": "to"
+    "USD": "$"
   },
   "discover": {
-    "latest_locations": "Latest locations on the map",
-    "latest_listings": "Latest equipment on sale",
-    "popular_users": "Popular users",
-    "photography": "Photography equipment",
-    "video": "Video equipment",
     "cafes": "Great cafes",
+    "latest_listings": "Latest equipment on sale",
+    "latest_locations": "Latest locations on the map",
+    "offices": "Cool offices",
+    "photography": "Photography equipment",
+    "popular_users": "Popular users",
     "restaurants": "Amazing restaurants",
-    "offices": "Cool offices"
+    "video": "Video equipment"
+  },
+  "errors": {
+    "not_found": "Not found",
+    "something_went_wrong": "Something went wrong, please try again",
+    "try_again": "Try again"
+  },
+  "listing": {
+    "buttons": {
+      "delete": "Delete",
+      "edit": "Edit",
+      "report": "Report",
+      "save": "Save",
+      "saved": "Saved",
+      "share": "Share",
+      "view_all": "View all"
+    },
+    "comments": {
+      "action": "Comment",
+      "errorLoading": "Problem loading comments, please try again",
+      "none": "No comments yet...",
+      "placeholder": "Add a comment...",
+      "plural": "Comments",
+      "singular": "Comment",
+      "sort": {
+        "newest": "Newest",
+        "oldest": "Oldest",
+        "popular": "Popular"
+      },
+      "sortBy": "Sort by",
+      "tryAgain": "Try again"
+    },
+    "errors": {
+      "404": {
+        "action": "Go back",
+        "message": "The listing you're looking for doesn't exist or has been deleted.",
+        "title": "404 - Listing not found"
+      },
+      "go_back": "Go back",
+      "unauthorized": "You are not authorized to view this page"
+    },
+    "get_directions": "Get directions",
+    "hour": "hr",
+    "modal": {
+      "saved": {
+        "close": "Close",
+        "message": "The listing has been saved successfully.",
+        "title": "Saved",
+        "view_all": "View favorites"
+      }
+    },
+    "negotiable": "Negotiable",
+    "state": {
+      "LIKE_NEW": "Like New",
+      "NEW": "New",
+      "REFURBISHED": "Refurbished",
+      "USED": "Used"
+    },
+    "view_profile": "View profile"
+  },
+  "navigation": {
+    "categories": "Categories",
+    "chats": "Chats",
+    "create": {
+      "name": "Create",
+      "place": "Place",
+      "product": "Product",
+      "service": "Service"
+    },
+    "discover_feed": "Discover Feed",
+    "favorites": "Favorites",
+    "login": "Log in",
+    "logout": "Log out",
+    "my_profile": "My Profile",
+    "places": "Places",
+    "search": "Search",
+    "settings": "Settings",
+    "signup": "Sign up"
+  },
+  "place": {
+    "buttons": {
+      "delete": "Delete",
+      "edit": "Edit",
+      "open_map": "Open in Google Maps",
+      "report": "Report"
+    },
+    "creator": "Creator",
+    "errors": {
+      "go_back": "Go back",
+      "unauthorized": "You are not authorized to view this place"
+    },
+    "owner": "Owner",
+    "reviews": {
+      "action": "Post",
+      "errors": {
+        "empty": "Rating is required",
+        "max": "Rating must be at most 5",
+        "max_length": "Review must be at most 480 characters long",
+        "min": "Rating must be at least 1",
+        "min_length": "Review must be at least 3 characters long",
+        "unauthorized": "You have to be logged in to post a review"
+      },
+      "first": "Be the first one to add a review!",
+      "none": "No reviews yet...",
+      "placeholder": "Add a review...",
+      "publish": "Publish a review",
+      "rating": "Rating",
+      "read_all": "Read all",
+      "show_less": "show less",
+      "show_more": "show more",
+      "title": "Reviews",
+      "your_review": "Your review"
+    },
+    "visitors": {
+      "title": "People who've been here",
+      "view_all": "View all"
+    }
+  },
+  "search": {
+    "categories": {
+      "Equipment": "Equipment",
+      "Freelancers": "Freelancers",
+      "Places": "Places"
+    },
+    "description": "Find listings, places and people in LensLend",
+    "metadata": {
+      "all_categories": "all categories",
+      "in": "in",
+      "search_for": "Search for"
+    },
+    "placeholder": "what are you looking for today?",
+    "relevant listings": "Relevant listings",
+    "relevant places": "Relevant places",
+    "relevant_users": "Relevant users",
+    "title": "Search",
+    "to": "to"
+  },
+  "settings": {
+    "change_language": "Change Language",
+    "change_theme": "Change Theme",
+    "title": "Application settings"
+  },
+  "sms": {
+    "listing": "Hello, I'm interested in your listing: "
   }
 }

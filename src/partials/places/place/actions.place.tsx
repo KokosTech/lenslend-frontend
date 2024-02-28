@@ -1,12 +1,10 @@
 import { useTranslations } from 'next-intl';
 import HorizontalDivider from '@/components/horizontalDivider';
 import Link from 'next/link';
-import ListingActionButtons from '@/wrappers/listingActionButtons';
+import PlaceActionButtons from '@/wrappers/placeActionButtons';
 
 const ActionsPlace = ({
   uuid,
-  ownerUuid,
-  userUuid,
   lat,
   lng,
 }: {
@@ -29,11 +27,7 @@ const ActionsPlace = ({
           >
             {t('open_map')}
           </Link>
-          <ListingActionButtons
-            uuid={uuid}
-            phone={ownerUuid ?? userUuid}
-            addClass='h-full'
-          />
+          <PlaceActionButtons uuid={uuid} />
         </div>
       </div>
     </div>

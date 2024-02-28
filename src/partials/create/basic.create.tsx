@@ -1,10 +1,11 @@
-import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 import CategorySelect from '@/partials/create/categorySelect';
+import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 
+import DropdownInput from '@/components/common/dropdown.input';
 import Input from '@/components/common/input';
 import HorizontalDivider from '@/components/horizontalDivider';
-import DropdownInput from '@/components/common/dropdown.input';
 
+import { Category, Status, StatusOptions } from '@/types/forms/common.form';
 import {
   CreateListingForm,
   CreateProductErrors,
@@ -12,7 +13,6 @@ import {
   ListingStateOptions,
 } from '@/types/forms/create-listing.form';
 import { useTranslations } from 'next-intl';
-import { Category, Status, StatusOptions } from '@/types/forms/common.form';
 
 type BasicCreateProps = {
   name: string;
