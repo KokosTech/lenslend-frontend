@@ -2,19 +2,23 @@
 
 import { useLocale, useTranslations } from 'next-intl';
 import { locales } from '@/constants/locales';
+import { usePathname, useRouter } from 'next/navigation';
 
 const ChangeLanguage = () => {
   const t = useTranslations('settings');
   const locale = useLocale();
 
+  const router = useRouter();
+  const path = usePathname();
+
   const changeLanguage = (lang: string) => {
     if (!locales.includes(lang)) return null;
 
-    const url = window.location.href.split('/');
-    url[3] = lang;
-
+    const url = path.split('/');
+    url[1] = lang;
     const newUrl = url.join('/');
-    window.location.replace(newUrl);
+
+    router.push(newUrl);
   };
 
   return (

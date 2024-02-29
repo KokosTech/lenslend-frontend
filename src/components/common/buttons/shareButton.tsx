@@ -36,7 +36,7 @@ const ShareButton = (): JSX.Element => {
         text: window.document.title,
         url: `${window.location.origin}${path}`,
       })
-      .then(() => console.log('Successful share! 🎉'))
+      .then(() => console.log('Successful share'))
       .catch((err) =>
         console.warn('Browser does not support native share', err),
       );

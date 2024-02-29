@@ -36,8 +36,6 @@ const StarForm = ({
         },
       });
 
-      console.log('res', res.body);
-
       if (!res.ok) {
         return;
       }

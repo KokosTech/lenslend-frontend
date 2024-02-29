@@ -25,8 +25,6 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   let place: Place | null;
 
-  console.log('METADATA', uuid, locale);
-
   try {
     place = await getPlace(uuid);
   } catch (e) {
@@ -69,8 +67,6 @@ export async function generateMetadata({
       alternateLocale: locale === 'bg' ? 'en_US' : 'bg_BG',
     },
   };
-
-  console.log('META', meta);
 
   return meta;
 }
