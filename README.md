@@ -2,7 +2,7 @@
 
 # lenslend-frontend
 
-A Technology School Electronic Systems thesis project made by Kaloyan Doychinov, class 2024
+The frontend of a Technology School Electronic Systems thesis project made by Kaloyan Doychinov, class 2024
 
 <p align="center">
   <img src='https://repobeats.axiom.co/api/embed/3a65101ada2293c1930f3abb241f1f4ac2fe3909.svg' alt="Repobeats analytics image" />
@@ -52,5 +52,11 @@ pnpm dev
 - [SWR](https://swr.vercel.app)
 - [Axios](https://axios-http.com/docs/intro)
 - [Tabler Icons](https://tablericons.com)
+
+## Other Repos for LensLend
+
+- Backend (API) - https://github.com/KokosTech/lenslend-backend
+
+<br/>
 
 *Created by [Kaloyan Doychinov](https://kaloyan.tech/), Technology School Electronic Systems*
