@@ -46,6 +46,7 @@
           "isStrongPassword": "Insecure password"
         },
         "username": {
+          "invalid_characters": "Username must only contain latin characters",
           "max_length": "Username must be at most 16 characters long",
           "min_length": "Username must be at least 3 characters long"
         }
@@ -223,6 +224,12 @@
     "comments": {
       "action": "Comment",
       "errorLoading": "Problem loading comments, please try again",
+      "errors": {
+        "empty": "A comment cannot be empty",
+        "max_length": "A comment must be at most 280 characters",
+        "min_length": "A comment must be at least 3 characters",
+        "unauthorized": "To comment, you have to be logged in"
+      },
       "none": "No comments yet...",
       "placeholder": "Add a comment...",
       "plural": "Comments",
@@ -293,6 +300,9 @@
     "errors": {
       "go_back": "Go back",
       "unauthorized": "You are not authorized to view this place"
+    },
+    "map": {
+      "loading": "Loading Google Maps..."
     },
     "owner": "Owner",
     "reviews": {
