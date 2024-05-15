@@ -2,6 +2,7 @@ import { useTranslations } from 'next-intl';
 
 import Dates from '@/components/common/dates';
 import Tag from '@/components/common/tag';
+import TranslationWrapper from '@/wrappers/translation.wrapper';
 
 const Description = ({
   category,
@@ -45,7 +46,11 @@ const Description = ({
               </div>
             )}
           </div>
-          <p className='text-md whitespace-pre-wrap'>{description}</p>
+          <p className='text-md relative whitespace-pre-wrap break-words'>
+            <TranslationWrapper text={description}>
+              {description}
+            </TranslationWrapper>
+          </p>
           <div className='flex w-full flex-wrap items-end justify-end gap-4 text-text-secondary'>
             {tags?.map(({ tag }) => <Tag tag={tag} key={tag.uuid} />)}
           </div>

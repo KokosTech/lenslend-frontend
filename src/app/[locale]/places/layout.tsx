@@ -1,18 +1,17 @@
 'use client';
 
-import { SWRConfig } from 'swr';
+import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { APIProvider } from '@vis.gl/react-google-maps';
 import { AxiosError } from 'axios';
 import { useParams } from 'next/navigation';
-import { APIProvider } from '@vis.gl/react-google-maps';
-import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { SWRConfig } from 'swr';
 
 import MapsPartialPage from '@/app/[locale]/places/maps';
 
-import { GMAPS_API } from '@/configs/google';
 import { axiosInstance } from '@/configs/axios';
+import { GMAPS_API } from '@/configs/google';
 
 import type { ShortPlace } from '@/types/data/place.type';
-import { Suspense } from 'react';
 
 const PlacesLayout = ({ children }: { children: React.ReactNode }) => {
   const [parent] = useAutoAnimate({
@@ -47,7 +46,7 @@ const PlacesLayout = ({ children }: { children: React.ReactNode }) => {
           ref={parent}
         >
           <MapsPartialPage uuid={uuid} />
-          <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
+          {children}
         </div>
       </APIProvider>
     </SWRConfig>

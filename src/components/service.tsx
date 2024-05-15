@@ -1,12 +1,12 @@
 import CustomIcon from '@/components/common/customIcon';
-import { Service } from '@/types/data/place.type';
+import { Service as ServiceType } from '@/types/data/place.type';
 
 const Service = ({
   service: { name, icon },
   className,
   onClick,
 }: {
-  service: Service;
+  service: ServiceType;
   className?: string;
   onClick?: () => void;
 }) => (
