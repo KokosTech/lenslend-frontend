@@ -20,6 +20,7 @@
     "@types/lodash": "^4.17.0",
     "@vis.gl/react-google-maps": "^0.4.3",
     "axios": "^1.6.8",
+    "deepl-node": "^1.13.0",
     "emoji-picker-react": "^4.9.2",
     "formik": "^2.4.6",
     "google-map-react": "^2.2.1",

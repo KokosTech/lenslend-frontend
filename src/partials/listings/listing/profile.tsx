@@ -88,7 +88,7 @@ const Profile = ({
         )}
         <div className='flex w-full flex-col gap-2 break-words rounded-lg p-2 pt-4 text-left text-text-secondary lg:w-80 lg:pt-2 xl:w-96 xl:pt-4'>
           <HorizontalDivider />
-          <p className='whitespace-pre-wrap text-sm'>{bio}</p>
+          <p className='whitespace-pre-wrap break-words text-sm'>{bio}</p>
         </div>
         <div className='flex w-full flex-col gap-2 break-words rounded-lg p-2 pt-0 lg:w-80 xl:w-96'>
           <StarForm username={username} revalidate={`/user/${username}`} />
