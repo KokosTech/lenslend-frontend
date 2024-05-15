@@ -75,6 +75,7 @@
   "common": {
     "copied": "Copied!",
     "created_at": "Created on:",
+    "from": "from",
     "share": "Share",
     "updated_at": "Updated on:",
     "view_all": "view all"
@@ -207,7 +208,9 @@
     "video": "Video equipment"
   },
   "errors": {
+    "go_back": "Go back",
     "not_found": "Not found",
+    "page_limit_invalid": "Invalid page or limit",
     "something_went_wrong": "Something went wrong, please try again",
     "try_again": "Try again"
   },
