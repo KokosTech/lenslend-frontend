@@ -7,6 +7,7 @@ import { Suspense } from 'react';
 import Image from 'next/image';
 import HorizontalDivider from '@/components/horizontalDivider';
 import { useTranslations } from 'next-intl';
+import ListingGridSkeleton from '@/loading/skeletons/listing/listing-grid-skeleton';
 
 const HeaderImage = () => (
   <div className='relative !aspect-[32/9] w-full overflow-hidden rounded-xl border border-stroke bg-primary p-4'>
@@ -35,20 +36,48 @@ const Home = ({ params: { locale } }: { params: { locale: string } }) => {
       <Suspense fallback='Loading...'>
         <PlacesGrid title={t('latest_locations')} url={'/place/list'} />
       </Suspense>
-      <Suspense fallback='Loading...'>
-        <ListingsGrid title={t('latest_listings')} url={'/listing'} />
+      <Suspense
+        fallback={
+          <ListingGridSkeleton
+            title={t('latest_listings')}
+            count={6}
+            key='latest-listings-skeleton'
+          />
+        }
+      >
+        <ListingsGrid
+          title={t('latest_listings')}
+          url={'/listing'}
+          key='latest-listings'
+        />
       </Suspense>
       <Suspense fallback='Loading...'>
         <UsersGrid title={t('popular_users')} url={'/user'} />
       </Suspense>
-      <Suspense fallback='Loading...'>
+      <Suspense
+        fallback={
+          <ListingGridSkeleton
+            title={t('photography')}
+            count={6}
+            key='photography-listings-skeleton'
+          />
+        }
+      >
         <ListingsGrid
           title={t('photography')}
           url={'/listing/category/aaaa-bbbb-cccc-dddd'}
           category={'aaaa-bbbb-cccc-dddd'}
         />
       </Suspense>
-      <Suspense fallback='Loading...'>
+      <Suspense
+        fallback={
+          <ListingGridSkeleton
+            title={t('video')}
+            count={6}
+            key='video-listings-skeleton'
+          />
+        }
+      >
         <ListingsGrid
           title={t('video')}
           url={'/listing/category/34f3c028-3813-42cb-b4b1-5a6fa3ea01c3'}

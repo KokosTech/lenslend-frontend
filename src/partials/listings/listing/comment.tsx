@@ -2,6 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import { User } from '@/types/data/place.type';
 import Dates from '@/components/common/dates';
+import TranslationWrapper from '@/wrappers/translation.wrapper';
 
 const Comment = ({
   user,
@@ -14,7 +15,7 @@ const Comment = ({
   created_at: string;
   updated_at: string;
 }) => (
-  <div className='flex gap-4 rounded-xl border border-stroke bg-primary p-2 text-justify'>
+  <div className='relative flex gap-4 rounded-xl border border-stroke bg-primary p-2 text-justify'>
     <div className='flex flex-col gap-2 px-2'>
       <div className='flex items-center gap-2'>
         {user.profile_pic && (
@@ -32,9 +33,11 @@ const Comment = ({
           <p className='text-xs text-text-secondary'>@{user.username}</p>
         </div>
       </div>
-      <p className='whitespace-pre-line px-2 font-semibold text-text'>
-        {content}
-      </p>
+      <TranslationWrapper text={content} pos='bottom-2 right-2'>
+        <p className='whitespace-pre-line px-2 font-semibold text-text'>
+          {content}
+        </p>
+      </TranslationWrapper>
       <Dates created_at={created_at} updated_at={updated_at} />
     </div>
   </div>

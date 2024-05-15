@@ -46,7 +46,7 @@ const ReviewClient = ({
           </p>
         </div>
       </Link>
-      <p className='text-text-text px-2'>
+      <p className='text-text-text w-full break-words px-2'>
         {showFull ? content : content.slice(0, 100)}
         {content.length > 100 && (
           <button

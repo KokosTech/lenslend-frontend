@@ -5,11 +5,9 @@ import { ShortPlace } from '@/types/data/place.type';
 
 const MarkersMap = ({
   data,
-  openPlace,
   setOpenPlace,
 }: {
   data: ShortPlace[];
-  openPlace: string | null;
   setOpenPlace: (uuid: string | null) => void;
 }) => {
   const map = useMap();
@@ -61,11 +59,7 @@ const MarkersMap = ({
             lng: place.lng,
           }}
           onClick={() => {
-            if (openPlace === place.uuid) {
-              setOpenPlace(null);
-            } else {
-              setOpenPlace(place.uuid);
-            }
+            setOpenPlace(place.uuid);
           }}
           ref={(marker) => {
             setMarkerRef(marker, place.uuid);

@@ -46,8 +46,4 @@ const Navigation = () => {
   );
 };
 
-// export default dynamic(() => Promise.resolve(Navigation), {
-//   ssr: false,
-// });
-
 export default Navigation;

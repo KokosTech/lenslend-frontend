@@ -3,6 +3,7 @@ import HorizontalDivider from '@/components/horizontalDivider';
 import Dates from '@/components/common/dates';
 import Tag from '@/components/common/tag';
 import Address from '@/components/common/address';
+import TranslationWrapper from '@/wrappers/translation.wrapper';
 
 const TextPlace = ({
   name,
@@ -29,9 +30,12 @@ const TextPlace = ({
       <div className='self-start rounded-lg border border-stroke px-3 py-1.5'>
         {category.name}
       </div>
-      <p className=' whitespace-pre-wrap break-words text-text'>
-        {description}
+      <p className='relative h-fit whitespace-pre-wrap break-words text-text'>
+        <TranslationWrapper text={description}>
+          {description}
+        </TranslationWrapper>
       </p>
+
       <div className='flex w-full flex-wrap items-end justify-end gap-4 text-text-secondary'>
         {tags?.map(({ tag }) => <Tag tag={tag} key={tag.uuid} />)}
       </div>

@@ -5,6 +5,7 @@ import Dates from '@/components/common/dates';
 
 import type { Review as ReviewType } from '@/types/data/place.type';
 import { useLocale } from 'next-intl';
+import TranslationWrapper from '@/wrappers/translation.wrapper';
 
 const ReviewServer = ({
   uuid,
@@ -41,8 +42,10 @@ const ReviewServer = ({
           </p>
         </div>
       </Link>
-      <div className='flex flex-col gap-2 px-2'>
-        <p className='text-text-text'>{content}</p>
+      <div className='relative flex flex-col gap-2 px-2'>
+        <TranslationWrapper text={content} pos='bottom-0 right-0'>
+          <p className='text-text-text w-full break-words'>{content}</p>
+        </TranslationWrapper>
         <Dates created_at={created_at} updated_at={updated_at} />
       </div>
     </div>
