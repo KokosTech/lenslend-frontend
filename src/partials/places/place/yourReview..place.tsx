@@ -1,14 +1,14 @@
 'use client';
 
-import useSWR, { useSWRConfig } from 'swr';
-import { Review } from '@/types/data/place.type';
 import { getAuth } from '@/actions/auth';
-import { API_URL } from '@/configs/api';
-import { ReviewClient } from '@/components/place/review';
-import PublishReviewPlace from '@/partials/places/place/publishReview.place';
 import HorizontalDivider from '@/components/horizontalDivider';
+import { ReviewClient } from '@/components/place/review';
+import { API_URL } from '@/configs/api';
+import PublishReviewPlace from '@/partials/places/place/publishReview.place';
+import { Review } from '@/types/data/place.type';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
+import useSWR, { useSWRConfig } from 'swr';
 
 const yourReviewFetcher = async (tags: string[], url: string) => {
   const auth = await getAuth('ssr');
@@ -72,7 +72,7 @@ const YourReviewPlace = ({ uuid }: { uuid: string }) => {
   }, [hasReview, review]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return null;
   }
 
   if (error) {
