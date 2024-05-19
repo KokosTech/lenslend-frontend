@@ -94,7 +94,6 @@ const CreateProductPage = () => {
       setRedirecting(false);
       handleError({ global: [t('errors.500')] });
     } finally {
-      setRedirecting(false);
       setSubmitting(false);
     }
   };
