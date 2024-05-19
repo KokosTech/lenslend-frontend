@@ -14,7 +14,7 @@ import Gallery from '@/components/project/gallery';
 import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
 import Link from 'next/link';
 import ModifyListing from '@/partials/listings/listing/modify.listing';
-import { Metadata, ResolvingMetadata } from 'next';
+import { Metadata } from 'next';
 
 const ListingPage = async ({
   params: { uuid, locale },
@@ -77,7 +77,6 @@ export async function generateMetadata({
   params: { uuid, locale },
 }: {
   params: { uuid: string; locale: string };
-  parent: ResolvingMetadata;
 }): Promise<Metadata> {
   const t = await getTranslations({
     locale,

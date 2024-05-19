@@ -1,8 +1,8 @@
-import Link from 'next/link';
-import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
-import { Metadata, ResolvingMetadata } from 'next';
-import { useTranslations } from 'next-intl';
 import { IconFaceIdError } from '@tabler/icons-react';
+import { Metadata } from 'next';
+import { useTranslations } from 'next-intl';
+import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
+import Link from 'next/link';
 
 const LogoutFailedPage = ({
   params: { locale },
@@ -25,7 +25,6 @@ export async function generateMetadata({
   params: { locale },
 }: {
   params: { locale: string };
-  parent: ResolvingMetadata;
 }): Promise<Metadata> {
   const t = await getTranslations({
     locale,

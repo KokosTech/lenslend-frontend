@@ -2,7 +2,7 @@ import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
 import { useTranslations } from 'next-intl';
 import LoginForm from '@/partials/login/form';
 import AuthWrapper from '@/wrappers/auth.wrapper';
-import { Metadata, ResolvingMetadata } from 'next';
+import { Metadata } from 'next';
 
 const LoginPage = ({ params: { locale } }: { params: { locale: string } }) => {
   unstable_setRequestLocale(locale);
@@ -26,7 +26,6 @@ export async function generateMetadata({
   params: { locale },
 }: {
   params: { locale: string };
-  parent: ResolvingMetadata;
 }): Promise<Metadata> {
   const t = await getTranslations({
     locale,

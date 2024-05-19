@@ -2,7 +2,7 @@ import { toInteger } from 'lodash';
 import PageOptions from '@/partials/common/pageOptions';
 import { getPlaces } from '@/fetch/place.fetch';
 import PlacesGrid from '@/partials/grid/places.grid';
-import { Metadata, ResolvingMetadata } from 'next';
+import { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 
 const PlacesPage = async ({
@@ -37,7 +37,6 @@ export async function generateMetadata({
   params: { locale },
 }: {
   params: { locale: string };
-  parent: ResolvingMetadata;
 }): Promise<Metadata> {
   const t = await getTranslations({
     locale,
