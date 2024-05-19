@@ -16,6 +16,7 @@
       "submit": "Login",
       "title": "Log In"
     },
+    "logout_failed": "Logout failed",
     "signup": {
       "already_have_account": "Already have an account?",
       "confirm_password": "confirm password",
@@ -138,6 +139,7 @@
         "title": "Meetup point"
       },
       "pending": "Creating...",
+      "redirecting": "Redirecting to post...",
       "reset": "Reset",
       "submit": "Create",
       "title": "Create a new listing"
@@ -184,6 +186,7 @@
         "title": "Location"
       },
       "pending": "Creating...",
+      "redirecting": "Redirecting to place...",
       "reset": "Reset",
       "submit": "Create",
       "title": "Create a new place"
@@ -361,5 +364,8 @@
   },
   "sms": {
     "listing": "Hello, I'm interested in your listing: "
+  },
+  "user": {
+    "places": "@{username}'s places"
   }
 }

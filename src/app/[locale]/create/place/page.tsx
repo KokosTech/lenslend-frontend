@@ -23,6 +23,7 @@ import {
 import { handleCreatePlace } from '@/utils/create/place.create';
 import FormErrors from '@/components/common/form/errors';
 import DetailsCreatePlace from '@/partials/create/place/details.create-place';
+import { IconLoader3 } from '@tabler/icons-react';
 
 const CreatePage = () => {
   const router = useRouter();
@@ -31,6 +32,7 @@ const CreatePage = () => {
   const [form, setForm] = useState<CreatePlaceForm>(CreatePlaceInitial);
   const [images, setImages] = useState<ImageInputProps[]>([]);
 
+  const [redirecting, setRedirecting] = useState<boolean>(false);
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [errors, setErrors] = useState<CreatePlaceErrors>(
     CreatePlaceInitialErrors,
@@ -76,17 +78,29 @@ const CreatePage = () => {
         (key: string) => t(`errors.${key}`),
       );
       if (place) {
+        setRedirecting(true);
         setForm(CreatePlaceInitial);
         setImages([]);
-        // maybe create animation page
         router.push(`/places/${place.uuid}`);
       }
     } catch (error) {
+      setRedirecting(false);
       handleError({ global: [t('errors.500')] });
     } finally {
       setSubmitting(false);
     }
   };
+
+  if (redirecting) {
+    return (
+      <div className='flex flex-col items-center justify-center gap-4 lg:flex-row'>
+        <IconLoader3 size={96} className='animate-spin-slow text-green' />
+        <h3 className='text-center text-3xl font-bold text-blue'>
+          {t('redirecting')}
+        </h3>
+      </div>
+    );
+  }
 
   return (
     <form
