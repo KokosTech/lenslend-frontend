@@ -25,6 +25,7 @@ import {
 } from '@/constants/forms/create-listing.initial';
 import ImageSelect from '@/partials/create/image.select';
 import CreateButtons from '@/partials/create/createButtons';
+import { IconLoader3 } from '@tabler/icons-react';
 
 const CreateProductPage = () => {
   const router = useRouter();
@@ -34,6 +35,7 @@ const CreateProductPage = () => {
   const [images, setImages] = useState<ImageInputProps[]>([]);
 
   const [submitting, setSubmitting] = useState<boolean>(false);
+  const [redirecting, setRedirecting] = useState<boolean>(false);
   const [errors, setErrors] = useState<CreateProductErrors>(
     CreateListingInitialErrors,
   );
@@ -85,14 +87,28 @@ const CreateProductPage = () => {
         (key: string) => t(`errors.${key}`),
       );
       if (listing) {
+        setRedirecting(true);
         router.push(`/listing/${listing.uuid}`);
       }
     } catch (error) {
+      setRedirecting(false);
       handleError({ global: [t('errors.500')] });
     } finally {
+      setRedirecting(false);
       setSubmitting(false);
     }
   };
+
+  if (redirecting) {
+    return (
+      <div className='flex flex-col items-center justify-center gap-4 lg:flex-row'>
+        <IconLoader3 size={96} className='animate-spin-slow text-green' />
+        <h3 className='text-center text-3xl font-bold text-blue'>
+          {t('redirecting')}
+        </h3>
+      </div>
+    );
+  }
 
   return (
     <form

@@ -1,20 +1,25 @@
-import ListingCard from '@/components/common/cards/listing.card';
-import { ShortListingResponse } from '@/types/data/listing.type';
-import { toInteger } from 'lodash';
 import PageOptions from '@/partials/common/pageOptions';
+
 import CategoryTitle from '@/components/common/cateogry-title';
+import ListingCard from '@/components/common/cards/listing.card';
+import PageLimitError from '@/components/error/page-limit.error';
+
 import { getListings } from '@/fetch/listing.fetch';
 
+import { ShortListingResponse } from '@/types/data/listing.type';
+
+import { DEFAULT_LISTING_LIMIT, DEFAULT_PAGE } from '@/constants/limits';
+
 const ListingsPage = async ({
-  searchParams: { page = 1, limit = 12 },
+  searchParams: { page = DEFAULT_PAGE, limit = DEFAULT_LISTING_LIMIT },
 }: {
   searchParams: {
     page: number;
     limit: number;
   };
 }) => {
-  if (Number.isNaN(toInteger(page)) || Number.isNaN(toInteger(limit))) {
-    return <div>Invalid page or limit</div>;
+  if (Number.isNaN(page) || Number.isNaN(limit) || limit < 1 || page < 1) {
+    return <PageLimitError />;
   }
 
   const listingsData = await getListings(page, limit);

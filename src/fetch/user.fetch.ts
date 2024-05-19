@@ -1,7 +1,13 @@
 import { paginatedFetch } from '@/utils/paginated-fetch';
+
 import { User } from '@/types/data/place.type';
 
-const getUsers = async (page: number = 1, limit = 12) => {
+import { DEFAULT_PAGE, DEFAULT_USER_LIMIT } from '@/constants/limits';
+
+const getUsers = async (
+  page: number = DEFAULT_PAGE,
+  limit = DEFAULT_USER_LIMIT,
+) => {
   try {
     return await paginatedFetch<User>('/user/profile', page, limit, {
       next: {

@@ -34,6 +34,15 @@ const config: Config = {
       backgroundImage: (theme) => ({
         gradient: 'linear-gradient(99deg, #28EDA3 31.45%, #06A7F5 68.87%)',
       }),
+      animation: {
+        'spin-slow': 'spin 1.5s linear infinite',
+      },
+      keyframes: {
+        wiggle: {
+          '0%, 100%': { transform: 'rotate(-3deg)' },
+          '50%': { transform: 'rotate(3deg)' },
+        },
+      },
       boxShadow: {
         // TODO: add box shadows according to the design in figma
       },

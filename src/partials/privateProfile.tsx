@@ -101,7 +101,7 @@ const PrivateProfile = ({ user }: { user: UserProfile }) => {
         <div className='flex items-center gap-3 p-4'>
           <IconCake className='size-8' />
           <p className='text-md font-medium'>
-            <Suspense fallback='Loading...'>
+            <Suspense fallback={null}>
               <DateComponent date={date_of_birth} />
             </Suspense>
           </p>
