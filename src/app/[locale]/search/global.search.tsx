@@ -1,9 +1,9 @@
 import UserCard from '@/components/common/cards/user.card';
-import { GlobalSearchResult } from '@/types/data/search.type';
 import CategoryTitle from '@/components/common/cateogry-title';
-import { useTranslations } from 'next-intl';
-import PlacesGrid from '@/partials/grid/places.grid';
 import ListingsGrid from '@/partials/grid/listings.grid';
+import PlacesGrid from '@/partials/grid/places.grid';
+import { GlobalSearchResult } from '@/types/data/search.type';
+import { useTranslations } from 'next-intl';
 
 const GlobalSearch = ({
   data: { listings, places, users },
@@ -19,7 +19,11 @@ const GlobalSearch = ({
   return (
     <>
       <div className='flex flex-col gap-4'>
-        <PlacesGrid title={t('relevant places')} placesDataFetched={places} />
+        <PlacesGrid
+          title={t('relevant places')}
+          placesDataFetched={places}
+          even
+        />
       </div>
       <div className='flex flex-col gap-4'>
         <ListingsGrid

@@ -29,6 +29,7 @@ const UserPage = async ({
           title={`@${username}'s places`}
           url={`/user/${username}/places`}
           username={username}
+          even
         />
       </div>
       <div className='flex h-fit flex-col items-center gap-4 lg:sticky lg:-top-14 lg:pt-16'>
@@ -50,5 +51,15 @@ const getUser = async (username: string) => {
 
   return (await response.json()) as PublicProfile;
 };
+
+export function generateMetadata({
+  params: { username },
+}: {
+  params: { locale: string; username: string };
+}) {
+  return {
+    title: `@${username}`,
+  };
+}
 
 export default UserPage;

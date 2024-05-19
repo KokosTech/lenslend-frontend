@@ -42,6 +42,7 @@ const ProfilePage = async ({
           username={username}
           placesDataFetched={placesData}
           noActions
+          even
         />
       </div>
       <PrivateProfile user={profile} />

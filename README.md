@@ -8,7 +8,7 @@ The frontend of a Technology School Electronic Systems thesis project made by Ka
   <img src='https://repobeats.axiom.co/api/embed/3a65101ada2293c1930f3abb241f1f4ac2fe3909.svg' alt="Repobeats analytics image" />
 </p>
 
-***LensLend*** is an innovative web application designed to facilitate digital content creators by providing a platform for selling and buying, renting and lending recording equipment and offering locations for shoots. Catering to the needs of those involved in video and podcast production, it aims to enhance the quality of content creation by making it easier to access the right technology and ideal settings. Accessible from any device, LensLend serves as a dynamic solution for creators seeking to produce high-quality digital content for platforms like YouTube, Instagram, and TikTok.
+**_LensLend_** is an innovative web application designed to facilitate digital content creators by providing a platform for selling and buying, renting and lending recording equipment and offering locations for shoots. Catering to the needs of those involved in video and podcast production, it aims to enhance the quality of content creation by making it easier to access the right technology and ideal settings. Accessible from any device, LensLend serves as a dynamic solution for creators seeking to produce high-quality digital content for platforms like YouTube, Instagram, and TikTok.
 
 [![wakatime](https://wakatime.com/badge/user/f3786457-e08f-4d45-b593-cd8517eacd90/project/255770c5-3f45-4ba3-9a3b-bc7fc6765926.svg)](https://wakatime.com/badge/user/f3786457-e08f-4d45-b593-cd8517eacd90/project/255770c5-3f45-4ba3-9a3b-bc7fc6765926)
 
@@ -59,4 +59,4 @@ pnpm dev
 
 <br/>
 
-*Created by [Kaloyan Doychinov](https://kaloyan.tech/), Technology School Electronic Systems*
+_Created by [Kaloyan Doychinov](https://kaloyan.tech/), Technology School Electronic Systems_

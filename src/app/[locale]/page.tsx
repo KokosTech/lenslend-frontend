@@ -38,7 +38,7 @@ const Home = ({ params: { locale } }: { params: { locale: string } }) => {
           />
         }
       >
-        <PlacesGrid title={t('latest_locations')} url={'/place/list'} />
+        <PlacesGrid title={t('latest_locations')} url={'/place/list'} even />
       </Suspense>
       {/* Latest Listings */}
       <Suspense
@@ -110,7 +110,12 @@ const Home = ({ params: { locale } }: { params: { locale: string } }) => {
           />
         }
       >
-        <PlacesGrid title={t('cafes')} url={'/place/category/1'} category='1' />
+        <PlacesGrid
+          title={t('cafes')}
+          url={'/place/category/1'}
+          category='1'
+          even
+        />
       </Suspense>
       {/* Restaurants (Places) */}
       <Suspense
@@ -126,6 +131,7 @@ const Home = ({ params: { locale } }: { params: { locale: string } }) => {
           title={t('restaurants')}
           url={'/place/category/650cf655-3247-4c58-976e-caaf48d1ba86'}
           category='650cf655-3247-4c58-976e-caaf48d1ba86'
+          even
         />
       </Suspense>
       {/* Offices (Places) */}
@@ -142,6 +148,7 @@ const Home = ({ params: { locale } }: { params: { locale: string } }) => {
           title={t('offices')}
           url={'/place/category/4f1e7e29-d640-4928-9572-1ccfd592e089'}
           category='4f1e7e29-d640-4928-9572-1ccfd592e089'
+          even
         />
       </Suspense>
       <HorizontalDivider />

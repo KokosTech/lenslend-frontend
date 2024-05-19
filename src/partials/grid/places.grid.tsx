@@ -13,6 +13,7 @@ const PlacesGrid = async ({
   page,
   limit,
   placesDataFetched,
+  even,
 }: {
   title?: string;
   url?: string;
@@ -23,6 +24,7 @@ const PlacesGrid = async ({
   page?: number;
   limit?: number;
   placesDataFetched?: PaginatedResponse<CardPlace>;
+  even?: boolean;
 }) => {
   const placesData: PaginatedResponse<CardPlace> | null =
     placesDataFetched ?? (await getPlaces(page, limit, username, category));
@@ -49,8 +51,8 @@ const PlacesGrid = async ({
       <div
         className={`grid w-full grid-cols-1 gap-4 overflow-hidden ${
           username
-            ? '2xl:grid-cols-2 min-[1800px]:grid-cols-3 min-[1800px]:grid-rows-[1fr_0_0] min-[1800px]:gap-y-0'
-            : 'lg:grid-cols-2 2xl:grid-cols-3 2xl:grid-rows-[1fr_0_0] 2xl:gap-y-0'
+            ? `2xl:grid-cols-2 min-[1800px]:grid-cols-3 ${even && 'min-[1800px]:grid-rows-[1fr_0_0] min-[1800px]:gap-y-0'}`
+            : `lg:grid-cols-2 2xl:grid-cols-3 ${even && '2xl:grid-rows-[1fr_0_0] 2xl:gap-y-0'}`
         }`}
       >
         {places.map((place) => (

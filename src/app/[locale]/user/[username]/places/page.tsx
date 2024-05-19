@@ -1,4 +1,4 @@
-import { unstable_setRequestLocale } from 'next-intl/server';
+import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
 import PageOptions from '@/partials/common/pageOptions';
 import { notFound } from 'next/navigation';
 import CategoryTitle from '@/components/common/cateogry-title';
@@ -35,5 +35,20 @@ const UserPlacesPage = async ({
     </div>
   );
 };
+
+export async function generateMetadata({
+  params: { locale, username },
+}: {
+  params: { locale: string; username: string };
+}) {
+  const t = await getTranslations({
+    locale,
+    namespace: 'user',
+  });
+
+  return {
+    title: t('places', { username }),
+  };
+}
 
 export default UserPlacesPage;
