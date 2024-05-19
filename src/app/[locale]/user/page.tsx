@@ -9,6 +9,7 @@ import { User } from '@/types/data/place.type';
 import { PaginatedResponse } from '@/types/paginated-response.type';
 import PageLimitError from '@/components/error/page-limit.error';
 import { DEFAULT_PAGE, DEFAULT_USER_LIMIT } from '@/constants/limits';
+import { getTranslations } from 'next-intl/server';
 
 const UsersPage = async ({
   searchParams: { page = DEFAULT_PAGE, limit = DEFAULT_USER_LIMIT },
@@ -18,6 +19,8 @@ const UsersPage = async ({
     limit: number;
   };
 }) => {
+  const t = await getTranslations('users');
+
   if (Number.isNaN(page) || Number.isNaN(limit) || limit < 1) {
     return <PageLimitError />;
   }
@@ -36,7 +39,7 @@ const UsersPage = async ({
 
   return (
     <div className='flex w-full flex-col gap-4'>
-      <CategoryTitle title='Users' />
+      <CategoryTitle title={t('title')} />
       <div className='grid w-full grid-cols-2 justify-items-stretch gap-4 sm:grid-cols-3 md:grid-cols-2 min-[880px]:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6'>
         {users.map((user: User) => (
           <UserCard key={user.uuid} user={user} />
@@ -46,5 +49,20 @@ const UsersPage = async ({
     </div>
   );
 };
+
+export async function generateMetadata({
+  params: { locale },
+}: {
+  params: { locale: string };
+}) {
+  const t = await getTranslations({
+    locale,
+    namespaces: ['users'],
+  });
+
+  return {
+    title: t('title'),
+  };
+}
 
 export default UsersPage;

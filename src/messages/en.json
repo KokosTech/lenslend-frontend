@@ -375,6 +375,10 @@
     "listing": "Hello, I'm interested in your listing: "
   },
   "user": {
+    "listings": "@{username}'s listings",
     "places": "@{username}'s places"
+  },
+  "users": {
+    "title": "Users"
   }
 }

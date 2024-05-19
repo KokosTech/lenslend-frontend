@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { getProfile } from '@/fetch/profile.fetch';
-import { unstable_setRequestLocale } from 'next-intl/server';
+import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
 import ListingsGrid from '@/partials/grid/listings.grid';
 import PlacesGrid from '@/partials/grid/places.grid';
 import { getListings } from '@/fetch/listing.fetch';
@@ -14,6 +14,8 @@ const ProfilePage = async ({
   params: { locale: string };
 }) => {
   unstable_setRequestLocale(locale);
+
+  const t = await getTranslations('user');
 
   const auth = await getAuth('ssr');
   if (!auth) notFound();
@@ -30,14 +32,14 @@ const ProfilePage = async ({
     <div className='flex h-full w-full flex-col-reverse justify-end gap-4 lg:flex-row'>
       <div className='flex w-full flex-col gap-4'>
         <ListingsGrid
-          title={`@${username}'s listings`}
+          title={t('listings', { username })}
           url={`/user/${username}/listings`}
           listingDataFetched={listingsData}
           username={username}
           noActions
         />
         <PlacesGrid
-          title={`@${username}'s places`}
+          title={t('places', { username })}
           url={`/user/${username}/places`}
           username={username}
           placesDataFetched={placesData}

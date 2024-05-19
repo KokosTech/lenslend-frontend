@@ -1,4 +1,4 @@
-import { unstable_setRequestLocale } from 'next-intl/server';
+import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
 import { PublicProfile } from '@/types/data/user.type';
 import { notFound } from 'next/navigation';
 import { API_URL } from '@/configs/api';
@@ -13,6 +13,8 @@ const UserPage = async ({
 }) => {
   unstable_setRequestLocale(locale);
 
+  const t = await getTranslations('user');
+
   const profile = await getUser(username);
 
   if (!profile) notFound();
@@ -21,12 +23,12 @@ const UserPage = async ({
     <div className='flex h-full w-full flex-col-reverse justify-end gap-4 lg:flex-row'>
       <div className='flex w-full flex-col gap-4'>
         <ListingsGrid
-          title={`@${username}'s listings`}
+          title={t('listings', { username })}
           url={`/user/${username}/listings`}
           username={username}
         />
         <PlacesGrid
-          title={`@${username}'s places`}
+          title={t('places', { username })}
           url={`/user/${username}/places`}
           username={username}
           even
