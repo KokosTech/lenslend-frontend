@@ -78,7 +78,8 @@ const CreatePage = () => {
       if (place) {
         setForm(CreatePlaceInitial);
         setImages([]);
-        router.push(`/place/${place.uuid}`);
+        // maybe create animation page
+        router.push(`/places/${place.uuid}`);
       }
     } catch (error) {
       handleError({ global: [t('errors.500')] });
