@@ -10,28 +10,38 @@ const SaveButton = ({
   onSave,
 }: {
   uuid: string;
-  onSave: (listingUUID: string) => Promise<boolean>;
+  onSave: (listingUUID: string) => Promise<boolean | null>;
 }) => {
   const { open, toggleModal, setModal } = useModal();
-  const t = useTranslations('listing.modal.saved');
+  const t = useTranslations('listing.modal');
 
   const onClick = () => {
     void (async () => {
       try {
         const successfullySaved = await onSave(uuid);
 
-        if (!successfullySaved) {
+        if (successfullySaved === null) {
           return;
+        } else if (successfullySaved) {
+          setModal(
+            t('saved.title'),
+            <InfoModal
+              title={t('saved.title')}
+              description={t('saved.message')}
+              onClose={toggleModal}
+            />,
+          );
+        } else {
+          setModal(
+            t('unsaved.title'),
+            <InfoModal
+              title={t('unsaved.title')}
+              description={t('unsaved.message')}
+              onClose={toggleModal}
+            />,
+          );
         }
 
-        setModal(
-          t('title'),
-          <InfoModal
-            title={t('title')}
-            description={t('message')}
-            onClose={toggleModal}
-          />,
-        );
         toggleModal();
       } catch (error) {
         // Handle the error if needed

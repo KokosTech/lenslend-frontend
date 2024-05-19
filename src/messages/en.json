@@ -218,6 +218,11 @@
     "something_went_wrong": "Something went wrong, please try again",
     "try_again": "Try again"
   },
+  "favorites": {
+    "listings": "Favorite listings",
+    "places": "Favorite places",
+    "title": "Favorites"
+  },
   "listing": {
     "buttons": {
       "delete": "Delete",
@@ -263,9 +268,13 @@
     "modal": {
       "saved": {
         "close": "Close",
-        "message": "The listing has been saved successfully.",
+        "message": "The post has been saved successfully.",
         "title": "Saved",
         "view_all": "View favorites"
+      },
+      "unsaved": {
+        "message": "The post has been removed from Saved",
+        "title": "Removed from saved"
       }
     },
     "negotiable": "Negotiable",

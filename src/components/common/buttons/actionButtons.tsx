@@ -11,7 +11,7 @@ const ActionButtons = ({
   uuid: string;
   title: string;
   phone: string;
-  onSave: (listingUUID: string) => Promise<boolean>;
+  onSave: (listingUUID: string) => Promise<boolean | null>;
   addClass?: string;
 }) => (
   <div

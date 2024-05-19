@@ -26,7 +26,7 @@ const PrivateProfile = ({ user }: { user: UserProfile }) => {
   } = user;
 
   return (
-    <div className='flex h-fit flex-col items-center gap-4 lg:sticky lg:-top-14 lg:pt-16'>
+    <div className='flex h-fit w-full flex-col items-center gap-4 sm:w-fit lg:sticky lg:-top-14 lg:pt-16'>
       <div className='relative flex flex-col gap-2 rounded-xl border-2 border-stroke bg-primary p-2 text-justify'>
         {profile_pic || header_pic ? (
           <div className='relative flex w-full flex-col gap-2'>

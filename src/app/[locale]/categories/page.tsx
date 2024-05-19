@@ -19,7 +19,7 @@ const CategoriesPage = ({
         <CategoriesPartial title={'Equipment'} type='LISTING' />
       </Suspense>
       <Suspense fallback={<div>Loading place categories...</div>}>
-        <CategoriesPartial title={'Places'} type='PLACES' />
+        <CategoriesPartial title={'Places'} type='PLACE' />
       </Suspense>
     </div>
   );

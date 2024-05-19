@@ -22,6 +22,7 @@ const InfoModal = ({
         <Link
           className='flex-1 rounded-lg border border-blue bg-blue p-2 text-center text-background'
           href='/favorites'
+          onClick={() => onClose()}
         >
           {t('view_all')}
         </Link>

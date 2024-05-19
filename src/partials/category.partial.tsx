@@ -11,7 +11,7 @@ type Category = {
 
 type CategoriesPartialProps = {
   title: string;
-  type: 'LISTING' | 'PLACES';
+  type: 'LISTING' | 'PLACE';
 };
 
 const CategoriesPartial = async ({ title, type }: CategoriesPartialProps) => {

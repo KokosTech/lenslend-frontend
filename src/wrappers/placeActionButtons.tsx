@@ -1,6 +1,6 @@
 'use client';
 
-import { onSave } from '@/utils/saves/listing.save';
+import { onSave } from '@/utils/saves/place.save';
 import SaveButton from '@/components/common/buttons/saveButton';
 
 const PlaceActionButtons = ({ uuid }: { uuid: string; addClass?: string }) => (

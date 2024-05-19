@@ -1,15 +1,14 @@
-import { axiosInstance } from '@/configs/axios';
+import { save } from '@/actions/save';
 
 export const onSave = async (listingUUID: string) => {
-  return true;
-
   try {
-    const response = await axiosInstance.post(`/listings/${listingUUID}/save`, {
-      listingUUID,
-    });
+    const res = await save(listingUUID, 'listing');
+    if (typeof res === 'boolean') {
+      return res;
+    }
 
-    return response.status === 201;
+    return null;
   } catch (error) {
-    return false;
+    return null;
   }
 };
