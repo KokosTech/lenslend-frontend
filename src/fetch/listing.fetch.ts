@@ -1,51 +1,31 @@
 /* eslint-disable indent */
 
+import { getAuth } from '@/actions/auth';
+import { paginatedFetch } from '@/utils/paginated-fetch';
+
 import { API_URL } from '@/configs/api';
 import {
   FullListingResponse,
   ShortListingResponse,
 } from '@/types/data/listing.type';
-import { getAuth } from '@/actions/auth';
 import {
   HTTPForbiddenException,
   HTTPUnauthorizedException,
 } from '@/errors/HTTPExceptions';
-import { paginatedFetch } from '@/utils/paginated-fetch';
 
-export const getListings = async (
-  page: number = 1,
-  limit: number = 6,
-  username?: string,
-  category?: string,
-  auth?: string,
-) => {
-  try {
-    return await paginatedFetch<ShortListingResponse>(
-      `/${username ? `user/${username}/` : ''}listing${
-        category ? `?category=${category}` : ''
-      }`,
-      page,
-      limit,
-      {
-        next: {
-          revalidate: 60,
-        },
-        headers: {
-          Authorization: auth || '',
-        },
-      },
-    );
-  } catch (error) {
-    console.error(error);
-    return null;
-  }
-};
+import {
+  DEFAULT_CACHE_TIME,
+  DEFAULT_LISTING_FETCH_LIMIT,
+  DEFAULT_PAGE,
+} from '@/constants/limits';
 
 const getListing = async (uuid: string) => {
   const auth = await getAuth('ssr');
 
   const response = await fetch(`${API_URL}/listing/${uuid}`, {
-    cache: 'no-cache',
+    next: {
+      revalidate: DEFAULT_CACHE_TIME,
+    },
     headers: auth
       ? {
           Authorization: auth,
@@ -67,6 +47,35 @@ const getListing = async (uuid: string) => {
   }
 
   return (await response.json()) as FullListingResponse;
+};
+
+export const getListings = async (
+  page: number = DEFAULT_PAGE,
+  limit: number = DEFAULT_LISTING_FETCH_LIMIT,
+  username?: string,
+  category?: string,
+  auth?: string,
+) => {
+  try {
+    return await paginatedFetch<ShortListingResponse>(
+      `/${username ? `user/${username}/` : ''}listing${
+        category ? `?category=${category}` : ''
+      }`,
+      page,
+      limit,
+      {
+        next: {
+          revalidate: DEFAULT_CACHE_TIME,
+        },
+        headers: {
+          Authorization: auth ?? '',
+        },
+      },
+    );
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
 };
 
 export default getListing;

@@ -1,20 +1,25 @@
 import PageOptions from '@/partials/common/pageOptions';
-import getUsers from '@/fetch/user.fetch';
-import { PaginatedResponse } from '@/types/paginated-response.type';
-import { User } from '@/types/data/place.type';
+
 import UserCard from '@/components/common/cards/user.card';
 import CategoryTitle from '@/components/common/cateogry-title';
 
+import getUsers from '@/fetch/user.fetch';
+
+import { User } from '@/types/data/place.type';
+import { PaginatedResponse } from '@/types/paginated-response.type';
+import PageLimitError from '@/components/error/page-limit.error';
+import { DEFAULT_PAGE, DEFAULT_USER_LIMIT } from '@/constants/limits';
+
 const UsersPage = async ({
-  searchParams: { page = 1, limit = 12 },
+  searchParams: { page = DEFAULT_PAGE, limit = DEFAULT_USER_LIMIT },
 }: {
   searchParams: {
     page: number;
     limit: number;
   };
 }) => {
-  if (Number.isNaN(page) || Number.isNaN(limit)) {
-    return <div>Invalid page or limit</div>;
+  if (Number.isNaN(page) || Number.isNaN(limit) || limit < 1) {
+    return <PageLimitError />;
   }
 
   const usersData: PaginatedResponse<User> | null = await getUsers(page, limit);

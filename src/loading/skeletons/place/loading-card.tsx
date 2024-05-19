@@ -1,22 +1,19 @@
-import Address from '@/components/common/address';
-import PlaceActionButtons from '@/wrappers/placeActionButtons';
-import Link from 'next/link';
+import LoadingActionButtons from '../loading-action-buttons';
 
 const LoadingPlaceCard = () => (
-  <div className='relative flex w-full flex-col gap-3 rounded-xl border border-stroke bg-primary p-2.5 transition-all hover:border-stroke-secondary'>
+  <div className='relative flex w-full flex-col gap-3 rounded-xl border border-stroke bg-primary p-2.5 transition-all'>
     <div className='relative !aspect-[5/3] w-full overflow-hidden rounded-lg border border-stroke'>
-      <div className='absolute !aspect-[4/3] w-full bg-stroke object-cover' />
+      <div className='absolute !aspect-[4/3] w-full bg-background object-cover' />
     </div>
     <div className='flex w-full items-end justify-between gap-2'>
-      <div className='flex flex-col'>
-        <h3 className='line-clamp-2 font-semibold sm:text-lg md:text-2xl'>
-          {place.name}
-        </h3>
-        <Address lat={place.lat} lng={place.lng} size='text-sm' />
+      <div className='relative flex w-full animate-pulse flex-col'>
+        <div className='line-clamp-2 h-7 w-1/2 rounded-lg bg-stroke text-lg font-semibold sm:text-xl md:text-2xl' />
+        <p className='md:text-md mt-0.5 text-sm font-light text-text-secondary'>
+          <div className='h-4 w-full max-w-24 break-words rounded-lg bg-stroke text-sm font-semibold text-text-secondary' />
+        </p>
       </div>
-      {!noActions && <PlaceActionButtons uuid={place.uuid} />}
+      <LoadingActionButtons />
     </div>
-    <Link href={`/places/${place.uuid}`} className='absolute h-full w-full' />
   </div>
 );
 

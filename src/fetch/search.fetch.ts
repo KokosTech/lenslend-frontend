@@ -1,19 +1,26 @@
 import { API_URL } from '@/configs/api';
-import { GlobalSearchResult, SearchType } from '@/types/data/search.type';
 import { paginatedFetch } from '@/utils/paginated-fetch';
+
+import { GlobalSearchResult, SearchType } from '@/types/data/search.type';
+
+import {
+  DEFAULT_CACHE_TIME,
+  DEFAULT_LISTING_LIMIT,
+  DEFAULT_PAGE,
+} from '@/constants/limits';
 
 export const getSearch = async (
   search: string,
   category?: string,
-  page = 1,
-  limit = 12,
+  page = DEFAULT_PAGE,
+  limit = DEFAULT_LISTING_LIMIT,
 ) => {
   // === GLOBAL SEARCH ===
 
   if (category === undefined) {
     const res = await fetch(`${API_URL}/search?search=${search}}`, {
       next: {
-        revalidate: 60,
+        revalidate: DEFAULT_CACHE_TIME,
       },
     });
 
@@ -28,7 +35,7 @@ export const getSearch = async (
     limit,
     {
       next: {
-        revalidate: 60,
+        revalidate: DEFAULT_CACHE_TIME,
       },
       cache: 'no-store',
     },

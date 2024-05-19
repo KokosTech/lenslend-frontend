@@ -1,19 +1,29 @@
 /* eslint-disable indent */
 
-import { API_URL } from '@/configs/api';
-import { CardPlace, Place } from '@/types/data/place.type';
 import { getAuth } from '@/actions/auth';
+import { API_URL } from '@/configs/api';
+
+import { CardPlace, Place } from '@/types/data/place.type';
+
 import {
   HTTPForbiddenException,
   HTTPUnauthorizedException,
 } from '@/errors/HTTPExceptions';
 import { paginatedFetch } from '@/utils/paginated-fetch';
 
+import {
+  DEFAULT_CACHE_TIME,
+  DEFAULT_PAGE,
+  DEFAULT_PLACE_FETCH_LIMIT,
+} from '@/constants/limits';
+
 export const getPlace = async (uuid: string) => {
   const auth = await getAuth('ssr');
 
   const response = await fetch(`${API_URL}/place/${uuid}`, {
-    cache: 'no-cache',
+    next: {
+      revalidate: DEFAULT_CACHE_TIME,
+    },
     headers: auth
       ? {
           Authorization: auth,
@@ -38,8 +48,8 @@ export const getPlace = async (uuid: string) => {
 };
 
 export const getPlaces = async (
-  page: number = 1,
-  limit: number = 4,
+  page: number = DEFAULT_PAGE,
+  limit: number = DEFAULT_PLACE_FETCH_LIMIT,
   username?: string,
   category?: string,
   auth?: string,
@@ -51,11 +61,10 @@ export const getPlaces = async (
       limit,
       {
         next: {
-          revalidate: 60,
+          revalidate: DEFAULT_CACHE_TIME,
         },
-        cache: 'no-cache',
         headers: {
-          Authorization: auth || '',
+          Authorization: auth ?? '',
         },
       },
     );

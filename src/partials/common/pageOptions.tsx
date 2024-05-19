@@ -5,10 +5,12 @@ import {
   IconChevronLeft,
   IconChevronRight,
 } from '@tabler/icons-react';
+import { toInteger } from 'lodash';
+import { useCallback } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useSearchParams } from 'next/dist/client/components/navigation';
-import { useCallback } from 'react';
-import { toInteger } from 'lodash';
+
+import { DEFAULT_PAGE_LIMIT_OPTIONS } from '@/constants/limits';
 
 export type PageOptionsProps = {
   page: number;
@@ -77,10 +79,11 @@ export const PageOptions = ({ page, limit, totalItems }: PageOptionsProps) => {
             );
           }}
         >
-          <option value='2'>2</option>
-          <option value='12'>12</option>
-          <option value='24'>24</option>
-          <option value='48'>48</option>
+          {DEFAULT_PAGE_LIMIT_OPTIONS.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
         </select>
         {/* make the cursor pass through to select */}
         <IconChevronDown className='pointer-events-none absolute right-2 top-1/2 h-4 w-4 -translate-y-1/2 transform' />

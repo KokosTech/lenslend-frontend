@@ -1,5 +1,6 @@
 import { UserProfile } from '@/types/data/user.type';
 import { API_URL } from '@/configs/api';
+import { DEFAULT_CACHE_TIME } from '@/constants/limits';
 
 const getProfile = async (auth: string) => {
   const res = await fetch(`${API_URL}/user/me`, {
@@ -8,6 +9,7 @@ const getProfile = async (auth: string) => {
     },
     next: {
       tags: ['user'],
+      revalidate: DEFAULT_CACHE_TIME,
     },
   });
 
