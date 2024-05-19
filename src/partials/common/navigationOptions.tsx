@@ -1,11 +1,11 @@
-import LogoComponent from '@/components/navigation/logoComponent';
-import { navigation } from '@/constants/navigation';
-import HorizontalDivider from '@/components/horizontalDivider';
-import NavigationComponent from '@/components/navigation/navigationComponent';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { isAuth as isAuthF } from '@/actions/auth';
-import { usePathname } from 'next/navigation';
+import HorizontalDivider from '@/components/horizontalDivider';
+import LogoComponent from '@/components/navigation/logoComponent';
+import NavigationComponent from '@/components/navigation/navigationComponent';
+import { navigation } from '@/constants/navigation';
 import dynamic from 'next/dynamic';
+import { usePathname } from 'next/navigation';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 type NavigationOptionsProps = {
   setShow: Dispatch<SetStateAction<boolean>>;
@@ -47,7 +47,9 @@ const NavigationOptions = ({ setShow }: NavigationOptionsProps) => {
           />
         );
       })}
-      {isAuth === null && 'skeleton'}
+      {isAuth === null && (
+        <div className='h-96 w-full animate-pulse rounded-lg bg-primary' />
+      )}
     </div>
   );
 };
