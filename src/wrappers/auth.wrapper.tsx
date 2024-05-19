@@ -17,7 +17,7 @@ const AuthWrapper = ({
   };
 }) => (
   <>
-    <div className='flex flex-col gap-4 rounded-xl border border-stroke bg-primary px-8 py-6 font-semibold'>
+    <div className='flex w-full flex-col gap-4 rounded-xl border border-stroke bg-primary px-8 py-6 font-semibold sm:w-fit'>
       <Link className='flex items-center justify-center gap-2' href={'/'}>
         <LogoComponent />
         <VerticalDivider />

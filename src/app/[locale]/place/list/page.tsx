@@ -2,6 +2,8 @@ import { toInteger } from 'lodash';
 import PageOptions from '@/partials/common/pageOptions';
 import { getPlaces } from '@/fetch/place.fetch';
 import PlacesGrid from '@/partials/grid/places.grid';
+import { Metadata, ResolvingMetadata } from 'next';
+import { getTranslations } from 'next-intl/server';
 
 const PlacesPage = async ({
   searchParams: { page = 1, limit = 12 },
@@ -30,5 +32,21 @@ const PlacesPage = async ({
     </div>
   );
 };
+
+export async function generateMetadata({
+  params: { locale },
+}: {
+  params: { locale: string };
+  parent: ResolvingMetadata;
+}): Promise<Metadata> {
+  const t = await getTranslations({
+    locale,
+    namespace: 'navigation',
+  });
+
+  return {
+    title: t('places'),
+  };
+}
 
 export default PlacesPage;

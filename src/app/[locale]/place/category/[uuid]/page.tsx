@@ -1,4 +1,4 @@
-import { unstable_setRequestLocale } from 'next-intl/server';
+import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
 import getCategory from '@/fetch/category.fetch';
 import { CardPlace } from '@/types/data/place.type';
 import { PaginatedResponse } from '@/types/paginated-response.type';
@@ -6,6 +6,7 @@ import PageOptions from '@/partials/common/pageOptions';
 import { toInteger } from 'lodash';
 import { getPlaces } from '@/fetch/place.fetch';
 import PlacesGrid from '@/partials/grid/places.grid';
+import { Metadata, ResolvingMetadata } from 'next';
 
 const PlacesCategoryPage = async ({
   params: { locale, uuid },
@@ -51,5 +52,22 @@ const PlacesCategoryPage = async ({
     </div>
   );
 };
+
+export async function generateMetadata({
+  params: { locale, uuid },
+}: {
+  params: { locale: string; uuid: string };
+  parent: ResolvingMetadata;
+}): Promise<Metadata> {
+  const t = await getTranslations({
+    locale,
+    namespace: 'navigation',
+  });
+  const categoryData = await getCategory(uuid, 'PLACE');
+
+  return {
+    title: categoryData ? categoryData.name : t('places'),
+  };
+}
 
 export default PlacesCategoryPage;

@@ -1,7 +1,8 @@
 import { Suspense } from 'react';
-import { unstable_setRequestLocale } from 'next-intl/server';
+import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
 
 import CategoriesPartial from '@/partials/category.partial';
+import { Metadata, ResolvingMetadata } from 'next';
 
 const CategoriesPage = ({
   params: { locale },
@@ -23,4 +24,21 @@ const CategoriesPage = ({
     </div>
   );
 };
+
+export async function generateMetadata({
+  params: { locale },
+}: {
+  params: { locale: string };
+  parent: ResolvingMetadata;
+}): Promise<Metadata> {
+  const t = await getTranslations({
+    locale,
+    namespace: 'navigation',
+  });
+
+  return {
+    title: t('categories'),
+  };
+}
+
 export default CategoriesPage;
