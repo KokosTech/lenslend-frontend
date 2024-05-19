@@ -1,19 +1,20 @@
-import { Suspense } from 'react';
 import { useTranslations } from 'next-intl';
 import { unstable_setRequestLocale } from 'next-intl/server';
+import { Suspense } from 'react';
 
 import Search from '@/partials/common/seatch';
-import UsersGrid from '@/partials/grid/users.grid';
-import PlacesGrid from '@/partials/grid/places.grid';
 import ListingsGrid from '@/partials/grid/listings.grid';
+import PlacesGrid from '@/partials/grid/places.grid';
+import UsersGrid from '@/partials/grid/users.grid';
 
 import Footer from '@/components/home/footer';
 import HeaderImage from '@/components/home/header';
 import HorizontalDivider from '@/components/horizontalDivider';
 
-import PlaceGridSkeleton from '@/loading/skeletons/place/place-grid-skeleton';
 import ListingGridSkeleton from '@/loading/skeletons/listing/listing-grid-skeleton';
+import PlaceGridSkeleton from '@/loading/skeletons/place/place-grid-skeleton';
 import SearchSkeleton from '@/loading/skeletons/search-skeleton';
+import UserGridSkeleton from '@/loading/skeletons/user/user-grid-skeleton';
 
 const Home = ({ params: { locale } }: { params: { locale: string } }) => {
   unstable_setRequestLocale(locale);
@@ -56,7 +57,15 @@ const Home = ({ params: { locale } }: { params: { locale: string } }) => {
         />
       </Suspense>
       {/* Popular Users */}
-      <Suspense fallback='Loading...'>
+      <Suspense
+        fallback={
+          <UserGridSkeleton
+            title={t('popular_users')}
+            count={6}
+            key='popular-users-skeleton'
+          />
+        }
+      >
         <UsersGrid title={t('popular_users')} url={'/user'} />
       </Suspense>
       {/* Popular Categories */}
